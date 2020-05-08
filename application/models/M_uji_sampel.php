@@ -46,9 +46,9 @@ class M_uji_sampel extends CI_Model{
 		return $hsl;
 	}
 
-	function simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan,$uang_muka,$sisa){
-		$hsl=$this->db->query("insert into tbl_us(us_id,us_anggota,us_kode_sampel,us_fk_js,us_fk_jw,us_pengambilan,us_total,us_catatan,us_uang_muka,us_sisa) values 
-		('$id','$anggota','$kode','$jenis_sampel','$jenis_wadah','$pengambilan','$tarif','$catatan','$uang_muka','$sisa')");
+	function simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan,$uang_muka,$sisa,$pdf){
+		$hsl=$this->db->query("insert into tbl_us(us_id,us_anggota,us_kode_sampel,us_fk_js,us_fk_jw,us_pengambilan,us_total,us_catatan,us_uang_muka,us_sisa,us_file) values 
+		('$id','$anggota','$kode','$jenis_sampel','$jenis_wadah','$pengambilan','$tarif','$catatan','$uang_muka','$sisa','$pdf')");
 		return $hsl;
 	}
 	function get_by_kode($kode){
@@ -59,9 +59,14 @@ class M_uji_sampel extends CI_Model{
 		$hsl=$this->db->query("SELECT * FROM tbl_us where pu_sp_id='$fk'");
 		return $hsl;
 	}
-	function update($id,$nama,$sp,$tarif){
-		$hsl=$this->db->query("update tbl_us set pu_nama='$nama',pu_sp_id='$sp',pu_tarif='$tarif'
-			where pu_id='$id'");
+	function update($id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$catatan,$pdf){
+		$hsl=$this->db->query("update tbl_us set us_kode_sampel='$kode',us_fk_js='$jenis_sampel',us_fk_jw='$jenis_wadah',us_pengambilan='$pengambilan',
+		us_catatan='$catatan',us_file='$pdf' where us_id='$id'");
+		return $hsl;
+	}
+	function update_nopdf($id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$catatan){
+		$hsl=$this->db->query("update tbl_us set us_kode_sampel='$kode',us_fk_js='$jenis_sampel',us_fk_jw='$jenis_wadah',us_pengambilan='$pengambilan',
+		us_catatan='$catatan' where us_id='$id'");
 		return $hsl;
 	}
 	function batal($id){

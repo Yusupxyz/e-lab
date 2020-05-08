@@ -49,7 +49,7 @@
         <!--form panels-->
         <div class="row">
           <div class="col-12 col-lg-12 m-auto">
-            <form  action="<?php echo base_url().'anggota/uji_sampel/update'?>" method="post" class="multisteps-form__form">
+            <form  action="<?php echo base_url().'anggota/uji_sampel/update'?>" method="post" enctype="multipart/form-data" class="multisteps-form__form">
               <!--single form panel-->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">Pengambilan sampel dilakukan oleh :</h3>
@@ -75,6 +75,7 @@
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col">
+                      <input class="multisteps-form__input form-control" type="hidden" name="xpdf"  value="<?= $file ?>"/>
                       <input class="multisteps-form__input form-control" type="text" name="xkode" id="xkode" placeholder="Kode/Nama Sampel Pelanggan" value="<?= $kode_sampel ?>"/>
                     </div>
                   </div>
@@ -138,14 +139,18 @@
               </div>
               <!--single form panel-->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">Catatan tambahan (jika ada)</h3>
+              <h3 class="multisteps-form__title">Surat Permohonan (format file pdf)</h3>
                 <div class="multisteps-form__content">
+                <div class="form-row mt-4">
+                    <input type="file" id="xfile" name="xfile" class="multisteps-form__textarea form-control" accept="application/pdf"/>
+                  </div>
+                  <h3 class="multisteps-form__title">Catatan Tambahan (jika perlu)</h3>
                   <div class="form-row mt-4">
                     <textarea name="xcatatan" class="multisteps-form__textarea form-control" placeholder="Catatan Tambahah Jika Diperlukan"></textarea>
                   </div>
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                    <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#exampleModal" id="a" type="button" title="Send">Ubah</button>
+                    <button id="button4" class="btn btn-success ml-auto" data-toggle="modal" data-target="#exampleModal" id="a" type="button" title="Send">Kirim</button>
                   </div>
                 </div>
               </div>
@@ -162,7 +167,7 @@
                       <p>Apa anda yakin mengubah data uji sampel anda?</p>
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-success">Ubah</button>
+                      <button type="submit" name="xid" value="<?= $us_id ?>" class="btn btn-success">Ubah</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
                   </div>
@@ -231,6 +236,13 @@ $(document).ready(function() {
         $(':input[id="button2"]').prop('disabled', true);
       }
     });
+
+    $("#xfile").change(function() {
+    if(this.files[0].size > 5000000){
+       alert("Ukuran file maksimal 5MB");
+       this.value = "";
+      }
+  });
   } );
 
   function handleChange(checkbox) {

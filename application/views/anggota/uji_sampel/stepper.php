@@ -42,14 +42,14 @@
               <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Pengambilan</button>
               <button class="multisteps-form__progress-btn" type="button" title="Address">Data Sampel</button>
               <button class="multisteps-form__progress-btn" type="button" title="Order Info">Parameter</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Comments">Kirim</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Comments">Tambahan</button>
             </div>
           </div>
         </div>
         <!--form panels-->
         <div class="row">
           <div class="col-12 col-lg-12 m-auto">
-            <form  action="<?php echo base_url().'anggota/uji_sampel/simpan'?>" method="post" class="multisteps-form__form">
+            <form  action="<?php echo base_url().'anggota/uji_sampel/simpan'?>" method="post" enctype="multipart/form-data" class="multisteps-form__form">
               <!--single form panel-->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">Pengambilan sampel dilakukan oleh :</h3>
@@ -136,14 +136,18 @@
               </div>
               <!--single form panel-->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">Catatan tambahan (jika ada)</h3>
+                <h3 class="multisteps-form__title">Surat Permohonan (format file pdf)</h3>
                 <div class="multisteps-form__content">
+                <div class="form-row mt-4">
+                    <input type="file" id="xfile" name="xfile" class="multisteps-form__textarea form-control" accept="application/pdf" required/>
+                  </div>
+                  <h3 class="multisteps-form__title">Catatan Tambahan (jika perlu)</h3>
                   <div class="form-row mt-4">
                     <textarea name="xcatatan" class="multisteps-form__textarea form-control" placeholder="Catatan Tambahah Jika Diperlukan"></textarea>
                   </div>
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                    <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#exampleModal" id="a" type="button" title="Send">Kirim</button>
+                    <button id="button4" class="btn btn-success ml-auto" data-toggle="modal" data-target="#exampleModal" id="a" type="button" title="Send" disabled>Kirim</button>
                   </div>
                 </div>
               </div>
@@ -229,6 +233,15 @@ $(document).ready(function() {
         $(':input[id="button2"]').prop('disabled', true);
       }
     });
+
+    $("#xfile").change(function() {
+    if(this.files[0].size > 5000000){
+       alert("Ukuran file maksimal 5MB");
+       this.value = "";
+      }else{
+        $(':input[id="button4"]').prop('disabled', false);
+      }
+  });
   } );
 
   function handleChange(checkbox) {
@@ -243,7 +256,9 @@ $(document).ready(function() {
   }else{
       $(':input[id="button3"]').prop('disabled', true);
    }
-}
+    
+  }
+
 </script>
 </body>
 </html>

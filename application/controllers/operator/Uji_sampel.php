@@ -85,6 +85,9 @@ class Uji_sampel extends CI_Controller{
 	function hapus(){
 		$kode=$this->input->post('kode');
 		$this->m_uji_sampel->hapus($kode);
+		$this->m_parameter_us->hapus($kode);
+		$file=$this->m_uji_sampel->get_by_kode($kode)->row()->us_file;
+		unlink('assets/surat_permohonan/'.$file);
 	    echo $this->session->set_flashdata('msg','success-hapus');
 	    redirect('operator/uji_sampel');
 	}

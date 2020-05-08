@@ -25,7 +25,7 @@ class M_parameter_us extends CI_Model{
 		return $hsl;
 	}
 	function hapus($kode){
-		$hsl=$this->db->query("delete from tbl_parameter_us where pu_id='$kode'");
+		$hsl=$this->db->query("delete from tbl_parameter_us where parameter_us_id='$kode'");
 		return $hsl;
 	}
 

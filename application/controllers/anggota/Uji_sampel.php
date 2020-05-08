@@ -71,33 +71,52 @@ class Uji_sampel extends CI_Controller{
 	}
 
 	function simpan(){
-		$sifat_pengujian=$this->m_sp->get_all()->result();
-		$anggota=$this->session->userdata('idadmin');
-		$id=uniqid();
-		$pengambilan=$this->input->post('pengambilan');
-		$kode=$this->input->post('xkode');
-		$jenis_sampel=$this->input->post('xjenis_sampel');
-		$jenis_wadah=$this->input->post('xjenis_wadah');
-		$catatan=$this->input->post('xcatatan');
-		$tarif=0;
-		foreach ($sifat_pengujian as $key => $value) { 
-			if ($this->input->post('xparam'.$value->sp_id)){
-				foreach ($this->input->post('xparam'.$value->sp_id) as $key => $value) {
-					$tarif=$this->m_pu->get_by_kode($value)->row()->pu_tarif+$tarif;
-					$this->m_parameter_us->simpan($id,$value,'0');
+		$config['upload_path'] = './assets/surat_permohonan/'; //path folder
+		$config['allowed_types'] = 'pdf'; //type yang dapat diakses bisa anda sesuaikan
+		$config['encrypt_name'] = TRUE; //nama yang terupload nantinya
+		$this->upload->initialize($config);
+		if(!empty($_FILES['xfile']['name']))
+		{
+			if ($this->upload->do_upload('xfile'))
+			{
+				$pdf = $this->upload->data();
+				$pdf=$pdf['file_name'];
+				$sifat_pengujian=$this->m_sp->get_all()->result();
+				$anggota=$this->session->userdata('idadmin');
+				$id=uniqid();
+				$pengambilan=$this->input->post('pengambilan');
+				$kode=$this->input->post('xkode');
+				$jenis_sampel=$this->input->post('xjenis_sampel');
+				$jenis_wadah=$this->input->post('xjenis_wadah');
+				$catatan=$this->input->post('xcatatan');
+				$tarif=0;
+				foreach ($sifat_pengujian as $key => $value) { 
+					if ($this->input->post('xparam'.$value->sp_id)){
+						foreach ($this->input->post('xparam'.$value->sp_id) as $key => $value) {
+							$tarif=$this->m_pu->get_by_kode($value)->row()->pu_tarif+$tarif;
+							$this->m_parameter_us->simpan($id,$value,'0');
+						}
+					}
 				}
+				$persentase=$this->m_setting->get_by_kode('1')->row()->setting_data;
+				$uang_muka=$tarif*($persentase/100);
+				$sisa=$tarif-$uang_muka;
+				if ($this->m_uji_sampel->simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan,$uang_muka,$sisa,$pdf)){
+					echo $this->session->set_flashdata('msg','success');
+					echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
+				}else{
+					echo $this->session->set_flashdata('msg','warning');
+					echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
+				}
+			}else{
+				echo $this->session->set_flashdata('msg','warning');
+				echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
 			}
-		}
-		$persentase=$this->m_setting->get_by_kode('1')->row()->setting_data;
-		$uang_muka=$tarif*($persentase/100);
-		$sisa=$tarif-$uang_muka;
-		if ($this->m_uji_sampel->simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan,$uang_muka,$sisa)){
-			echo $this->session->set_flashdata('msg','success');
-			echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
 		}else{
 			echo $this->session->set_flashdata('msg','warning');
 			echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
 		}	
+
 	}
 
 	function get_edit(){
@@ -123,7 +142,9 @@ class Uji_sampel extends CI_Controller{
 		foreach ($x['sifat_pengujian'] as $key => $value) {
 			$parameter[$value->sp_id]=$this->m_pu->get_by_fk($value->sp_id)->result();
 		}
+		$x['us_id']=$data->us_id;
 		$x['pengambilan']=$data->us_pengambilan;
+		$x['file']=$data->us_file;
 		$x['kode_sampel']=$data->us_kode_sampel;
 		$x['xjenis_sampel']=$data->us_fk_js;
 		$x['xjenis_wadah']=$data->us_fk_jw;
@@ -141,19 +162,50 @@ class Uji_sampel extends CI_Controller{
 
 
 	function update(){
-		$pengambilan=$this->input->post('pengambilan');
-		$kode=$this->input->post('xkode');
-		$jenis_sampel=$this->input->post('xjenis_sampel');
-		$jenis_wadah=$this->input->post('xjenis_wadah');
-		$catatan=$this->input->post('xcatatan');
-
-		if ($this->m_uji_sampel->simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan)){
-			echo $this->session->set_flashdata('msg','success');
-			echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
+		$config['upload_path'] = './assets/surat_permohonan/'; //path folder
+		$config['allowed_types'] = 'pdf'; //type yang dapat diakses bisa anda sesuaikan
+		$config['encrypt_name'] = TRUE; //nama yang terupload nantinya
+		$this->upload->initialize($config);
+		if(!empty($_FILES['xfile']['name']))
+		{
+			if ($this->upload->do_upload('xfile'))
+			{
+				$pdf = $this->upload->data();
+				$pdf=$pdf['file_name'];
+				$id=$this->input->post('xid');
+				$pengambilan=$this->input->post('pengambilan');
+				$kode=$this->input->post('xkode');
+				$jenis_sampel=$this->input->post('xjenis_sampel');
+				$jenis_wadah=$this->input->post('xjenis_wadah');
+				$catatan=$this->input->post('xcatatan');
+				$oldpdf=$this->input->post('xpdf');
+				unlink('assets/surat_permohonan/'.$oldpdf);
+				if ($this->m_uji_sampel->update($id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$catatan,$pdf)){
+					echo $this->session->set_flashdata('msg','success');
+					echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
+				}else{
+					echo $this->session->set_flashdata('msg','warning');
+					echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
+				}
+			}else{
+				echo $this->session->set_flashdata('msg','warning');
+				echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
+			}
 		}else{
-			echo $this->session->set_flashdata('msg','warning');
-			echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
-		}	
+			$id=$this->input->post('xid');
+			$pengambilan=$this->input->post('pengambilan');
+			$kode=$this->input->post('xkode');
+			$jenis_sampel=$this->input->post('xjenis_sampel');
+			$jenis_wadah=$this->input->post('xjenis_wadah');
+			$catatan=$this->input->post('xcatatan');
+			if ($this->m_uji_sampel->update_nopdf($id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$catatan)){
+				echo $this->session->set_flashdata('msg','success');
+				echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
+			}else{
+				echo $this->session->set_flashdata('msg','warning');
+				echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/pendaftaran';</script>";
+			}
+		}		
 	}
 
 	function batal(){
