@@ -12,6 +12,11 @@ class M_anggota extends CI_Model{
 		return $hsl;
 	}
 
+	function get_by_kode($kode){
+		$hsl=$this->db->query("SELECT * FROM tbl_anggota where anggota_id='$kode'");
+		return $hsl;
+	}
+
 	//UPDATE anggota //
 	function update_anggota($kode,$nama,$username,$alamat,$personil,$jl,$email,$kontak){
 		$hsl=$this->db->query("UPDATE tbl_anggota set anggota_nama='$nama',anggota_username='$username',anggota_alamat='$alamat',anggota_personil='$personil',anggota_jenis_kelamin='$jl',anggota_kontak='$kontak',anggota_email='$email' where anggota_id='$kode'");

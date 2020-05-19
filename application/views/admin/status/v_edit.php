@@ -89,7 +89,15 @@
                 echo form_dropdown('xclass', $class, $data->status_class.'" class="'.$data->status_class, $attribute);
             ?><br>            
             </div>
-          </div>       
+          </div> 
+          <div class="row">
+            <div class="col-md-12">
+              <label for="male">Kirim Email (Pilih Hanya Jika Status Perlu Melakukan Notifikasi Via Email)</label>
+              <?php
+                        echo form_dropdown('xsettingemail', $setting_email, $data->status_id_setting_email, $attribute2);
+                    ?><br>
+          </div>  
+          </div>      
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">

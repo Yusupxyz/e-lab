@@ -76,6 +76,7 @@
                 <tr>
                 <th>No.</th>
       					<th>Status</th>
+      					<th>Kirim Email Notifikasi</th>
                 <th style="text-align:right;">Aksi</th>
                 </tr>
                 </thead>
@@ -86,10 +87,18 @@
           					   $status_id=$i['status_id'];
           					   $status_nama=$i['status_nama'];
           					   $status_class=$i['status_class'];
+          					   $status_id_setting_email=$i['status_id_setting_email'];
+          					   $setting_nama=$i['setting_nama'];
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
                   <td><span class="<?= $status_class ?> alert" style="padding:5px"><?php echo $status_nama;?></span></td>
+                  <td>
+                      <?php if ($status_id_setting_email!=0){ ?>
+                        <?= 'Ya ('.$setting_nama.')' ?>
+                      <?php }else{ ?>
+                        <?= 'Tidak' ?>
+                      <?php } ?>
                   <td style="text-align:right;">
                         <a class="btn" href="<?php echo base_url().'admin/status/get_edit/'.$status_id;?>"><span class="fa fa-pencil"></span></a>
                         <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $status_id;?>"><span class="fa fa-trash"></span></a>

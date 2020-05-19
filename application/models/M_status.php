@@ -2,20 +2,20 @@
 class M_status extends CI_Model{
 
 	function get_all(){
-		$hsl=$this->db->query("SELECT * FROM tbl_status ORDER BY status_id DESC");
+		$hsl=$this->db->query("SELECT * FROM tbl_status LEFT JOIN tbl_setting_email ON tbl_setting_email.setting_id=tbl_status.status_id_setting_email ORDER BY status_id DESC");
 		return $hsl;
 	}
-	function simpan($nama,$class){
-		$hsl=$this->db->query("insert into tbl_status(status_nama,status_class) values 
-		('$nama','$class')");
+	function simpan($nama,$class,$settingemail){
+		$hsl=$this->db->query("insert into tbl_status(status_nama,status_class,status_id_setting_email) values 
+		('$nama','$class','$settingemail')");
 		return $hsl;
 	}
 	function get_by_kode($kode){
 		$hsl=$this->db->query("SELECT * FROM tbl_status where status_id='$kode'");
 		return $hsl;
 	}
-	function update($id,$nama,$class){
-		$hsl=$this->db->query("update tbl_status set status_nama='$nama',status_class='$class'
+	function update($id,$nama,$class,$settingemail){
+		$hsl=$this->db->query("update tbl_status set status_nama='$nama',status_class='$class', status_id_setting_email='$settingemail'
 			where status_id='$id'");
 		return $hsl;
 	}

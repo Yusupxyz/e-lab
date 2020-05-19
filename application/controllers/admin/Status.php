@@ -7,6 +7,7 @@ class Status extends CI_Controller{
             redirect($url);
         };
 		$this->load->model('m_status');
+		$this->load->model('m_setting_email');
 		$this->load->library('upload');
 	}
 
@@ -27,8 +28,11 @@ class Status extends CI_Controller{
 			'alert-danger" class="alert-danger' => 'Danger',
 			'alert-success" class="alert-success' => 'Success',
 		);
+		$x['setting_email']=$this->m_setting_email->dd();
 		$x['attribute'] = 'class="form-control" id="xclass" required';
+		$x['attribute2'] = 'class="form-control"';
 		$x['xclass']='';
+		$x['xsettingemail']='';
 
 		$this->load->view('admin/status/v_add',$x);
 	}
@@ -45,14 +49,18 @@ class Status extends CI_Controller{
 			'alert-danger" class="alert-danger' => 'Danger',
 			'alert-success" class="alert-success' => 'Success',
 		);
+
+		$x['setting_email']=$this->m_setting_email->dd();
 		$x['attribute'] = 'class="form-control" id="xclass" required';
+		$x['attribute2'] = 'class="form-control"';
 		$this->load->view('admin/status/v_edit',$x);
 	}
 
 	function simpan(){
 		$nama=$this->input->post('xnama');
 		$class=$this->input->post('xclass');
-		if ($this->m_status->simpan($nama,$class)){
+		$settingemail=$this->input->post('xsettingemail');
+		if ($this->m_status->simpan($nama,$class,$settingemail)){
 			echo $this->session->set_flashdata('msg','success');
 			redirect('admin/status');
 		}else{
@@ -66,7 +74,8 @@ class Status extends CI_Controller{
 		$nama=$this->input->post('xnama');
 		$class=$this->input->post('xclass');
 		$id=$this->input->post('xid');
-		$this->m_status->update($id,$nama,$class);
+		$settingemail=$this->input->post('xsettingemail');
+		$this->m_status->update($id,$nama,$class,$settingemail);
 		echo $this->session->set_flashdata('msg','info');
 		redirect('admin/status');
 	}

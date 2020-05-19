@@ -75,9 +75,15 @@ class Uji_sampel extends CI_Controller{
 		$status=$this->input->post('xstatus');
 
 		if ($this->m_uji_sampel->update_status($id,$status,$no_sampel,$metode)){
-			$this->kirim_email($id);
-			echo $this->session->set_flashdata('msg','success');
-			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
+			$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
+			$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
+			$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;
+			if ($status_id_setting_email!=0){
+				$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama);
+			}else{
+				echo $this->session->set_flashdata('msg','success');
+				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
+			}
 		}else{
 			echo $this->session->set_flashdata('msg','warning');
 			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
@@ -94,19 +100,19 @@ class Uji_sampel extends CI_Controller{
 	    redirect('operator/uji_sampel');
 	}
 
-	function kirim_email($id){
+	function kirim_email($to_email,$status,$status_nama){
 		$email=$this->m_setting_email->get_all()->result();
 		$from_email = $email[0]->setting_data; 
-		$to_email = $this->m_uji_sampel->get_email_pengguna($id)->row1()->anggota_email; 
+		$nama_pengirim = $email[4]->setting_data;
 		// $to_email = 'yusufxyx114@gmail.com'; 
 
 		$config = Array(
 			   'protocol' => 'smtp',
-			   'smtp_host' => 'ssl://smtp.googlemail.com',
+			   'smtp_host' => $email[1]->setting_data,
 			   'smtp_port' => $email[2]->setting_data,
 			   'smtp_timeout' => '30',
 			   'smtp_user' => $from_email,
-			   'smtp_pass' => 'zhikanoseishin',
+			   'smtp_pass' => $email[3]->setting_data,
 			   'mailtype'  => 'html', 
 			   'charset'   => 'iso-8859-1'
 	   );
@@ -115,17 +121,24 @@ class Uji_sampel extends CI_Controller{
 		   $this->load->library('email', $config);
 		   $this->email->set_newline("\r\n");   
 
-		$this->email->from($from_email, 'nama'); 
+		$this->email->from($from_email,$email[4]->setting_data); 
 		$this->email->to($to_email);
-		$this->email->subject('Test Pengiriman Email'); 
-		$this->email->message('Coba mengirim Email dengan CodeIgniter.'); 
+		if ($status==6){
+			$this->email->subject($email[5]->setting_data); 
+			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.'); 
+		}elseif($status==7){
+			$this->email->subject($email[6]->setting_data); 
+			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.'); 
+		}
 
 		//Send mail 
 		if($this->email->send()){
-			   echo "Berhasil";
+			echo $this->session->set_flashdata('msg','success2');
+			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
 		}else {
-			echo $this->email->print_debugger();
- 
+			// echo $this->email->print_debugger();
+			echo $this->session->set_flashdata('msg','error');
+			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
 		} 
 	}
 

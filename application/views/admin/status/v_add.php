@@ -93,6 +93,14 @@
           </div>
           <div class="row">
             <div class="col-md-12">
+              <label for="male">Kirim Email (Pilih Hanya Jika Status Perlu Melakukan Notifikasi Via Email)</label>
+              <?php
+                        echo form_dropdown('xsettingemail', $setting_email, $xsettingemail, $attribute2);
+                    ?><br>
+          </div>  
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-save"></span> Simpan</button>
               <!-- /.form-group -->

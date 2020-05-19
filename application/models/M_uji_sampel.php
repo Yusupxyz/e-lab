@@ -55,6 +55,10 @@ class M_uji_sampel extends CI_Model{
 		$hsl=$this->db->query("SELECT * FROM tbl_us where us_id='$kode'");
 		return $hsl;
 	}
+	function get_email_anggota($kode){
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_anggota ON tbl_anggota.anggota_id=tbl_us.us_anggota where us_id='$kode'");
+		return $hsl;
+	}
 	function get_by_fk($fk){
 		$hsl=$this->db->query("SELECT * FROM tbl_us where pu_sp_id='$fk'");
 		return $hsl;

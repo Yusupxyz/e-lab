@@ -341,7 +341,7 @@
         <script type="text/javascript">
                 $.toast({
                     heading: 'Error',
-                    text: "Password dan Ulangi Password yang Anda masukan tidak sama.",
+                    text: "Status berhasil diubah. Namun email gagal terkirim ke pelanggan.",
                     showHideTransition: 'slide',
                     icon: 'error',
                     hideAfter: false,
@@ -355,6 +355,18 @@
                 $.toast({
                     heading: 'Success',
                     text: "Informasi Berhasil disimpan ke database.",
+                    showHideTransition: 'slide',
+                    icon: 'success',
+                    hideAfter: false,
+                    position: 'bottom-right',
+                    bgColor: '#7EC857'
+                });
+        </script>
+    <?php elseif($this->session->flashdata('msg')=='success2'):?>
+        <script type="text/javascript">
+                $.toast({
+                    heading: 'Success',
+                    text: "Informasi Berhasil disimpan ke database. Dan email berhasil terkiriM ketujuan. Silahkan cek kotak keluar gmail Anda.",
                     showHideTransition: 'slide',
                     icon: 'success',
                     hideAfter: false,
