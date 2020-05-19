@@ -6,7 +6,7 @@
   <title>E-LAB | Registrasi</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="shorcut icon" type="text/css" href="<?php echo base_url().'assets/images/favicon2.png'?>">
+  <link rel="shorcut icon" type="text/css" href="<?php echo base_url().'assets/images/logo plk.png'?>">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/bootstrap/css/bootstrap.min.css'?>">
   <!-- Font Awesome -->
@@ -26,7 +26,7 @@
  
   <!-- /.login-logo -->
   <div class="register-box-body" style="margin-top:-80px;">
-  <p class="register-box-msg"> <img src="<?php echo base_url().'assets/images/logo.png'?>" height="50" widht="50"></p>
+  <p class="register-box-msg"> <img src="<?php echo base_url().'assets/images/logo plk.png'?>" height="50" widht="50"></p>
   <p align="center"><b>E-LAB </b></p>
     <p class="register-box-msg">UPT LINGKUNGAN<br> DINAS LINGKUNGAN HIDUP KOTA PALANGKA RAYA </p>
 
@@ -55,8 +55,12 @@
         </select>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" name="kontak" class="form-control" placeholder="No. Telp/Fax/E-mail" required>
+        <input type="email" name="email" class="form-control" placeholder="E-mail Personil Penghubung" required>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" name="kontak" class="form-control" placeholder="No. Telp/Fax Personil Penghubung" required>
+        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input type="password" name="password" class="form-control" placeholder="Password" required id="password">

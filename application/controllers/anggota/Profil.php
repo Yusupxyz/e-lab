@@ -24,10 +24,11 @@ class Profil extends CI_Controller{
 		$username=$this->input->post('username');
 		$personil=$this->input->post('personil');
 		$jl=$this->input->post('jl');
+		$email=$this->input->post('email');
 		$kontak=$this->input->post('kontak');
 		$konfirmasipassword=$this->input->post('konfirmasipassword');
 		if ($konfirmasipassword==$this->session->userdata('password')){
-			$update=$this->m_anggota->update_anggota($kode,$nama,$username,$alamat,$personil,$jl,$kontak);
+			$update=$this->m_anggota->update_anggota($kode,$nama,$username,$alamat,$personil,$jl,$email,$kontak);
 			if ($update){
 				$this->session->set_flashdata('success', 'Profil berhasil diubah.');
 				redirect('anggota/profil');

@@ -98,6 +98,10 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <label for="exampleInputEmail1">Email Personil Penghubung</label>
+                  <input type="email" name="email" class="form-control" placeholder="Masukkan email personil penghubung" value="<?= $data->anggota_email ?>" required>
+               </div>
+                <div class="form-group">
                   <label for="exampleInputEmail1">Kontak Personil Penghubung</label>
                   <input type="text" name="kontak" class="form-control" placeholder="Masukkan kontak personil penghubung" value="<?= $data->anggota_kontak ?>" required>
                   <p class="help-block">*No. Hp/Telp/Fax/Email</p>

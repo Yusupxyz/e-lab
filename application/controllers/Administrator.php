@@ -24,8 +24,9 @@ class Administrator extends CI_Controller{
             $alamat=$this->input->post('alamat');
             $personil=$this->input->post('personil');
             $jl=$this->input->post('jl');
+            $email=$this->input->post('email');
             $kontak=$this->input->post('kontak');
-            $simpan=$this->m_anggota->simpan_anggota($nama,$username,$password,$alamat,$personil,$jl,$kontak);
+            $simpan=$this->m_anggota->simpan_anggota($nama,$username,$password,$alamat,$personil,$jl,$email,$kontak);
             if (!$simpan){
                 echo $this->session->set_flashdata('msg','<center>Registrasi Gagal! Silahkan kontak admin.</center>');
                 redirect('administrator/registrasi');
