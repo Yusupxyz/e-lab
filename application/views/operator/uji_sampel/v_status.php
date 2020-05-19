@@ -72,6 +72,7 @@
                 <tr>
                 <th>No.</th>
       					<th>Pelanggan</th>
+      					<th>Surat Permohonan</th>
                 <th>Kode Uji Sampel</th>
                 <th>Pengambilan Oleh</th>
       					<th>Jenis Sampel</th>
@@ -97,11 +98,14 @@
           					   $anggota_nama=$i['anggota_nama'];   
           					   $us_pengambilan=$i['us_pengambilan'];  
           					   $us_no_sampel=$i['us_no_sampel'];  
-          					   $us_metode=$i['us_metode'];                            
+          					   $us_metode=$i['us_metode'];    
+          					   $us_file=$i['us_file'];      
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
                   <td><?php echo $anggota_nama;?></td>
+                  <td>
+                  <a href="<?php echo base_url().'/assets/surat_permohonan/'.$us_file?>"> Download PDF </a>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $us_pengambilan;?></td>
                   <td><?php echo $js_nama;?></td>
@@ -266,6 +270,35 @@
             </div>
         </div>
 	<?php endforeach;?>
+
+<!-- ============ MODAL PDF =============== -->
+<?php 
+            foreach ($data->result_array() as $a){
+              $us_id=$a['us_id'];
+              $us_file=$a['us_file']; 
+                    ?>
+                <div id="modalDetailPdf<?php echo $us_id?>" class="modal fade modal-xl" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 class="modal-title" id="myModalLabel">Surat Permohonan</h3>
+                    </div>
+                        <div class="modal-body">
+                        <iframe src="{{ url('<?php echo base_url().'/assets/surat_permohonan/'.$us_file?>') }}#toolbar=0&navpanes=0&scrollbar=0" title="PDF in an i-Frame" frameborder="0" scrolling="auto" style="width:100%; height:100%;"></iframe>
+
+
+                    </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                        </div>
+                </div>
+                </div>
+                </div>
+            <?php
+        }
+        ?>
+
 
 <footer class="main-footer">
     <?php $this->load->view('template/copyright'); ?>  

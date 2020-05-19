@@ -166,6 +166,14 @@
             </span>
           </a>
         </li>
+        <li class="<?= $title=='Setting Email'?'active':''?>">
+          <a href="<?php echo base_url().'admin/setting_email'?>">
+            <i class="fa fa-envelope-o"></i> <span>Setting Email</span>
+            <span class="pull-right-container">
+              <small class="label pull-right"></small>
+            </span>
+          </a>
+        </li>
         <li class="<?= $title=='Kontak'?'active':''?>">
           <a href="<?php echo base_url().'admin/kontak'?>">
             <i class="fa fa-info-circle"></i> <span>Kontak</span>
