@@ -73,6 +73,7 @@
                 <th>No.</th>
       					<th>Pelanggan</th>
       					<th>Surat Permohonan</th>
+      					<th>Catatan Pelanggan</th>
                 <th>Kode Uji Sampel</th>
                 <th>Pengambilan Oleh</th>
       					<th>Jenis Sampel</th>
@@ -80,6 +81,7 @@
       					<th>Parameter Uji</th>
       					<th>No. Sampel Lab</th>
       					<th>Metode Pengujian</th>
+      					<th>Catatan Status</th>
       					<th>Status</th>
                 <th style="text-align:right;">Aksi</th>
                 </tr>
@@ -100,12 +102,15 @@
           					   $us_no_sampel=$i['us_no_sampel'];  
           					   $us_metode=$i['us_metode'];    
           					   $us_file=$i['us_file'];      
+          					   $us_catatan=$i['us_catatan'];  
+          					   $us_catatan_status=$i['us_catatan_status'];        
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
                   <td><?php echo $anggota_nama;?></td>
                   <td>
                   <a href="<?php echo base_url().'/assets/surat_permohonan/'.$us_file?>"> Download PDF </a>
+                  <td><?php echo ($us_catatan!='')?$us_catatan:'-';?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $us_pengambilan;?></td>
                   <td><?php echo $js_nama;?></td>
@@ -115,12 +120,17 @@
                   </td>
                   <td><?php echo $us_no_sampel;?></td>
                   <td><?php echo $us_metode;?></td>
-                  <td><span class="<?= $status_class ?> alert" style="padding:5px"><?php echo $status_nama;?></span></td>
-                  <td style="text-align:right;">
-                    <?php if ($us_status_id!='3') { ?>
+                  <td><?php echo ($us_catatan_status!='')?$us_catatan_status:'-';?></td>
+                  <td><span class="<?= $status_class ?> alert" style="padding:1px"><?php echo $status_nama;?></span></td>
+                  <td style="text-align:center;">
+                    <?php if ($us_status_id!='3' && $us_status_id!='5' && $us_status_id!='6') { ?>
                       <a class="btn" data-toggle="modal" data-target="#ModalEdit<?php echo $us_id;?>"><span class="fa fa-pencil"></span></a>
-                    <?php }else{  ?>
+                    <?php }elseif($us_status_id=='3'){  ?>
                       <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $us_id;?>"><span class="fa fa-trash"></span></a>
+                    <?php }elseif($us_status_id=='6'){  ?>
+                      <a class="btn" href="<?php echo base_url().'/operator/uji_sampel/isi_laporan/'.$us_id?>"><span class="fa fa-file-text-o"></span></a>
+                    <?php }else{  ?>
+                      -
                     <?php } ?>
                   </td>
                 </tr>
@@ -198,7 +208,7 @@
               $us_id=$i['us_id'];
               $us_status_id=$i['us_status_id'];
               $us_no_sampel=$i['us_no_sampel'];  
-              $us_metode=$i['us_metode'];              
+              $us_metode=$i['us_metode'];    
             ?>
 	<!--Modal Edit Pengguna-->
         <div class="modal fade" id="ModalEdit<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -229,7 +239,11 @@
                           <label for="inputUserName" class="col-sm-4 control-label">Status</label>
                           <div class="col-sm-7">
                           <?php
-                            echo form_dropdown('xstatus', $status, $us_status_id, $attribute2);
+                            if ($us_status_id==1){
+                              echo form_dropdown('xstatus', $status, $us_status_id, $attribute2);
+                            }elseif($us_status_id==6){
+                              echo form_dropdown('xstatus', $status2, $us_status_id, $attribute2);
+                            }
                         ?><br>
                           </div>
                       </div>

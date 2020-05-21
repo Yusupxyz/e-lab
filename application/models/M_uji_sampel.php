@@ -83,6 +83,11 @@ class M_uji_sampel extends CI_Model{
 			where us_id	='$id'");
 		return $hsl;
 	}
+	function update_status_dari_transaksi($id,$status,$catatan){
+		$hsl=$this->db->query("update tbl_us set us_status_id='$status',us_catatan_status='$catatan'
+			where us_id	='$id'");
+		return $hsl;
+	}
 	function update_sisa($id,$sisa){
 		$hsl=$this->db->query("update tbl_us set us_sisa='$sisa'
 			where us_id	='$id'");

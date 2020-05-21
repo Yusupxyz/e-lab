@@ -87,7 +87,8 @@
           					   $us_kode_sampel=$i['us_kode_sampel'];         
           					   $us_total=$i['us_total'];                   
           					   $us_uang_muka=$i['us_uang_muka'];                   
-          					   $us_sisa=$i['us_sisa'];                     
+                       $us_sisa=$i['us_sisa'];    
+                       $us_status_id=$i['us_status_id'];                           
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
@@ -103,7 +104,7 @@
                   <td>
                     <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail Transaksi"><span class="fa fa-info"></span> Detail</a>
                     <?php if ($us_sisa!=0){ ?>
-                      <a class="btn btn-xs btn-success" href="#modalBayar<?php echo $us_id?>"  data-toggle="modal" title="Bayar Transaksi"><span class="fa fa-credit-card"></span> Bayar</a>
+                      <a <?= ($us_status_id==1)?'disabled':'href="#modalBayar'.$us_id.'"';?>   class="btn btn-xs btn-success"   data-toggle="modal" title="Bayar Transaksi"><span class="fa fa-credit-card"></span> Bayar</a>
                     <?php } ?>
                   </td>
                 </tr>
@@ -185,7 +186,7 @@
                $us_kode_sampel=$i['us_kode_sampel'];         
                $us_total=$i['us_total'];                   
                $us_uang_muka=$i['us_uang_muka'];                   
-               $us_sisa=$i['us_sisa'];          
+               $us_sisa=$i['us_sisa'];                          
             ?>
 	<!--Modal Bayar-->
         <div class="modal fade" id="modalBayar<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -220,7 +221,7 @@
                   <div class="form-group">
                       <label for="inputUserName" class="col-sm-4 control-label">Bayar (Rp)</label>
                       <div class="col-sm-7">
-                        <input type="number" name="xbayar" class="form-control" id="inputUserName" placeholder="Masukkan Jumlah Pembayaran" max="<?php echo $us_sisa;?>" required>
+                        <input type="number" name="xbayar" class="form-control" id="inputUserName" placeholder="Masukkan Jumlah Pembayaran" min="<?php echo $us_uang_muka;?>" max="<?php echo $us_sisa;?>" required>
                       </div>
                   </div>
                      
@@ -289,6 +290,18 @@
                 $.toast({
                     heading: 'Success',
                     text: "Informasi Berhasil disimpan ke database.",
+                    showHideTransition: 'slide',
+                    icon: 'success',
+                    hideAfter: false,
+                    position: 'bottom-right',
+                    bgColor: '#7EC857'
+                });
+        </script>
+     <?php elseif($this->session->flashdata('msg')=='success2'):?>
+        <script type="text/javascript">
+                $.toast({
+                    heading: 'Success',
+                    text: "Informasi Berhasil disimpan ke database. Dan email berhasil terkiriM ketujuan. Silahkan cek kotak keluar gmail Anda.",
                     showHideTransition: 'slide',
                     icon: 'success',
                     hideAfter: false,

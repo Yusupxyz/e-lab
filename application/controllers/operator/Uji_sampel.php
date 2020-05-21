@@ -32,6 +32,7 @@ class Uji_sampel extends CI_Controller{
         $x['attribute'] = 'class="form-control" required';
         $x['attribute2'] = 'class="form-control" id="xstatus"';
 		$x['status']=$this->m_status->dd2();
+		$x['status2']=$this->m_status->dd3();
 		// var_dump($x['detail']);
 		$this->load->view('operator/uji_sampel/v_status',$x);
 	}
@@ -54,8 +55,22 @@ class Uji_sampel extends CI_Controller{
 
 		if ($this->m_transaksi->simpan($id,$bayar)){
 			if ($this->m_uji_sampel->update_sisa($id,$sisa)){
-				echo $this->session->set_flashdata('msg','success');
-				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/transaksi';</script>";
+				$status='6';
+				$catatan="Transaksi berhasil, uji sampel memasuki tahap proses.";
+				if ($this->m_uji_sampel->update_status_dari_transaksi($id,$status,$catatan)){
+					$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
+					$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
+					$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;
+					if ($status_id_setting_email!=0){
+						$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
+					}else{
+						echo $this->session->set_flashdata('msg','success');
+						echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/transaksi';</script>";
+					}
+				}else{
+					echo $this->session->set_flashdata('msg','warning');
+					echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/transaksi';</script>";
+				}	
 			}else{
 				echo $this->session->set_flashdata('msg','warning');
 				echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel/transaksi';</script>";
@@ -146,5 +161,8 @@ class Uji_sampel extends CI_Controller{
 		} 
 	}
 
+	function isi_laporan(){
+
+	}
 
 }

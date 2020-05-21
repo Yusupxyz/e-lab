@@ -14,8 +14,8 @@ class M_status extends CI_Model{
 		$hsl=$this->db->query("SELECT * FROM tbl_status where status_id='$kode'");
 		return $hsl;
 	}
-	function update($id,$nama,$class,$settingemail){
-		$hsl=$this->db->query("update tbl_status set status_nama='$nama',status_class='$class', status_id_setting_email='$settingemail'
+	function update($id,$settingemail){
+		$hsl=$this->db->query("update tbl_status set status_id_setting_email='$settingemail'
 			where status_id='$id'");
 		return $hsl;
 	}
@@ -41,6 +41,23 @@ class M_status extends CI_Model{
 	// get data dropdown
     function dd2()
     {
+		$this->db->where('status_id!="2"');
+		$this->db->where('status_id!="6"');
+		$this->db->order_by('status_nama', 'ASC');
+        $result = $this->db->get('tbl_status');
+        $dd[''] = '-- Pilih Status --';
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+                $dd[$row->status_id] = $row->status_nama;
+            }
+        }
+        return $dd;
+	}
+	
+	// get data dropdown
+    function dd3()
+    {
+        $this->db->where('status_id','2');
         $this->db->order_by('status_id', 'ASC');
         $result = $this->db->get('tbl_status');
         $dd[''] = '-- Pilih Status --';
@@ -50,5 +67,5 @@ class M_status extends CI_Model{
             }
         }
         return $dd;
-    }
+	}
 }

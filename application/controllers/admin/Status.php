@@ -56,35 +56,33 @@ class Status extends CI_Controller{
 		$this->load->view('admin/status/v_edit',$x);
 	}
 
-	function simpan(){
-		$nama=$this->input->post('xnama');
-		$class=$this->input->post('xclass');
-		$settingemail=$this->input->post('xsettingemail');
-		if ($this->m_status->simpan($nama,$class,$settingemail)){
-			echo $this->session->set_flashdata('msg','success');
-			redirect('admin/status');
-		}else{
-			echo $this->session->set_flashdata('msg','warning');
-			redirect('admin/status');
-		}
+	// function simpan(){
+	// 	$nama=$this->input->post('xnama');
+	// 	$class=$this->input->post('xclass');
+	// 	$settingemail=$this->input->post('xsettingemail');
+	// 	if ($this->m_status->simpan($nama,$class,$settingemail)){
+	// 		echo $this->session->set_flashdata('msg','success');
+	// 		redirect('admin/status');
+	// 	}else{
+	// 		echo $this->session->set_flashdata('msg','warning');
+	// 		redirect('admin/status');
+	// 	}
 				
-	}
+	// }
 	
 	function update(){
-		$nama=$this->input->post('xnama');
-		$class=$this->input->post('xclass');
 		$id=$this->input->post('xid');
 		$settingemail=$this->input->post('xsettingemail');
-		$this->m_status->update($id,$nama,$class,$settingemail);
+		$this->m_status->update($id,$settingemail);
 		echo $this->session->set_flashdata('msg','info');
 		redirect('admin/status');
 	}
 
-	function hapus(){
-		$kode=$this->input->post('kode');
-		$this->m_status->hapus($kode);
-		echo $this->session->set_flashdata('msg','success-hapus');
-		redirect('admin/status');
-	}
+	// function hapus(){
+	// 	$kode=$this->input->post('kode');
+	// 	$this->m_status->hapus($kode);
+	// 	echo $this->session->set_flashdata('msg','success-hapus');
+	// 	redirect('admin/status');
+	// }
 
 }
