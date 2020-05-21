@@ -72,6 +72,7 @@
                 <tr>
                 <th>No.</th>
       					<th>Status</th>
+      					<th>Catatan Dari Admin</th>
       					<th>Kode Uji Sampel</th>
       					<th>Jenis Sampel</th>
       					<th>Jenis Wadah</th>
@@ -89,11 +90,13 @@
           					   $status_class=$i['status_class'];
           					   $us_kode_sampel=$i['us_kode_sampel'];
           					   $js_nama=$i['js_nama'];              
-          					   $jw_nama=$i['jw_nama'];                           
+          					   $jw_nama=$i['jw_nama'];             
+          					   $us_catatan_status=$i['us_catatan_status'];                           
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
-                  <td><span class="<?= $status_class ?> alert" style="padding:5px"><?php echo $status_nama;?></span></td>
+                  <td><span class="<?= $status_class ?> alert" style="padding:1px"><?php echo $status_nama;?></span></td>
+                  <td><?php echo ($us_catatan_status!='')?$us_catatan_status:'-';?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $js_nama;?></td>
                   <td><?php echo $jw_nama;?></td>
@@ -105,7 +108,6 @@
                         <?php if ($us_status_id=='1'){ ?>
                           <a class="btn" href="<?php echo base_url().'anggota/uji_sampel/batal/'.$us_id;?>"><span class="fa fa-ban"></span></a>
                         <?php } ?>
-                        <!-- <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $us_id;?>"><span class="fa fa-trash"></span></a> -->
                   </td>
                 </tr>
 				<?php endforeach;?>
