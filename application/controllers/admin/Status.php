@@ -51,7 +51,7 @@ class Status extends CI_Controller{
 		);
 
 		$x['setting_email']=$this->m_setting_email->dd();
-		$x['attribute'] = 'class="form-control" id="xclass" required';
+		$x['attribute'] = 'class="form-control" id="xclass" required disabled';
 		$x['attribute2'] = 'class="form-control"';
 		$this->load->view('admin/status/v_edit',$x);
 	}

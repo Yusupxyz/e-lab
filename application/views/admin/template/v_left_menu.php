@@ -132,7 +132,7 @@
             <li class="<?= $title=='Daftar Jenis Wadah'?'active':''?>"><a href="<?php echo base_url().'admin/jenis_wadah'?>"><i class="fa fa-list"></i> Daftar Jenis Wadah</a></li>
           </ul> 
         </li>
-        <li class="treeview <?= (isset($pratitle))?($pratitle=='Status'?'active':''):''?>">
+        <!-- <li class="treeview <?= (isset($pratitle))?($pratitle=='Status'?'active':''):''?>">
           <a href="#">
             <i class="fa fa-star-o"></i>
             <span>Status</span>
@@ -144,7 +144,7 @@
             <li class="<?= $title=='Tambah Status'?'active':''?>"><a href="<?php echo base_url().'admin/status/add'?>"><i class="fa fa-thumb-tack"></i> Tambah Baru</a></li>
             <li class="<?= $title=='Daftar Status'?'active':''?>"><a href="<?php echo base_url().'admin/status'?>"><i class="fa fa-list"></i> Daftar Status</a></li>
           </ul> 
-        </li>
+        </li> -->
         <li class="treeview <?= (isset($pratitle))?($pratitle=='Acuan Metode'?'active':''):''?>">
           <a href="#">
             <i class="fa fa-arrows"></i>
@@ -169,6 +169,14 @@
         <li class="<?= $title=='Setting Email'?'active':''?>">
           <a href="<?php echo base_url().'admin/setting_email'?>">
             <i class="fa fa-envelope-o"></i> <span>Setting Email</span>
+            <span class="pull-right-container">
+              <small class="label pull-right"></small>
+            </span>
+          </a>
+        </li>
+        <li class="<?= $title=='Status'?'active':''?>">
+          <a href="<?php echo base_url().'admin/status'?>">
+            <i class="fa fa-star-o"></i> <span>Status</span>
             <span class="pull-right-container">
               <small class="label pull-right"></small>
             </span>

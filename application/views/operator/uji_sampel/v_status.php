@@ -216,7 +216,7 @@
                       <div class="col-sm-7">
                         <input type="text" name="xno" class="form-control" id="inputUserName" value="<?php echo $us_no_sampel;?>" placeholder="Masukkan No. Sampel Lab" required>
                       </div>
-                                    </div>
+                      </div>
                       <div class="form-group">
                           <label for="inputUserName" class="col-sm-4 control-label">Metode Pengujian</label>
                           <div class="col-sm-7">
@@ -229,9 +229,15 @@
                           <label for="inputUserName" class="col-sm-4 control-label">Status</label>
                           <div class="col-sm-7">
                           <?php
-                            echo form_dropdown('xstatus', $status, $us_status_id, $attribute);
+                            echo form_dropdown('xstatus', $status, $us_status_id, $attribute2);
                         ?><br>
                           </div>
+                      </div>
+                      <div class="form-group" id="catatan" style="display:none">
+                      <label for="inputUserName" class="col-sm-4 control-label">Catatan untuk pelanggan (Jika diperlukan)</label>
+                      <div class="col-sm-7" >
+                        <textarea name="xcatatan"  class="form-control"></textarea>
+                      </div>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -401,5 +407,11 @@
     <?php else:?>
 
     <?php endif;?>
+
+    <script>
+    $('#xstatus').on('change', function() {
+      document.getElementById("catatan").style.display = "block";
+    });
+    </script>
 </body>
 </html>

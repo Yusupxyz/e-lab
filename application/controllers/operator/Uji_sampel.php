@@ -30,6 +30,7 @@ class Uji_sampel extends CI_Controller{
 		}
 		$x['am']=$this->m_am->dd();
         $x['attribute'] = 'class="form-control" required';
+        $x['attribute2'] = 'class="form-control" id="xstatus"';
 		$x['status']=$this->m_status->dd2();
 		// var_dump($x['detail']);
 		$this->load->view('operator/uji_sampel/v_status',$x);
@@ -73,13 +74,14 @@ class Uji_sampel extends CI_Controller{
 		$no_sampel=$this->input->post('xno');
 		$metode=$this->input->post('xmetode');
 		$status=$this->input->post('xstatus');
+		$catatan=$this->input->post('xcatatan');
 
-		if ($this->m_uji_sampel->update_status($id,$status,$no_sampel,$metode)){
+		if ($this->m_uji_sampel->update_status($id,$status,$no_sampel,$metode,$catatan)){
 			$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
 			$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
 			$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;
 			if ($status_id_setting_email!=0){
-				$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama);
+				$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
 			}else{
 				echo $this->session->set_flashdata('msg','success');
 				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
@@ -100,12 +102,14 @@ class Uji_sampel extends CI_Controller{
 	    redirect('operator/uji_sampel');
 	}
 
-	function kirim_email($to_email,$status,$status_nama){
+	function kirim_email($to_email,$status,$status_nama,$catatan){
 		$email=$this->m_setting_email->get_all()->result();
 		$from_email = $email[0]->setting_data; 
 		$nama_pengirim = $email[4]->setting_data;
 		// $to_email = 'yusufxyx114@gmail.com'; 
-
+		if (empty($catatan)){
+			$catatan='-';
+		}
 		$config = Array(
 			   'protocol' => 'smtp',
 			   'smtp_host' => $email[1]->setting_data,
@@ -116,7 +120,7 @@ class Uji_sampel extends CI_Controller{
 			   'mailtype'  => 'html', 
 			   'charset'   => 'iso-8859-1'
 	   );
-	   var_dump($config);
+	//    var_dump($config);
 
 		   $this->load->library('email', $config);
 		   $this->email->set_newline("\r\n");   
@@ -125,10 +129,10 @@ class Uji_sampel extends CI_Controller{
 		$this->email->to($to_email);
 		if ($status==6){
 			$this->email->subject($email[5]->setting_data); 
-			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.'); 
+			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.<br>Catatan : <b>'.$catatan.'</b>'); 
 		}elseif($status==7){
 			$this->email->subject($email[6]->setting_data); 
-			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.'); 
+			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.<br>Catatan : <b>'.$catatan.'</b>'); 
 		}
 
 		//Send mail 
@@ -136,7 +140,7 @@ class Uji_sampel extends CI_Controller{
 			echo $this->session->set_flashdata('msg','success2');
 			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
 		}else {
-			// echo $this->email->print_debugger();
+			echo $this->email->print_debugger();
 			echo $this->session->set_flashdata('msg','error');
 			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
 		} 

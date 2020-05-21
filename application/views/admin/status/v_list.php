@@ -66,9 +66,9 @@
           <div class="box">
            
           <div class="box">
-            <div class="box-header">
+            <!-- <div class="box-header">
               <a class="btn btn-success btn-flat" href="<?php echo base_url().'admin/status/add'?>"><span class="fa fa-plus"></span> Tambah Baru</a>
-            </div>
+            </div> -->
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-striped" style="font-size:13px;">
@@ -101,7 +101,7 @@
                       <?php } ?>
                   <td style="text-align:right;">
                         <a class="btn" href="<?php echo base_url().'admin/status/get_edit/'.$status_id;?>"><span class="fa fa-pencil"></span></a>
-                        <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $status_id;?>"><span class="fa fa-trash"></span></a>
+                        <!-- <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $status_id;?>"><span class="fa fa-trash"></span></a> -->
                   </td>
                 </tr>
 				<?php endforeach;?>

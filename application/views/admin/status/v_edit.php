@@ -79,7 +79,7 @@
           <div class="row">
             <div class="col-md-12">
             <label for="male">Status*</label>
-              <input type="text" name="xnama" class="form-control" placeholder="Masukkan Kode" value="<?= $data->status_nama ?>" required/><br>
+              <input disabled type="text" name="xnama" class="form-control" placeholder="Masukkan Kode" value="<?= $data->status_nama ?>" required/><br>
             </div>
           </div>  
           <div class="row">
