@@ -78,7 +78,7 @@ class M_uji_sampel extends CI_Model{
 			where us_id='$id'");
 		return $hsl;
 	}
-	function update_status($id,$status,$no_sampel,$metode,$catatan){
+	function update_status($id,$status,$no_sampel,$metode,$catatan,$tggl){
 		$hsl=$this->db->query("update tbl_us set us_no_sampel='$no_sampel',us_status_id='$status',us_metode='$metode',us_catatan_status='$catatan'
 			where us_id	='$id'");
 		return $hsl;

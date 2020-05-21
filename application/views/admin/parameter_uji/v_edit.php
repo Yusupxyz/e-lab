@@ -95,7 +95,13 @@
               <label for="male">Tarif Uji (Rp)*</label>
               <input type="number" name="xtarif" class="form-control" placeholder="Masukkan Tarif Uji" value="<?= $data->pu_tarif ?>" required/><br>
             </div>
-          </div>       
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="male">Baku Mutu*</label>
+              <input type="text" name="xmutu" class="form-control" placeholder="Masukkan Baku Mutu" value="<?= $data->pu_mutu ?>" required/><br>
+            </div>
+          </div>        
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">

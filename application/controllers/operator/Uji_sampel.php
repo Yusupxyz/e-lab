@@ -90,8 +90,9 @@ class Uji_sampel extends CI_Controller{
 		$metode=$this->input->post('xmetode');
 		$status=$this->input->post('xstatus');
 		$catatan=$this->input->post('xcatatan');
+		$tggl=$this->input->post('xtanggalditerima');
 
-		if ($this->m_uji_sampel->update_status($id,$status,$no_sampel,$metode,$catatan)){
+		if ($this->m_uji_sampel->update_status($id,$status,$no_sampel,$metode,$catatan,$tggl)){
 			$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
 			$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
 			$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;

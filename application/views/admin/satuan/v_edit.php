@@ -41,9 +41,8 @@
    <?php 
     $this->load->view('admin/template/v_header');
   ?>
-  
 <!-- Left side column. contains the logo and sidebar -->
-  <?php 
+<?php 
     $this->load->view('admin/template/v_left_menu');
   ?>
 
@@ -52,13 +51,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Parameter Uji
+        Satuan
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Parameter Uji</a></li>
-        <li class="active">Tambah Baru</li>
+        <li><a href="#">Satuan</a></li>
+        <li class="active">Ubah Satuan</li>
       </ol>
     </section>
 
@@ -70,43 +69,24 @@
             <div class="col-md-6">
       <div class="box box-default ">
         <div class="box-header with-border ">
-          <h3 class="box-title">Tambah Parameter Uji</h3>
+          <h3 class="box-title">Ubah Satuan</h3>
         </div>
 		
-		<form action="<?php echo base_url().'admin/parameter_uji/simpan_parameter_uji'?>" method="post" enctype="multipart/form-data">
+		<form action="<?php echo base_url().'admin/satuan/update'?>" method="post" enctype="multipart/form-data">
 		
         <!-- /.box-header -->
-        <div class="box-body">
+        <div class="box-body">  
           <div class="row">
             <div class="col-md-12">
-              <label for="male">Parameter Uji*</label>
-              <input type="text" name="xparam" class="form-control" placeholder="Masukkan Parameter Uji" required/><br>
+              <label for="male">Satuan*</label>
+              <input type="text" name="xsatuan" class="form-control" placeholder="Masukkan Satuan" value="<?= $data->satuan_nama ?>" required/><br>
             </div>
-          </div> 
-          <div class="row">
-            <div class="col-md-12">
-              <label for="male">Sifat Uji*</label>
-              <?php
-                        echo form_dropdown('xsifat', $sp, $xsifat, $attribute);
-                    ?><br>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label for="male">Tarif Uji (Rp)*</label>
-              <input type="number" name="xtarif" class="form-control" placeholder="Masukkan Tarif Uji" required/><br>
-            </div>
-          </div> 
-          <div class="row">
-            <div class="col-md-12">
-              <label for="male">Baku Mutu*</label>
-              <input type="text" name="xmutu" class="form-control" placeholder="Masukkan Baku Mutu" required/><br>
-            </div>
-          </div> 
+          </div>       
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-save"></span> Simpan</button>
+                <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-edit"></span> Ubah</button>
+                <input type="hidden" name="xid" class="form-control" value="<?= $data->satuan_id ?>" /><br>
               <!-- /.form-group -->
             </div>
             </div>
@@ -118,11 +98,8 @@
       </div>
 	  </div>
       <!-- /.box -->
-
-      
 		</form>
-          
-        
+
 
     </section>
     <!-- /.content -->
@@ -132,7 +109,7 @@
     <?php $this->load->view('template/copyright'); ?>  
   </footer>
 
-  
+ 
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
@@ -167,6 +144,5 @@
 <script src="<?php echo base_url().'assets/dist/js/demo.js'?>"></script>
 <script src="<?php echo base_url().'assets/ckeditor/ckeditor.js'?>"></script>
 <!-- Page script -->
-
 </body>
 </html>

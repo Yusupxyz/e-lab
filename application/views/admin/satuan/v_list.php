@@ -49,12 +49,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Daftar Parameter Uji
+        Daftar Satuan
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Parameter Uji</a></li>
+        <li><a href="#">Satuan</a></li>
         <li class="active">Daftar</li>
       </ol>
     </section>
@@ -67,7 +67,7 @@
            
           <div class="box">
             <div class="box-header">
-              <a class="btn btn-success btn-flat" href="<?php echo base_url().'admin/parameter_uji/add_parameter_uji'?>"><span class="fa fa-plus"></span> Tambah Baru</a>
+              <a class="btn btn-success btn-flat" href="<?php echo base_url().'admin/satuan/add'?>"><span class="fa fa-plus"></span> Tambah Baru</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -75,10 +75,7 @@
                 <thead>
                 <tr>
                 <th>No.</th>
-      					<th>Parameter Uji</th>
-                <th>Sifat Pengujian</th>
-                <th>Baku Mutu</th>
-                <th>Tarif</th>
+      					<th>Satuan</th>
                 <th style="text-align:right;">Aksi</th>
                 </tr>
                 </thead>
@@ -86,21 +83,15 @@
           				<?php
           					$no=1;
           					foreach ($data->result_array() as $i) :
-                       $pu_id=$i['pu_id'];
-                       $pu_nama=$i['pu_nama'];
-          					   $sp_jenis=$i['sp_jenis'];
-          					   $pu_tarif=$i['pu_tarif'];
-          					   $pu_mutu=$i['pu_mutu'];
+          					   $satuan_id=$i['satuan_id'];
+          					   $satuan_nama=$i['satuan_nama'];
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
-                  <td><?php echo $pu_nama;?></td>
-                  <td><?php echo $sp_jenis;?></td>
-                  <td><?php echo $pu_mutu;?></td>
-                  <td><?php echo 'Rp '.number_format($pu_tarif);?></td>
+                  <td><?php echo $satuan_nama;?></td>
                   <td style="text-align:right;">
-                        <a class="btn" href="<?php echo base_url().'admin/parameter_uji/get_edit/'.$pu_id;?>"><span class="fa fa-pencil"></span></a>
-                        <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $pu_id;?>"><span class="fa fa-trash"></span></a>
+                        <a class="btn" href="<?php echo base_url().'admin/satuan/get_edit/'.$satuan_id;?>"><span class="fa fa-pencil"></span></a>
+                        <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $satuan_id;?>"><span class="fa fa-trash"></span></a>
                   </td>
                 </tr>
 				<?php endforeach;?>
@@ -128,23 +119,21 @@
 <!-- ./wrapper -->
 
 <?php foreach ($data->result_array() as $i) :
-                       $pu_id=$i['pu_id'];
-                       $pu_nama=$i['pu_nama'];
-          					   $sp_jenis=$i['sp_jenis'];
-          					   $pu_tarif=$i['pu_tarif'];
-                    ?>
+            $satuan_id=$i['satuan_id'];
+            $satuan_nama=$i['satuan_nama'];
+            ?>
 	<!--Modal Hapus Pengguna-->
-        <div class="modal fade" id="ModalHapus<?php echo $pu_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="ModalHapus<?php echo $satuan_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
-                        <h4 class="modal-title" id="myModalLabel">Hapus Parameter Uji</h4>
+                        <h4 class="modal-title" id="myModalLabel">Hapus Satuan</h4>
                     </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'admin/parameter_uji/hapus_parameter_uji'?>" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="<?php echo base_url().'admin/satuan/hapus'?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">       
-							       <input type="hidden" name="kode" value="<?php echo $pu_id;?>"/> 
-                            <p>Apakah Anda yakin mau menghapus Parameter Uji <b><?php echo $pu_nama;?></b> ?</p>
+							       <input type="hidden" name="kode" value="<?php echo $satuan_id;?>"/> 
+                            <p>Apakah Anda yakin mau menghapus Satuan <b><?php echo $satuan_nama;?></b> ?</p>
                                
                     </div>
                     <div class="modal-footer">

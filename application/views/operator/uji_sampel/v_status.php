@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url().'assets/font-awesome/css/font-awesome.min.css'?>">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datatables/dataTables.bootstrap.css'?>">
+  <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datepicker/datepicker3.css'?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/dist/css/AdminLTE.min.css'?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -209,6 +210,7 @@
               $us_status_id=$i['us_status_id'];
               $us_no_sampel=$i['us_no_sampel'];  
               $us_metode=$i['us_metode'];    
+              $us_tanggal_diterima=$i['us_tanggal_diterima'];    
             ?>
 	<!--Modal Edit Pengguna-->
         <div class="modal fade" id="ModalEdit<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -234,6 +236,12 @@
                             echo form_dropdown('xmetode', $am, $us_metode, $attribute);
                         ?><br>
                           </div>
+                      </div>
+                      <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Tanggal Penerimaan Sampel</label>
+                      <div class="col-sm-7">
+                        <input <?= ($us_status_id==1)?"disabled":"" ?> placeholder="Tanggal Penerimaan Sampel" type="text" class="form-control datepicker" name="xtanggalditerima" value="<?php echo $us_tanggal_diterima;?>">
+                      </div>
                       </div>
                       <div class="form-group">
                           <label for="inputUserName" class="col-sm-4 control-label">Status</label>
@@ -338,6 +346,7 @@
 <script src="<?php echo base_url().'assets/plugins/slimScroll/jquery.slimscroll.min.js'?>"></script>
 <!-- FastClick -->
 <script src="<?php echo base_url().'assets/plugins/fastclick/fastclick.js'?>"></script>
+<script src="<?php echo base_url().'assets/plugins/datepicker/bootstrap-datepicker.js'?>"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url().'assets/dist/js/app.min.js'?>"></script>
 <!-- AdminLTE for demo purposes -->
@@ -423,6 +432,14 @@
     <?php endif;?>
 
     <script>
+$(function(){
+  $(".datepicker").datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      todayHighlight: true,
+  });
+ });
+
     $('#xstatus').on('change', function() {
       document.getElementById("catatan").style.display = "block";
     });

@@ -132,19 +132,19 @@
             <li class="<?= $title=='Daftar Jenis Wadah'?'active':''?>"><a href="<?php echo base_url().'admin/jenis_wadah'?>"><i class="fa fa-list"></i> Daftar Jenis Wadah</a></li>
           </ul> 
         </li>
-        <!-- <li class="treeview <?= (isset($pratitle))?($pratitle=='Status'?'active':''):''?>">
+        <li class="treeview <?= (isset($pratitle))?($pratitle=='Satuan'?'active':''):''?>">
           <a href="#">
-            <i class="fa fa-star-o"></i>
-            <span>Status</span>
+            <i class="fa fa-bolt"></i>
+            <span>Satuan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="<?= $title=='Tambah Status'?'active':''?>"><a href="<?php echo base_url().'admin/status/add'?>"><i class="fa fa-thumb-tack"></i> Tambah Baru</a></li>
-            <li class="<?= $title=='Daftar Status'?'active':''?>"><a href="<?php echo base_url().'admin/status'?>"><i class="fa fa-list"></i> Daftar Status</a></li>
+            <li class="<?= $title=='Tambah Satuan'?'active':''?>"><a href="<?php echo base_url().'admin/satuan/add'?>"><i class="fa fa-thumb-tack"></i> Tambah Baru</a></li>
+            <li class="<?= $title=='Daftar Satuan'?'active':''?>"><a href="<?php echo base_url().'admin/satuan'?>"><i class="fa fa-list"></i> Daftar Satuan</a></li>
           </ul> 
-        </li> -->
+        </li>
         <li class="treeview <?= (isset($pratitle))?($pratitle=='Acuan Metode'?'active':''):''?>">
           <a href="#">
             <i class="fa fa-arrows"></i>
