@@ -81,7 +81,7 @@
                   <?php if($c['pengguna_level']=='1'):?>
                     <small>Administrator</small>
                   <?php else:?>
-                    <small>Author</small>
+                    <small>Operator</small>
                   <?php endif;?>
                 </p>
               </li>

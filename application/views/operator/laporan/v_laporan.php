@@ -95,7 +95,7 @@
                   </td>
                   <?php }else{ ?>
                   <td style="text-align:center;">
-                        <a class="btn btn-xs btn-primary"  href="<?php echo base_url().'assets/file_laporan/'.$us_laporan;?>" title="Buat Laporan PDF"><span class="fa fa-file-text"></span> Buat Laporan PDF</a>
+                        <a class="btn btn-xs btn-primary"  href="<?php echo base_url().'operator/laporan/generate/'.$us_id;?>" title="Buat Laporan PDF"><span class="fa fa-file-text"></span> Buat Laporan PDF</a>
                   </td>
                   <?php } ?>
                 </tr>
