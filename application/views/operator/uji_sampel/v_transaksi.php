@@ -186,7 +186,8 @@
                $us_kode_sampel=$i['us_kode_sampel'];         
                $us_total=$i['us_total'];                   
                $us_uang_muka=$i['us_uang_muka'];                   
-               $us_sisa=$i['us_sisa'];                          
+               $us_sisa=$i['us_sisa'];                             
+               $us_status_id=$i['us_status_id'];                          
             ?>
 	<!--Modal Bayar-->
         <div class="modal fade" id="modalBayar<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -214,6 +215,7 @@
                   <div class="form-group">
                       <label for="inputUserName" class="col-sm-4 control-label">Sisa</label>
                       <div class="col-sm-7">
+                      <input type="hidden" name="xstatus" class="form-control" id="inputUserName" value="<?php echo $us_status_id;?>" placeholder="Masukkan No. Sampel Lab" readonly>
                         <input type="hidden" name="xsisa" class="form-control" id="inputUserName" value="<?php echo $us_sisa;?>" placeholder="Masukkan No. Sampel Lab" readonly>
                         <input type="text" name="x" class="form-control" id="inputUserName" value="Rp <?php echo number_format($us_sisa);?>" placeholder="Masukkan No. Sampel Lab" readonly>
                       </div>

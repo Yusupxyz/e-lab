@@ -21,6 +21,7 @@ class Uji_sampel extends CI_Controller{
 	function index(){
 		$anggota=$this->session->userdata('idadmin');
 		$x['data']=$this->m_uji_sampel->get_byanggota($anggota);
+		// echo $this->db->last_query();
 		$x['pratitle'] = 'Uji Sampel';
 		$x['title']="Status Uji Sampel";
 		foreach ($x['data']->result_array() as $a) {
@@ -102,6 +103,10 @@ class Uji_sampel extends CI_Controller{
 				$uang_muka=$tarif*($persentase/100);
 				$sisa=$tarif-$uang_muka;
 				if ($this->m_uji_sampel->simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan,$uang_muka,$sisa,$pdf)){
+					$this->m_uji_sampel->simpan_informasi($id);
+					if ($pengambilan=="Laboratorium"){
+						$this->m_uji_sampel->simpan_pengambilan($id);
+					}
 					echo $this->session->set_flashdata('msg','success');
 					echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
 				}else{

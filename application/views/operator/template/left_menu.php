@@ -32,7 +32,8 @@
             </span>
           </a>
           <ul class="treeview-menu ">
-            <li class="<?= $title=='Kelola Data'?'active':''?>"><a href="<?php echo base_url().'operator/uji_sampel'?>"><i class="fa fa-list"></i> Kelola Data</a></li>
+            <li class="<?= $title=='Kelola Status'?'active':''?>"><a href="<?php echo base_url().'operator/uji_sampel'?>"><i class="fa fa-list"></i> Kelola Status</a></li>
+            <li class="<?= $title=='Kelola Informasi Sampel'?'active':''?>"><a href="<?php echo base_url().'operator/uji_sampel/informasi'?>"><i class="fa fa-info"></i> Kelola Informasi Sampel</a></li>
             <li class="<?= $title=='Kelola Transaksi'?'active':''?>"><a href="<?php echo base_url().'operator/uji_sampel/transaksi'?>"><i class="fa fa-shopping-cart"></i> Kelola Transaksi</a></li>
           </ul>
         </li>

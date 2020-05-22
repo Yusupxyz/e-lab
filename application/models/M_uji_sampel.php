@@ -3,24 +3,37 @@ class M_uji_sampel extends CI_Model{
 
 	function get_all(){
 		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
-		jw_id=us_fk_jw LEFT JOIN tbl_parameter_us ON us_id=parameter_us_id LEFT JOIN tbl_status ON us_status_id=status_id WHERE us_status_id!='3'
-		ORDER BY us_id DESC");
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id WHERE us_status_id!='3'
+		ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
 	function get_byanggota($id){
 		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
-		jw_id=us_fk_jw LEFT JOIN tbl_parameter_us ON us_id=parameter_us_id LEFT JOIN tbl_status ON us_status_id=status_id WHERE us_anggota='$id'
-		AND us_status_id!='3' ORDER BY us_id DESC");
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id WHERE us_anggota='$id'
+		AND us_status_id!='3' ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
 	function get_all_proses(){
 		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
-		jw_id=us_fk_jw LEFT JOIN tbl_parameter_us ON us_id=parameter_us_id LEFT JOIN tbl_status ON us_status_id=status_id 
-		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id!='2' ORDER BY us_id DESC");
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id
+		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id!='8' ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_all_proses2(){
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id
+		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id!='8' AND us_status_id!='4' ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
 	function get_laporan(){
-		$hsl=$this->db->query("SELECT * FROM tbl_us WHERE us_status_id='2' ORDER BY us_id DESC");
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id
+		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id='2' ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
 	function statistik_konfirmasi($kode){
@@ -51,6 +64,16 @@ class M_uji_sampel extends CI_Model{
 		('$id','$anggota','$kode','$jenis_sampel','$jenis_wadah','$pengambilan','$tarif','$catatan','$uang_muka','$sisa','$pdf')");
 		return $hsl;
 	}
+	function simpan_informasi($id){
+		$hsl=$this->db->query("insert into tbl_informasi_sampel(is_us_id) values 
+		('$id')");
+		return $hsl;
+	}
+	function simpan_pengambilan($id){
+		$hsl=$this->db->query("insert into tbl_pengambilan_sampel(ps_us_id) values 
+		('$id')");
+		return $hsl;
+	}
 	function get_by_kode($kode){
 		$hsl=$this->db->query("SELECT * FROM tbl_us where us_id='$kode'");
 		return $hsl;
@@ -73,13 +96,42 @@ class M_uji_sampel extends CI_Model{
 		us_catatan='$catatan' where us_id='$id'");
 		return $hsl;
 	}
+	function update_informasi($id,$no,$kondisi){
+		$hsl=$this->db->query("update tbl_informasi_sampel set no_identifikasi='$no',kondisi='$kondisi'
+		where is_us_id='$id'");
+		return $hsl;
+	}
+	function update_pengambilan($id,$lokasi,$titik,$metode,$rincian){
+		echo $metode;
+		$hsl=$this->db->query("update tbl_pengambilan_sampel set lokasi='$lokasi',titik_pengambilan='$titik',metode_id='$metode',rincian='$rincian'
+		where ps_us_id='$id'");
+		return $hsl;
+	}
+	function update_tanggal_pengambilan($id,$tanggal=NULL){
+		if ($tanggal==NULL){
+			$tanggal= "now()";
+		}
+		$hsl=$this->db->query("update tbl_informasi_sampel set tanggal_sampel='$tanggal'
+		where is_us_id='$id'");
+		return $hsl;
+	}
+	function update_tanggal_pengujian_awal($id){
+		$hsl=$this->db->query("update tbl_informasi_sampel set tanggal_pengujian_awal=now()
+		where is_us_id='$id'");
+		return $hsl;
+	}
+	function update_tanggal_pengujian_akhir($id){
+		$hsl=$this->db->query("update tbl_informasi_sampel set tanggal_pengujian_akhir=now()
+		where is_us_id='$id'");
+		return $hsl;
+	}
 	function batal($id){
 		$hsl=$this->db->query("update tbl_us set us_status_id='3'
 			where us_id='$id'");
 		return $hsl;
 	}
-	function update_status($id,$status,$no_sampel,$metode,$catatan,$tggl){
-		$hsl=$this->db->query("update tbl_us set us_no_sampel='$no_sampel',us_status_id='$status',us_metode='$metode',us_catatan_status='$catatan'
+	function update_status($id,$status,$catatan){
+		$hsl=$this->db->query("update tbl_us set us_status_id='$status',us_catatan_status='$catatan'
 			where us_id	='$id'");
 		return $hsl;
 	}
@@ -110,7 +162,8 @@ class M_uji_sampel extends CI_Model{
 	}
 	
 	function statistik_perbulan_opr(){
-        $query = $this->db->query("SELECT DATE_FORMAT(us_tanggal_diterima,'%d') AS tgl,COUNT(*) AS jumlah FROM tbl_us WHERE MONTH(us_tanggal_diterima)=MONTH(CURDATE())  GROUP BY DATE(us_tanggal_diterima)");
+        $query = $this->db->query("SELECT DATE_FORMAT(tanggal_sampel,'%d') AS tgl,COUNT(*) AS jumlah FROM tbl_us LEFT JOIN tbl_informasi_sampel ON
+		tbl_informasi_sampel.is_us_id=tbl_us.us_id WHERE MONTH(tanggal_sampel)=MONTH(CURDATE())  GROUP BY DATE(tanggal_sampel)");
          
         if($query->num_rows() > 0){
             foreach($query->result() as $data){

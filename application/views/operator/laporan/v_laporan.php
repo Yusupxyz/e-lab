@@ -37,10 +37,10 @@
 <div class="wrapper">
 
    <?php 
-    $this->load->view('anggota/template/v_header');
+    $this->load->view('operator/template/v_header');
     ?>
 <!-- Left side column. contains the logo and sidebar -->
-  <?php $this->load->view('anggota/template/left_menu'); ?>  
+  <?php $this->load->view('operator/template/left_menu'); ?>  
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -52,7 +52,6 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Uji Sampel</a></li>
         <li class="active">Laporan</li>
       </ol>
     </section>
@@ -71,7 +70,8 @@
                 <thead>
                 <tr>
                 <th>No.</th>
-      					<th>Kode Uji Sampel</th>
+      					<th>Pelanggan</th>
+      					<th>No. Identifikasi</th>
       					<th>Laporan</th>
                 </tr>
                 </thead>
@@ -80,15 +80,24 @@
           					$no=1;
           					foreach ($data->result_array() as $i) :
           					   $us_id=$i['us_id'];
-          					   $us_kode_sampel=$i['us_kode_sampel'];
-          					   $us_laporan=$i['us_laporan'];                     
+          					   $anggota_nama=$i['anggota_nama'];
+          					   $us_laporan=$i['us_laporan'];     
+          					   $no_identifikasi=$i['no_identifikasi'];    
+                       $us_sisa=$i['us_sisa'];                       
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
-                  <td><?php echo $us_kode_sampel;?></td>
-                  <td style="text-align:right;">
-                        <a class="btn" href="<?php echo base_url().'assets/file_laporan/'.$us_laporan;?>"><span class="fa fa-download"></span></a>
+                  <td><?php echo $anggota_nama;?></td>
+                  <td><?php echo $no_identifikasi;?></td>
+                  <?php if ($us_sisa!=0){ ?>
+                    <td>
+                      <p style="color:red;"><b>Lakukan pelunasan untuk melakukan generate laporan.</b></p>
                   </td>
+                  <?php }else{ ?>
+                  <td style="text-align:center;">
+                        <a class="btn btn-xs btn-primary"  href="<?php echo base_url().'assets/file_laporan/'.$us_laporan;?>" title="Buat Laporan PDF"><span class="fa fa-file-text"></span> Buat Laporan PDF</a>
+                  </td>
+                  <?php } ?>
                 </tr>
 				<?php endforeach;?>
                 </tbody>

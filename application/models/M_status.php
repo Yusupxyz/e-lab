@@ -67,5 +67,35 @@ class M_status extends CI_Model{
             }
         }
         return $dd;
+    }
+    
+    // get data dropdown
+    function dd4()
+    {
+        $this->db->where('status_id','6');
+        $this->db->order_by('status_id', 'ASC');
+        $result = $this->db->get('tbl_status');
+        $dd[''] = '-- Pilih Status --';
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+                $dd[$row->status_id] = $row->status_nama;
+            }
+        }
+        return $dd;
+    }
+    
+    // get data dropdown
+    function dd5()
+    {
+        $this->db->where('status_id','8');
+        $this->db->order_by('status_id', 'ASC');
+        $result = $this->db->get('tbl_status');
+        $dd[''] = '-- Pilih Status --';
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+                $dd[$row->status_id] = $row->status_nama;
+            }
+        }
+        return $dd;
 	}
 }

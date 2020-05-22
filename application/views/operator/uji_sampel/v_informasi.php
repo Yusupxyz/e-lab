@@ -48,13 +48,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Status Uji Sampel
+        Informasi Sampel
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Uji Sampel</a></li>
-        <li class="active">Status</li>
+        <li class="active">Informasi</li>
       </ol>
     </section>
 
@@ -73,16 +73,13 @@
                 <tr>
                 <th>No.</th>
       					<th>Pelanggan</th>
-      					<th>Surat Permohonan</th>
-      					<th>Catatan Pelanggan</th>
-                <th>Kode Uji Sampel</th>
+      					<th>Kode Uji Sampel</th>
                 <th>Pengambilan Oleh</th>
-      					<th>Jenis Sampel</th>
-      					<th>Jenis Wadah</th>
-      					<th>Parameter Uji</th>
-      					<!-- <th>No. Sampel Lab</th> -->
-      					<th>Catatan Status</th>
-      					<th>Status</th>
+      					<th>No. Identifikasi</th>
+      					<th>Uraian</th>
+                <th>Kondisi Saat Diterima</th>
+      					<th>Tanggal Diterima</th>
+      					<th>Tanggal Pengujian</th>
                 <th style="text-align:right;">Aksi</th>
                 </tr>
                 </thead>
@@ -92,41 +89,33 @@
           					foreach ($data->result_array() as $i) :
           					   $us_id=$i['us_id'];
           					   $us_status_id=$i['us_status_id'];
-          					   $status_nama=$i['status_nama'];
-          					   $status_class=$i['status_class'];
+          					   $no_identifikasi=$i['no_identifikasi'];
+          					   $kondisi=$i['kondisi'];
           					   $us_kode_sampel=$i['us_kode_sampel'];
           					   $js_nama=$i['js_nama'];              
-          					   $jw_nama=$i['jw_nama'];             
-          					   $anggota_nama=$i['anggota_nama'];   
-          					   $us_pengambilan=$i['us_pengambilan'];  
-          					   $us_file=$i['us_file'];      
+          					   $tanggal_sampel=$i['tanggal_sampel'];             
+          					   $tanggal_pengujian_awal=$i['tanggal_pengujian_awal'];   
+          					   $tanggal_pengujian_akhir=$i['tanggal_pengujian_akhir'];  
+          					   $us_pengambilan=$i['us_pengambilan'];      
           					   $us_catatan=$i['us_catatan'];  
-          					   $us_catatan_status=$i['us_catatan_status'];        
+                       $us_catatan_status=$i['us_catatan_status'];   
+                       $anggota_nama=$i['anggota_nama'];        
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
                   <td><?php echo $anggota_nama;?></td>
-                  <td>
-                  <a href="<?php echo base_url().'/assets/surat_permohonan/'.$us_file?>"> Download PDF </a>
-                  <td><?php echo ($us_catatan!='')?$us_catatan:'-';?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $us_pengambilan;?></td>
+                  <td><?php echo $no_identifikasi;?></td>
                   <td><?php echo $js_nama;?></td>
-                  <td><?php echo $jw_nama;?></td>
-                  <td>
-                    <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
-                  </td>
-                  <td><?php echo ($us_catatan_status!='')?$us_catatan_status:'-';?></td>
-                  <td><span class="<?= $status_class ?> alert" style="padding:1px"><?php echo $status_nama;?></span></td>
+                  <td><?php echo $kondisi;?></td>
+                  <td><?php echo $tanggal_sampel;?></td>
+                  <td><?php echo $tanggal_pengujian_awal.'<i> s.d. </i>'.$tanggal_pengujian_akhir;?></td>
                   <td style="text-align:center;">
-                    <?php if ($us_status_id!='3' && $us_status_id!='5' && $us_status_id!='6' && $us_status_id!='4') { ?>
-                      <a class="btn" data-toggle="modal" data-target="#ModalEdit<?php echo $us_id;?>"><span class="fa fa-pencil"></span></a>
-                    <?php }elseif($us_status_id=='3' OR  $us_status_id=='4'){  ?>
-                      <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $us_id;?>"><span class="fa fa-trash"></span></a>
-                    <?php }elseif($us_status_id=='6'){  ?>
-                      <a class="btn" href="<?php echo base_url().'operator/uji_sampel/isi_laporan/'.$us_id?>"><span class="fa fa-file-text-o"></span></a>
+                    <?php if ($us_pengambilan=='Pelanggan') { ?>
+                      <a  class="btn" data-toggle="modal" <?= ($us_status_id!=1)?' data-target="#ModalEdit'.$us_id.'"':'disabled' ?>  ><span class="fa fa-pencil"></span></a>
                     <?php }else{  ?>
-                      -
+                      <a class="btn" data-toggle="modal" data-target="#ModalEditLab<?php echo $us_id;?>"><span class="fa fa-pencil"></span></a>
                     <?php } ?>
                   </td>
                 </tr>
@@ -146,61 +135,13 @@
   </div>
   <!-- /.content-wrapper -->
  
-  <!-- ============ MODAL EDIT =============== -->
-  <?php $i=0; 
-            foreach ($data->result_array() as $a){
-              $us_id=$a['us_id'];
-              $us_total=$a['us_total']; 
-              $j=1;
-                    ?>
-                <div id="modalDetail<?php echo $us_id?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 class="modal-title" id="myModalLabel">Detail Parameter Uji</h3>
-                    </div>
-                        <div class="modal-body">
-                        
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Parameter Uji</th>
-                                <th>Jenis</th>
-                            </tr>
-                            </thead>
-                            <?php
-                        foreach ($detail[$i++] as $key => $b) {
-                        $pu_nama=$b['pu_nama'];
-                        $sp_jenis=$b['sp_jenis'];
-                    ?>
-                            <tbody>
-                           
-                            <tr>
-                                <td><?= $j++ ?></td>
-                                <td><?= $pu_nama ?></td>
-                                <td><?= $sp_jenis ?></td>
-                            </tr>
-                            </tbody>
-                                            <?php
-                    }
-                        ?>
-                        </table>
-                </div>
-                        <div class="modal-footer">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
-                        </div>
-                </div>
-                </div>
-                </div>
-            <?php
-        }
-        ?>
 
  <?php foreach ($data->result_array() as $i) :
-              $us_id=$i['us_id'];
+              $is_id=$i['is_id'];
               $us_status_id=$i['us_status_id'];
+              $no_identifikasi=$i['no_identifikasi']; 
+              $kondisi=$i['kondisi'];   
+              $us_pengambilan=$i['us_pengambilan'];        
             ?>
 	<!--Modal Edit Pengguna-->
         <div class="modal fade" id="ModalEdit<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -208,32 +149,106 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
-                        <h4 class="modal-title" id="myModalLabel">Update Pemeriksaan</h4>
+                        <h4 class="modal-title" id="myModalLabel">Update Penerimaan Sampel dari Pelanggan</h4>
                     </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'operator/uji_sampel/update'?>" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="<?php echo base_url().'operator/uji_sampel/update_informasi'?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
+                                
+                  <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">No. Sampel Laboratorium</label>
+                      <div class="col-sm-7">
+                      <input type="hidden" name="xoleh" value="<?php echo $us_pengambilan;?>" >
+                        <input type="text" name="xno" class="form-control" id="inputUserName" value="<?php echo $no_identifikasi;?>" placeholder="Masukkan No. Sampel Lab" required>
+                      </div>
+                      </div>
                       <div class="form-group">
-                          <label for="inputUserName" class="col-sm-4 control-label">Status</label>
-                          <div class="col-sm-7">
-                          <?php
-                            if ($us_status_id==1){
-                              echo form_dropdown('xstatus', $status, $us_status_id, $attribute2);
-                            }elseif($us_status_id==6){
-                              echo form_dropdown('xstatus', $status2, $us_status_id, $attribute2);
-                            }elseif($us_status_id==7){
-                              echo form_dropdown('xstatus', $status3, $us_status_id, $attribute2);
-                            }elseif($us_status_id==2){
-                              echo form_dropdown('xstatus', $status4, $us_status_id, $attribute2);
-                            }
-                        ?><br>
-                          </div>
-                      </div>
-                      <div class="form-group" id="catatan" style="display:none">
-                      <label for="inputUserName" class="col-sm-4 control-label">Catatan untuk pelanggan (Jika diperlukan)</label>
-                      <div class="col-sm-7" >
-                        <textarea name="xcatatan"  class="form-control"></textarea>
+                      <label for="inputUserName" class="col-sm-4 control-label">Kondisi Saat Diterima</label>
+                      <div class="col-sm-7">
+                        <input type="text" name="xkondisi" class="form-control" id="inputUserName" value="<?php echo $kondisi;?>" placeholder="Masukkan Kondisi Sampel" required>
                       </div>
                       </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                        <button type="submit" name="xid" value="<?php echo $is_id;?>" class="btn btn-primary btn-flat" id="simpan">Update</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	<?php endforeach;?>
+
+
+  <?php foreach ($data->result_array() as $i) :
+              $us_id=$i['us_id'];
+              $us_status_id=$i['us_status_id'];
+              $no_identifikasi=$i['no_identifikasi']; 
+              $kondisi=$i['kondisi'];   
+              $tanggal_sampel=$i['tanggal_sampel'];  
+              $lokasi=$i['lokasi'];      
+              $titik_pengambilan=$i['titik_pengambilan'];  
+              $metode_id=$i['metode_id'];    
+              $rincian=$i['rincian'];   
+              $us_pengambilan=$i['us_pengambilan'];         
+            ?>
+	<!--Modal Edit Pengguna-->
+        <div class="modal fade" id="ModalEditLab<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
+                        <h4 class="modal-title" id="myModalLabel">Update Penerimaan Sampel oleh Laboratorium</h4>
+                    </div>
+                    <form class="form-horizontal" action="<?php echo base_url().'operator/uji_sampel/update_informasi'?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                                
+                  <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">No. Sampel Laboratorium*</label>
+                      <div class="col-sm-7">
+                      <input type="hidden" name="xoleh" value="<?php echo $us_pengambilan;?>" >
+                        <input type="text" name="xno" class="form-control" id="inputUserName" value="<?php echo $no_identifikasi;?>" placeholder="Masukkan No. Sampel Lab" required>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Kondisi Saat Diterima*</label>
+                      <div class="col-sm-7">
+                      <?php
+                              echo form_dropdown('xkondisi', $kondisi_list, $kondisi, $attribute);
+                        ?>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Tanggal Pengambilan Sampel*</label>
+                      <div class="col-sm-7">
+                        <input  placeholder="Tanggal Pengambilan Sampel" type="text" class="form-control datepicker" name="xtanggal" value="<?php echo $tanggal_sampel;?>" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Lokasi Pengambilan Sampel*</label>
+                      <div class="col-sm-7">
+                        <input  placeholder="Lokasi Pengambilan Sampel" type="text" class="form-control" name="xlokasi" value="<?php echo $lokasi;?>" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Titik Pengambilan</label>
+                      <div class="col-sm-7">
+                        <input  placeholder="Titik Pengambilan" type="text" class="form-control" name="xtitik" value="<?php echo $titik_pengambilan;?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Acuan Rencana dan Prosedur Pengambilan*</label>
+                      <div class="col-sm-7">
+                      <?php
+                              echo form_dropdown('xmetode', $am, $metode_id, $attribute);
+                        ?>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Rincian Kondisi Lingkungan</label>
+                      <div class="col-sm-7">
+                        <textarea placeholder="Rincian Kondisi Lingkungan Pengambilan Sampel" class="form-control" name="xrincian" ><?php echo $rincian;?></textarea>
+                      </div>
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
@@ -244,34 +259,6 @@
             </div>
         </div>
 	<?php endforeach;?>
-
-  <?php foreach ($data->result_array() as $i) :
-              $us_id=$i['us_id'];
-            ?>
-	<!--Modal Hapus Pengguna-->
-        <div class="modal fade" id="ModalHapus<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
-                        <h4 class="modal-title" id="myModalLabel">Hapus Data</h4>
-                    </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'operator/uji_sampel/hapus'?>" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">       
-							<input type="hidden" name="kode" value="<?php echo $us_id;?>"/> 
-                            <p>Apakah Anda yakin mau menghapus Data Uji Sampel yang dibatalkan ini?</p>
-                               
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Hapus</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-	<?php endforeach;?>
-
 
 <footer class="main-footer">
     <?php $this->load->view('template/copyright'); ?>  
@@ -315,7 +302,7 @@
         <script type="text/javascript">
                 $.toast({
                     heading: 'Error',
-                    text: "Status gagal diubah. Dan email gagal terkirim ke pelanggan.",
+                    text: "Status berhasil diubah. Namun email gagal terkirim ke pelanggan.",
                     showHideTransition: 'slide',
                     icon: 'error',
                     hideAfter: false,
