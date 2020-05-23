@@ -207,23 +207,32 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Uang Muka</label>
+                      <label for="inputUserName" class="col-sm-4 control-label">Uang Muka Minimal</label>
                       <div class="col-sm-7">
-                        <input type="text" name="xno" class="form-control" id="inputUserName" value="Rp <?php echo number_format($us_uang_muka);?>" placeholder="Masukkan No. Sampel Lab" readonly>
+                      <input type="hidden" n id="dp" value="<?php echo $us_uang_muka;?>" placeholder="Masukkan No. Sampel Lab" readonly>
+                        <input type="text" name="xno" class="form-control" id="xdp" value="Rp <?php echo number_format($us_uang_muka);?>" placeholder="Masukkan No. Sampel Lab" readonly>
                       </div>
                   </div>
                   <div class="form-group">
                       <label for="inputUserName" class="col-sm-4 control-label">Sisa</label>
                       <div class="col-sm-7">
-                      <input type="hidden" name="xstatus" class="form-control" id="inputUserName" value="<?php echo $us_status_id;?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                        <input type="hidden" name="xsisa" class="form-control" id="inputUserName" value="<?php echo $us_sisa;?>" placeholder="Masukkan No. Sampel Lab" readonly>
+                      <input type="hidden" name="xstatus" class="form-control" id="xsisa" value="<?php echo $us_status_id;?>" placeholder="Masukkan No. Sampel Lab" readonly>
+                        <input type="hidden" name="xsisa" class="form-control" id="sisa" value="<?php echo $us_sisa;?>" placeholder="Masukkan No. Sampel Lab" readonly>
                         <input type="text" name="x" class="form-control" id="inputUserName" value="Rp <?php echo number_format($us_sisa);?>" placeholder="Masukkan No. Sampel Lab" readonly>
                       </div>
                   </div>
                   <div class="form-group">
+                      <label for="inputUserName" class="col-sm-4 control-label">Jenis Pembayaran*</label>
+                      <div class="col-sm-7">
+                      <?php
+                              echo form_dropdown('xjenis', $jenis, '', $attribute);
+                        ?>
+                      </div>
+                      </div>
+                  <div class="form-group">
                       <label for="inputUserName" class="col-sm-4 control-label">Bayar (Rp)</label>
                       <div class="col-sm-7">
-                        <input type="number" name="xbayar" class="form-control" id="inputUserName" placeholder="Masukkan Jumlah Pembayaran" min="<?php echo $us_uang_muka;?>" max="<?php echo $us_sisa;?>" required>
+                        <input type="number" name="xbayar" class="form-control" id="bayar" placeholder="Masukkan Jumlah Pembayaran" min="<?php echo $us_uang_muka;?>" max="<?php echo $us_sisa;?>" required>
                       </div>
                   </div>
                      
@@ -340,6 +349,22 @@
     <?php endif;?>
 <script>
 
+</script>
+
+<script>
+$('#transaksi').on('change', function() {
+  if (this.value==1){
+    $("#bayar").attr({
+      "max" : (parseInt(document.getElementById("sisa").value))-1,
+      "min" : document.getElementById("dp").value
+    });
+  }else{
+    $("#bayar").attr({
+      "max" : document.getElementById("sisa").value,
+      "min" : document.getElementById("sisa").value
+    });
+  }
+});
 </script>
 
 </body>
