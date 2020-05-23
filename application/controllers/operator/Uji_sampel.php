@@ -77,7 +77,7 @@ class Uji_sampel extends CI_Controller{
 					if ($this->m_uji_sampel->update_status_dari_transaksi($id,$status,$catatan)){
 						$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
 						$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
-						$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;
+						$anggota_email=$this->m_uji_sampel->get_anggota($id)->row()->anggota_email;
 						if ($status_id_setting_email!=0){
 							$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
 						}else{
@@ -117,7 +117,7 @@ class Uji_sampel extends CI_Controller{
 			// echo $this->db->last_query();
 			$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
 			$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
-			$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;
+			$anggota_email=$this->m_uji_sampel->get_anggota($id)->row()->anggota_email;
 			if ($status_id_setting_email!=0){
 				$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
 			}else{
@@ -168,7 +168,7 @@ class Uji_sampel extends CI_Controller{
 			// echo $this->db->last_query();
 			$status_id_setting_email=$this->m_status->get_by_kode($status)->row()->status_id_setting_email;
 			$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
-			$anggota_email=$this->m_uji_sampel->get_email_anggota($id)->row()->anggota_email;
+			$anggota_email=$this->m_uji_sampel->get_anggota($id)->row()->anggota_email;
 			if ($status_id_setting_email!=0){
 				$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
 			}else{
@@ -242,7 +242,6 @@ class Uji_sampel extends CI_Controller{
 		$x['title']="Kelola Status";
 		$x['data']=$this->m_parameter_us->get_by_kode($kode);
 		$x['am']=$this->m_am->dd();
-		$x['satuan']=$this->m_satuan->dd();
 		$x['kondisi_list']=array("" => "--Pilih Kondisi--",
 								"Terbuka" => "Terbuka",
 								"Tertutup" => "Tertutup",
@@ -256,10 +255,9 @@ class Uji_sampel extends CI_Controller{
 		$id=$this->input->post('xid');
 		$metode=$this->input->post('xmetode');
 		$hasil=$this->input->post('xhasil');
-		$satuan=$this->input->post('xsatuan');
 		$us_id=$this->input->post('xus_id');
 
-		if ($this->m_parameter_us->update_hasil($id,$metode,$hasil,$satuan)){
+		if ($this->m_parameter_us->update_hasil($id,$metode,$hasil)){
 			// echo $this->db->last_query();
 			echo $this->session->set_flashdata('msg','success');
 			echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/isi_laporan/".$us_id."';</script>";

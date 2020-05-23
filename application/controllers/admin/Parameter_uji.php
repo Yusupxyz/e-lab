@@ -8,6 +8,7 @@ class Parameter_uji extends CI_Controller{
 		};
 		$this->load->model('m_pu');
 		$this->load->model('m_sp');
+		$this->load->model('m_satuan');
 		$this->load->library('upload');
 	}
 
@@ -22,8 +23,10 @@ class Parameter_uji extends CI_Controller{
 		$x['pratitle']="Parameter Uji";
 		$x['title']="Tambah Parameter Uji";
 		$x['sp']=$this->m_sp->dd();
+		$x['satuan']=$this->m_satuan->dd();
         $x['attribute'] = 'class="form-control" required';
         $x['xsifat'] = '';
+        $x['xsatuan'] = '';
 		$this->load->view('admin/parameter_uji/v_add',$x);
 	}
 	function get_edit(){
@@ -32,6 +35,7 @@ class Parameter_uji extends CI_Controller{
 		$x['pratitle']="Parameter Uji";
 		$x['title']="Daftar Parameter Uji";
 		$x['sp']=$this->m_sp->dd();
+		$x['satuan']=$this->m_satuan->dd();
         $x['attribute'] = 'class="form-control" required';
 		$this->load->view('admin/parameter_uji/v_edit',$x);
 	}
@@ -57,7 +61,8 @@ class Parameter_uji extends CI_Controller{
 		$tarif=$this->input->post('xtarif');
 		$id=$this->input->post('xid');
 		$mutu=$this->input->post('xmutu');
-		$this->m_pu->update($id,$nama,$sp,$tarif,$mutu);
+		$satuan=$this->input->post('xsatuan');
+		$this->m_pu->update($id,$nama,$sp,$tarif,$mutu,$satuan);
 		echo $this->session->set_flashdata('msg','info');
 		redirect('admin/parameter_uji');
 	}

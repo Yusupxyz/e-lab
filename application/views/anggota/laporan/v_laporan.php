@@ -87,7 +87,7 @@
                   <td><?php echo $no++;?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td style="text-align:right;">
-                        <a class="btn" href="<?php echo base_url().'assets/file_laporan/'.$us_laporan;?>"><span class="fa fa-download"></span></a>
+                        <a class="btn" target="_blank" href="<?php echo base_url().'assets/hasil_pengujian/'.$us_laporan;?>"><span class="fa fa-download"></span></a>
                   </td>
                 </tr>
 				<?php endforeach;?>

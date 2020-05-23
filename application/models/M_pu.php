@@ -2,7 +2,8 @@
 class M_pu extends CI_Model{
 
 	function get_all(){
-		$hsl=$this->db->query("SELECT * FROM tbl_parameter_uji LEFT JOIN tbl_sifat_pengujian ON sp_id=pu_sp_id ORDER BY pu_id DESC");
+		$hsl=$this->db->query("SELECT * FROM tbl_parameter_uji LEFT JOIN tbl_satuan ON tbl_satuan.satuan_id=
+		tbl_parameter_uji.pu_satuan_id LEFT JOIN tbl_sifat_pengujian  ON sp_id=pu_sp_id ORDER BY pu_id DESC");
 		return $hsl;
 	}
 	function simpan($nama,$sp,$tarif,$mutu){
@@ -18,8 +19,8 @@ class M_pu extends CI_Model{
 		$hsl=$this->db->query("SELECT * FROM tbl_parameter_uji where pu_sp_id='$fk'");
 		return $hsl;
 	}
-	function update($id,$nama,$sp,$tarif,$mutu){
-		$hsl=$this->db->query("update tbl_parameter_uji set pu_nama='$nama',pu_sp_id='$sp',pu_tarif='$tarif',pu_mutu='$mutu'
+	function update($id,$nama,$sp,$tarif,$mutu,$satuan){
+		$hsl=$this->db->query("update tbl_parameter_uji set pu_nama='$nama',pu_sp_id='$sp',pu_tarif='$tarif',pu_mutu='$mutu',pu_satuan_id='$satuan'
 			where pu_id='$id'");
 		return $hsl;
 	}

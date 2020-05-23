@@ -105,6 +105,14 @@
           </div> 
           <div class="row">
             <div class="col-md-12">
+              <label for="male">Satuan*</label>
+              <?php
+                        echo form_dropdown('xsatuan', $satuan, $xsatuan, $attribute);
+                    ?><br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-save"></span> Simpan</button>
               <!-- /.form-group -->

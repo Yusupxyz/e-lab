@@ -163,6 +163,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Satuan</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control" id="inputUserName" value="<?php echo $satuan_nama;?>" placeholder="Data" >
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputUserName" class="col-sm-4 control-label">Acuan Metode</label>
                         <div class="col-sm-7">
                           <?php
@@ -174,14 +180,6 @@
                         <label for="inputUserName" class="col-sm-4 control-label">Hasil</label>
                         <div class="col-sm-7">
                             <input type="text" name="xhasil" class="form-control" id="inputUserName" value="<?php echo $parameter_us_hasil;?>" placeholder="Hasil Pengujian Sampel" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-4 control-label">Satuan</label>
-                        <div class="col-sm-7">
-                          <?php
-                                  echo form_dropdown('xsatuan', $satuan, $parameter_us_satuan_id, $attribute);
-                            ?>
                         </div>
                     </div>
                     </div>

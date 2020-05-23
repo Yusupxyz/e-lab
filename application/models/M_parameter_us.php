@@ -12,8 +12,9 @@ class M_parameter_us extends CI_Model{
 	}
 	function get_by_kode($kode){
 		$hsl=$this->db->query("SELECT * FROM tbl_parameter_us
-		LEFT JOIN tbl_acuan_metode ON tbl_parameter_us.parameter_us_metode_id=tbl_acuan_metode.acuan_metode_id LEFT JOIN tbl_satuan ON
-		tbl_parameter_us.parameter_us_satuan_id=tbl_satuan.satuan_id  LEFT JOIN tbl_parameter_uji ON tbl_parameter_us.parameter_us_uji_id=tbl_parameter_uji.pu_id 
+		LEFT JOIN tbl_acuan_metode ON tbl_parameter_us.parameter_us_metode_id=tbl_acuan_metode.acuan_metode_id LEFT JOIN tbl_parameter_uji 
+		ON tbl_parameter_us.parameter_us_uji_id=tbl_parameter_uji.pu_id  LEFT JOIN tbl_satuan ON
+		tbl_parameter_uji.pu_satuan_id=tbl_satuan.satuan_id  
 		LEFT JOIN tbl_sifat_pengujian ON tbl_parameter_uji.pu_sp_id=tbl_sifat_pengujian.sp_id where parameter_us_id='$kode'");
 		return $hsl;
 	}
@@ -22,13 +23,19 @@ class M_parameter_us extends CI_Model{
 		 LEFT JOIN tbl_sifat_pengujian ON sp_id=pu_sp_id where parameter_us_id='$fk'");
 		return $hsl;
 	}
+	function get_by_pu($fk){
+		$hsl=$this->db->query("SELECT * FROM tbl_parameter_us LEFT JOIN tbl_parameter_uji ON pu_id=parameter_us_uji_id 
+		 LEFT JOIN tbl_sifat_pengujian ON sp_id=pu_sp_id LEFT JOIN tbl_satuan ON tbl_satuan.satuan_id=tbl_parameter_uji.pu_satuan_id
+		 LEFT JOIN tbl_acuan_metode ON tbl_acuan_metode.acuan_metode_id=tbl_parameter_us.parameter_us_metode_id where pu_sp_id='$fk'");
+		return $hsl;
+	}
 	function update($id,$nama,$sp,$tarif){
 		$hsl=$this->db->query("update tbl_parameter_us set pu_nama='$nama',pu_sp_id='$sp',pu_tarif='$tarif'
 			where pu_id='$id'");
 		return $hsl;
 	}
-	function update_hasil($id,$metode,$hasil,$satuan){
-		$hsl=$this->db->query("update tbl_parameter_us set parameter_us_metode_id='$metode',parameter_us_satuan_id='$satuan',parameter_us_hasil='$hasil'
+	function update_hasil($id,$metode,$hasil){
+		$hsl=$this->db->query("update tbl_parameter_us set parameter_us_metode_id='$metode',parameter_us_hasil='$hasil'
 			where parameter_us='$id'");
 		return $hsl;
 	}

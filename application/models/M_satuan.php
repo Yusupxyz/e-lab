@@ -27,7 +27,7 @@ class M_satuan extends CI_Model{
 	// get data dropdown
     function dd()
     {
-        $this->db->order_by('satuan_id', 'ASC');
+        $this->db->order_by('satuan_nama', 'ASC');
         $result = $this->db->get('tbl_satuan');
         $dd[''] = '-- Pilih Satuan --';
         if ($result->num_rows() > 0) {

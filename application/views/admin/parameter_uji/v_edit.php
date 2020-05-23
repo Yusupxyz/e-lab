@@ -104,6 +104,14 @@
           </div>        
           <div class="row">
             <div class="col-md-12">
+              <label for="male">Satuan*</label>
+              <?php
+                        echo form_dropdown('xsatuan', $satuan, $data->pu_satuan_id, $attribute);
+                    ?><br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-edit"></span> Ubah</button>
                 <input type="hidden" name="xid" class="form-control" value="<?= $data->pu_id ?>" /><br>

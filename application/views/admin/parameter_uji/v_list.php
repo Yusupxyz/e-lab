@@ -78,6 +78,7 @@
       					<th>Parameter Uji</th>
                 <th>Sifat Pengujian</th>
                 <th>Baku Mutu</th>
+                <th>Satuan</th>
                 <th>Tarif</th>
                 <th style="text-align:right;">Aksi</th>
                 </tr>
@@ -91,12 +92,14 @@
           					   $sp_jenis=$i['sp_jenis'];
           					   $pu_tarif=$i['pu_tarif'];
           					   $pu_mutu=$i['pu_mutu'];
+          					   $satuan_nama=$i['satuan_nama'];
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
                   <td><?php echo $pu_nama;?></td>
                   <td><?php echo $sp_jenis;?></td>
                   <td><?php echo $pu_mutu;?></td>
+                  <td><?php echo $satuan_nama;?></td>
                   <td><?php echo 'Rp '.number_format($pu_tarif);?></td>
                   <td style="text-align:right;">
                         <a class="btn" href="<?php echo base_url().'admin/parameter_uji/get_edit/'.$pu_id;?>"><span class="fa fa-pencil"></span></a>
