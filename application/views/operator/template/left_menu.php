@@ -45,7 +45,19 @@
             </span>
           </a>
         </li>
-        
+        <li class="treeview <?= (isset($pratitle))?($pratitle=='Riwayat'?'active':''):''?>">
+          <a href="#">
+            <i class="fa fa-history"></i>
+            <span>Riwayat</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu ">
+            <li class="<?= $title=='Riwayat Uji Sampel'?'active':''?>"><a href="<?php echo base_url().'operator/riwayat_uji_sampel'?>"><i class="fa fa-clock-o"></i> Riwayat Uji Sampel</a></li>
+            <li class="<?= $title=='Riwayat Transaksi'?'active':''?>"><a href="<?php echo base_url().'operator/riwayat_transaksi'?>"><i class="fa fa-clock-o"></i> Riwayat Transaksi</a></li>
+          </ul>
+        </li>
        
       </ul>
     </section>

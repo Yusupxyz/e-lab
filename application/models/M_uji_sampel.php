@@ -4,7 +4,7 @@ class M_uji_sampel extends CI_Model{
 	function get_all(){
 		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
 		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
-		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id WHERE us_status_id!='3'
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id!='3'
 		ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
@@ -43,6 +43,58 @@ class M_uji_sampel extends CI_Model{
 		tbl_acuan_metode.acuan_metode_id=tbl_pengambilan_sampel.metode_id
 		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id='2' AND us_id='$kode' ORDER BY tbl_us.us_id DESC");
 		return $hsl;
+	}
+	function get_riwayat(){
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id  WHERE us_status_id!='3' AND year(tanggal_pengujian_awal)=year(curdate())
+		ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_riwayat_filter($tgl_awal,$tgl_akhir,$tabel){
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id WHERE us_status_id!='3' AND $tabel BETWEEN '$tgl_awal' AND '$tgl_akhir'
+		ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_riwayat_transaksi(){
+		$hsl=$this->db->query("SELECT * from tbl_transaksi LEFT JOIN tbl_us ON tbl_us.us_id=tbl_transaksi.transaksi_us
+		LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id  WHERE us_status_id!='3' AND year(tanggal_pengujian_awal)=year(curdate())
+		ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_riwayat_transaksi_filter($tgl_awal,$tgl_akhir,$pelanggan,$no){
+		$hsl2='';
+		$hsl3='';
+		$hsl4='';
+		$hsl5='';
+		$hsl="SELECT * from tbl_transaksi LEFT JOIN tbl_us ON tbl_us.us_id=tbl_transaksi.transaksi_us
+		LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id  WHERE us_status_id!='3' ";
+		if ($pelanggan!=null){
+			$hsl2="AND us_anggota='$pelanggan'";
+		}
+		if ($no!=null){
+			$hsl3="AND no_identifikasi='$no'";
+		}
+		if ($tgl_awal!=null && tgl_akhir!=null){
+			$hsl4="AND transaksi_tgl BETWEEN '$tgl_awal' AND '$tgl_akhir'";
+		}elseif($tgl_awal!=null){
+			$hsl4="AND transaksi_tgl= '$tgl_awal'";
+		}elseif($tgl_akhir!=null){
+			$hsl4="AND transaksi_tgl= '".$tgl_akhir."'";
+		}
+		$hsl5="ORDER BY transaksi_tgl ASC";
+		$query=$this->db->query($hsl.$hsl2.$hsl3.$hsl4.$hsl5);
+		return $query;
 	}
 	function statistik_konfirmasi($kode){
 		$hsl=$this->db->query("SELECT count(*) as 'count' FROM tbl_us where us_anggota='$kode' and us_status_id='1'");
@@ -84,6 +136,10 @@ class M_uji_sampel extends CI_Model{
 	}
 	function get_by_kode($kode){
 		$hsl=$this->db->query("SELECT * FROM tbl_us where us_id='$kode'");
+		return $hsl;
+	}
+	function get_is_by_kode($kode){
+		$hsl=$this->db->query("SELECT * FROM tbl_informasi_sampel where is_us_id='$kode'");
 		return $hsl;
 	}
 	function get_anggota($kode){
@@ -164,7 +220,8 @@ class M_uji_sampel extends CI_Model{
 	}
 	
 	function statistik_perbulan($kode){
-        $query = $this->db->query("SELECT DATE_FORMAT(us_tanggal_diterima,'%d') AS tgl,COUNT(*) AS jumlah FROM tbl_us WHERE MONTH(us_tanggal_diterima)=MONTH(CURDATE()) AND us_anggota='$kode' GROUP BY DATE(us_tanggal_diterima)");
+        $query = $this->db->query("SELECT DATE_FORMAT(tanggal_sampel,'%d') AS tgl,COUNT(*) AS jumlah FROM tbl_us LEFT JOIN tbl_informasi_sampel ON
+		tbl_informasi_sampel.is_us_id=tbl_us.us_id WHERE MONTH(tanggal_sampel)=MONTH(CURDATE()) AND us_anggota='$kode' GROUP BY DATE(tanggal_sampel)");
          
         if($query->num_rows() > 0){
             foreach($query->result() as $data){
@@ -184,6 +241,37 @@ class M_uji_sampel extends CI_Model{
             }
             return $hasil;
         }
+	}
+	
+	// get data dropdown
+    function dd()
+    {
+		$this->db->select('year(tanggal_pengujian_awal) as "tahun"');
+		$this->db->group_by('year(tanggal_pengujian_awal)');
+		$this->db->order_by('tahun', 'ASC');
+        $result = $this->db->get('tbl_informasi_sampel');
+        $dd[''] = '-- Pilih Tahun --';
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+                $dd[$row->tahun] = $row->tahun;
+            }
+        }
+        return $dd;
+	}
+	
+	// get data dropdown
+    function dd_no_identifikasi()
+    {
+		$this->db->join('tbl_informasi_sampel', 'tbl_informasi_sampel.is_us_id=tbl_us.us_id','left');
+		$this->db->order_by('no_identifikasi', 'ASC');
+        $result = $this->db->get('tbl_us');
+        $dd[''] = '-- Pilih No. Identifikasi --';
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+                $dd[$row->us_id] = $row->no_identifikasi;
+            }
+        }
+        return $dd;
     }
 
 }

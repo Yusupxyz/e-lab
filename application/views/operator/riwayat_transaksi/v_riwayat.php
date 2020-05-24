@@ -2,7 +2,7 @@
 <?php 
     $query=$this->db->query("SELECT * FROM tbl_inbox WHERE inbox_status='1'");
     $jum_pesan=$query->num_rows();
-    // $query1=$this->db->query("SELECT * FROM tbl_komentar WHERE komentar_Transaksi='0'");
+    // $query1=$this->db->query("SELECT * FROM tbl_komentar WHERE komentar_status='0'");
     // $jum_komentar=$query1->num_rows();
 ?>
 <!DOCTYPE html>
@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url().'assets/font-awesome/css/font-awesome.min.css'?>">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datatables/dataTables.bootstrap.css'?>">
+  <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datepicker/datepicker3.css'?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/dist/css/AdminLTE.min.css'?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -47,13 +48,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Transaksi Uji Sampel
+        Riwayat Transaksi
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Uji Sampel</a></li>
-        <li class="active">Transaksi</li>
+        <li class="active">Riwayat</li>
       </ol>
     </section>
 
@@ -62,21 +62,77 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-           
-          <div class="box">
- 
+          <div class="box-header">
+          <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Filter
+          </a>  &nbsp;&nbsp;
+          <a class="btn btn-primary" href="<?php echo base_url().'operator/riwayat_transaksi'?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Reset Filter
+          </a>
+          <p style="color:red"><b><?= $show; ?></b></p>
+          <form class="form-horizontal" action="<?php echo base_url().'operator/riwayat_transaksi'?>" method="post">
+          <div class="row">
+          <div class="col-xs-4">
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+            <div class="form-group">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>Pelanggan</label>
+                <div class="input-group"  style="padding-left: 20px;">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <?php
+                      echo form_dropdown('pelanggan', $xpelanggan, '', $attribute); 
+                  ?>
+                </div>
+              </div>
+              <div class="form-group">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>No. Identifikasi</label>
+                <div class="input-group"  style="padding-left: 20px;">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <?php
+                      echo form_dropdown('no_identifikasi', $xno, '', $attribute); 
+                  ?>
+                </div>
+              </div>
+              <div class="form-group">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>Pelanggan</label>
+                <div class="input-group"  style="padding-left: 20px;">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <input type="text" class="form-control datepicker" placeholder="Date Start" name="dateStart" readonly required>
+                </div>
+              </div>
+              <div class="form-group">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+                  <label>Tanggal Akhir</label>
+                  <div class="input-group"  style="padding-left: 20px;">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control datepicker" placeholder="Date End" name="dateEnd" readonly required>
+                  </div>
+              </div> 
+              <div class="form-group"  style="padding-left: 20px;">
+                  <button class="btn btn-warning" type="submit" style="width: 99%;" ><i class="fa fa-search"></i> Filter</button>
+              </div> 
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </form>        
+
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-striped" style="font-size:13px;">
                 <thead>
                 <tr>
                 <th>No.</th>
-      					<th>Kode Uji Sampel</th>
-      					<th>Total</th>
-      					<th>Uang Muka</th>
-      					<th>Sisa Pembayaran</th>
-      					<th>Status</th>
-      					<th>Aksi</th>
+      					<th>Pelanggan</th>
+      					<th>Kode Sampel</th>
+      					<th>No. Identifikasi</th>
+      					<th>Detail</th>
+      					<th>Besaran Uang Muka</th>
+      					<th>Tanggal Transaksi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,29 +140,23 @@
           					$no=1;
           					foreach ($data->result_array() as $i) :
           					   $us_id=$i['us_id'];
-          					   $us_kode_sampel=$i['us_kode_sampel'];         
-          					   $us_total=$i['us_total'];                   
-          					   $us_uang_muka=$i['us_uang_muka'];                   
-                       $us_sisa=$i['us_sisa'];    
-                       $us_status_id=$i['us_status_id'];                           
+          					   $anggota_nama=$i['anggota_nama'];
+          					   $us_laporan=$i['us_laporan'];     
+          					   $no_identifikasi=$i['no_identifikasi'];
+          					   $us_total=$i['us_total'];           
+          					   $us_kode_sampel=$i['us_kode_sampel'];    
+          					   $transaksi_tgl=$i['transaksi_tgl'];                      
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
+                  <td><?php echo $anggota_nama;?></td>
                   <td><?php echo $us_kode_sampel;?></td>
-                  <td><?php echo "Rp ".number_format($us_total);?></td>
-                  <td><?php echo "Rp ".number_format($us_uang_muka);?></td>
-                  <td><?php echo "Rp ".number_format($us_sisa);?></td>
-                  <td> <?php if ($us_sisa!=0){ ?>
-                    <span class="alert-warning alert" style="padding:5px">Belum Lunas</span></td>
-                  <?php }else{ ?>
-                    <span class="alert-success alert" style="padding:5px">Lunas</span></td>
-                  <?php } ?>
+                  <td><?php echo $no_identifikasi;?></td>
                   <td>
-                    <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail Transaksi"><span class="fa fa-info"></span> Detail</a>
-                    <?php if ($us_sisa!=0){ ?>
-                      <a <?= ($us_status_id==1)?'disabled':'href="#modalBayar'.$us_id.'"';?>   class="btn btn-xs btn-success"   data-toggle="modal" title="Bayar Transaksi"><span class="fa fa-credit-card"></span> Bayar</a>
-                    <?php } ?>
+                    <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
                   </td>
+                  <td><?php echo 'Rp '.number_format($us_total);?></td>
+                  <td><?php echo $transaksi_tgl;?></td>
                 </tr>
 				<?php endforeach;?>
                 </tbody>
@@ -137,7 +187,7 @@
                     <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 class="modal-title" id="myModalLabel">Detail Transaksi Parameter Uji</h3>
+                        <h3 class="modal-title" id="myModalLabel">Detail Parameter Uji</h3>
                     </div>
                         <div class="modal-body">
                         
@@ -181,73 +231,7 @@
         }
         ?>
  
- <?php foreach ($data->result_array() as $i) :
-               $us_id=$i['us_id'];
-               $us_kode_sampel=$i['us_kode_sampel'];         
-               $us_total=$i['us_total'];                   
-               $us_uang_muka=$i['us_uang_muka'];                   
-               $us_sisa=$i['us_sisa'];                             
-               $us_status_id=$i['us_status_id'];                          
-            ?>
-	<!--Modal Bayar-->
-        <div class="modal fade" id="modalBayar<?php echo $us_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
-                        <h4 class="modal-title" id="myModalLabel">Bayar Transaksi</h4>
-                    </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'operator/uji_sampel/bayar'?>" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                                
-                  <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Total</label>
-                      <div class="col-sm-7">
-                        <input type="text" name="xno" class="form-control" id="inputUserName" value="Rp <?php echo number_format($us_total);?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Uang Muka Minimal</label>
-                      <div class="col-sm-7">
-                      <input type="hidden" n id="dp" value="<?php echo $us_uang_muka;?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                        <input type="text" name="xno" class="form-control" id="xdp" value="Rp <?php echo number_format($us_uang_muka);?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Sisa</label>
-                      <div class="col-sm-7">
-                      <input type="hidden" name="xstatus" class="form-control" id="xsisa" value="<?php echo $us_status_id;?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                        <input type="hidden" name="xsisa" class="form-control" id="sisa" value="<?php echo $us_sisa;?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                        <input type="text" name="x" class="form-control" id="inputUserName" value="Rp <?php echo number_format($us_sisa);?>" placeholder="Masukkan No. Sampel Lab" readonly>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Jenis Pembayaran*</label>
-                      <div class="col-sm-7">
-                      <?php if ($us_sisa==$us_total){
-                              echo form_dropdown('xjenis', $jenis, '', $attribute);
-                      }else{?>
-                          <input type="text" name="xjenis" class="form-control" id="inputUserName" value="Lunas" placeholder="Masukkan No. Sampel Lab" readonly>
-                      <?php } ?>
-                      </div>
-                      </div>
-                  <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Bayar (Rp)</label>
-                      <div class="col-sm-7">
-                        <input type="number" name="xbayar" class="form-control" id="bayar" placeholder="Masukkan Jumlah Pembayaran" min="<?php echo $us_uang_muka;?>" max="<?php echo $us_sisa;?>" required>
-                      </div>
-                  </div>
-                     
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
-                        <button type="submit" name="xid" value="<?php echo $us_id;?>" class="btn btn-primary btn-flat" id="simpan">Bayar</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-	<?php endforeach;?>
+
 <footer class="main-footer">
     <?php $this->load->view('template/copyright'); ?>  
   </footer>
@@ -272,6 +256,8 @@
 <script src="<?php echo base_url().'assets/dist/js/demo.js'?>"></script>
 <script type="text/javascript" src="<?php echo base_url().'assets/plugins/toast/jquery.toast.min.js'?>"></script>
 <!-- page script -->
+<script src="<?php echo base_url().'assets/plugins/datepicker/bootstrap-datepicker.js'?>"></script>
+
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -310,18 +296,6 @@
                     bgColor: '#7EC857'
                 });
         </script>
-     <?php elseif($this->session->flashdata('msg')=='success2'):?>
-        <script type="text/javascript">
-                $.toast({
-                    heading: 'Success',
-                    text: "Informasi Berhasil disimpan ke database. Dan email berhasil terkiriM ketujuan. Silahkan cek kotak keluar gmail Anda.",
-                    showHideTransition: 'slide',
-                    icon: 'success',
-                    hideAfter: false,
-                    position: 'bottom-right',
-                    bgColor: '#7EC857'
-                });
-        </script>
     <?php elseif($this->session->flashdata('msg')=='info'):?>
         <script type="text/javascript">
                 $.toast({
@@ -349,25 +323,15 @@
     <?php else:?>
 
     <?php endif;?>
-<script>
+    <script>
+$(function(){
+  $(".datepicker").datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      todayHighlight: true,
+  });
+ });
 
-</script>
-
-<script>
-$('#transaksi').on('change', function() {
-  if (this.value==1){
-    $("#bayar").attr({
-      "max" : (parseInt(document.getElementById("sisa").value))-1,
-      "min" : document.getElementById("dp").value
-    });
-  }else{
-    $("#bayar").attr({
-      "max" : document.getElementById("sisa").value,
-      "min" : document.getElementById("sisa").value
-    });
-  }
-});
-</script>
-
+    </script>
 </body>
 </html>

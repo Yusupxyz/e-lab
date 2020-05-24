@@ -47,5 +47,18 @@ class M_anggota extends CI_Model{
 		return $hsl;
 	}
 
+	// get data dropdown
+    function dd()
+    {
+        $this->db->order_by('anggota_nama', 'ASC');
+        $result = $this->db->get('tbl_anggota');
+        $dd[''] = '-- Pilih Pelanggan --';
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+                $dd[$row->anggota_id] = $row->anggota_nama;
+            }
+        }
+        return $dd;
+	}
 
 }
