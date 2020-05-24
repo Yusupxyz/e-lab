@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: May 07, 2020 at 02:53 PM
+-- Generation Time: May 24, 2020 at 04:17 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -52,6 +52,7 @@ CREATE TABLE `tbl_anggota` (
   `anggota_nama` varchar(200) NOT NULL,
   `anggota_username` varchar(50) NOT NULL,
   `anggota_password` varchar(50) NOT NULL,
+  `anggota_email` varchar(100) NOT NULL,
   `anggota_alamat` varchar(500) NOT NULL,
   `anggota_personil` varchar(100) NOT NULL,
   `anggota_jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
@@ -63,10 +64,8 @@ CREATE TABLE `tbl_anggota` (
 -- Dumping data for table `tbl_anggota`
 --
 
-INSERT INTO `tbl_anggota` (`anggota_id`, `anggota_nama`, `anggota_username`, `anggota_password`, `anggota_alamat`, `anggota_personil`, `anggota_jenis_kelamin`, `anggota_kontak`, `anggota_level`) VALUES
-(6, 'xyz', 'andi', 'e10adc3949ba59abbe56e057f20f883e', 'Jl. Banda', 's', 'Laki-laki', '+6281258535938', '3'),
-(7, 'PT. ABC', 'abc', 'a141c47927929bc2d1fb6d336a256df4', 'Jl. Banda', 'Yusup', 'Laki-laki', '+6281258535938', '3'),
-(8, 'PT. Miteknologi', 'mitek', '41c51295d90bb753ad845b30713ce5b1', 'Jl. G. Obos', 'Sekar', 'Perempuan', '+6281258535938', '3');
+INSERT INTO `tbl_anggota` (`anggota_id`, `anggota_nama`, `anggota_username`, `anggota_password`, `anggota_email`, `anggota_alamat`, `anggota_personil`, `anggota_jenis_kelamin`, `anggota_kontak`, `anggota_level`) VALUES
+(6, 'xyz', 'andi', 'e10adc3949ba59abbe56e057f20f883e', 'yusufxyx114@gmail.com', 'Jl. Banda', 's', 'Laki-laki', '+6281258535938', '3');
 
 -- --------------------------------------------------------
 
@@ -90,6 +89,29 @@ CREATE TABLE `tbl_inbox` (
 
 INSERT INTO `tbl_inbox` (`inbox_id`, `inbox_nama`, `inbox_email`, `inbox_kontak`, `inbox_pesan`, `inbox_tanggal`, `inbox_status`) VALUES
 (2, 'asa', 'adechandra.ti.upr@gmail.com', NULL, 'asas', '2020-03-10 02:43:52', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_informasi_sampel`
+--
+
+CREATE TABLE `tbl_informasi_sampel` (
+  `is_id` int(11) NOT NULL,
+  `is_us_id` varchar(20) NOT NULL,
+  `tanggal_sampel` date DEFAULT NULL,
+  `no_identifikasi` varchar(100) NOT NULL,
+  `kondisi` enum('Terbuka','Tertutup') DEFAULT NULL,
+  `tanggal_pengujian_awal` date DEFAULT NULL,
+  `tanggal_pengujian_akhir` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_informasi_sampel`
+--
+
+INSERT INTO `tbl_informasi_sampel` (`is_id`, `is_us_id`, `tanggal_sampel`, `no_identifikasi`, `kondisi`, `tanggal_pengujian_awal`, `tanggal_pengujian_akhir`) VALUES
+(1, '5ec68e1a65eda', '2020-05-23', 'A A', 'Tertutup', '2020-05-22', '2020-05-22');
 
 -- --------------------------------------------------------
 
@@ -149,7 +171,7 @@ INSERT INTO `tbl_kontak` (`kontak_id`, `kontak_field`, `kontak_data`) VALUES
 (1, 'Jam Kerja', '07.30 - 16.00 WIB'),
 (2, 'Alamat', 'Jl. Tjilik Riwut Km. 2,5 Palangka Raya'),
 (3, 'No. Telepon', '0536-3239764'),
-(4, 'Email', 'lablingkungan@gmail.com'),
+(4, 'Email', 'lablingkungan.pky@gmail.com'),
 (5, 'Longitude', '-2.1953479'),
 (6, 'Latitude', '113.897856');
 
@@ -202,17 +224,19 @@ CREATE TABLE `tbl_parameter_uji` (
   `pu_id` int(11) NOT NULL,
   `pu_nama` varchar(500) NOT NULL,
   `pu_sp_id` int(11) NOT NULL,
-  `pu_tarif` double NOT NULL
+  `pu_tarif` double NOT NULL,
+  `pu_mutu` varchar(10) NOT NULL,
+  `pu_satuan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_parameter_uji`
 --
 
-INSERT INTO `tbl_parameter_uji` (`pu_id`, `pu_nama`, `pu_sp_id`, `pu_tarif`) VALUES
-(3, 'Temperatur (Suhu)', 1, 10000),
-(7, 'Residu Tersuspensi (TSS)', 1, 23000),
-(8, 'Derajat Keasaman (pH)', 2, 10000);
+INSERT INTO `tbl_parameter_uji` (`pu_id`, `pu_nama`, `pu_sp_id`, `pu_tarif`, `pu_mutu`, `pu_satuan_id`) VALUES
+(3, 'Temperatur (Suhu)', 1, 10000, '30', 2),
+(7, 'Residu Tersuspensi (TSS)', 1, 23000, '30', 1),
+(8, 'Derajat Keasaman (pH)', 2, 10000, '6-9', 3);
 
 -- --------------------------------------------------------
 
@@ -224,19 +248,39 @@ CREATE TABLE `tbl_parameter_us` (
   `parameter_us` int(11) NOT NULL,
   `parameter_us_id` varchar(50) NOT NULL,
   `parameter_us_uji_id` int(11) NOT NULL,
-  `parameter_us_metode_id` int(11) NOT NULL
+  `parameter_us_metode_id` int(11) NOT NULL,
+  `parameter_us_hasil` char(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_parameter_us`
 --
 
-INSERT INTO `tbl_parameter_us` (`parameter_us`, `parameter_us_id`, `parameter_us_uji_id`, `parameter_us_metode_id`) VALUES
-(7, '5e9714fe9e7ee', 8, 0),
-(8, '5eb3a57570201', 3, 0),
-(9, '5eb3a5f0e4b32', 3, 0),
-(10, '5eb3a626d930e', 7, 0),
-(11, '5eb3a64b58139', 3, 0);
+INSERT INTO `tbl_parameter_us` (`parameter_us`, `parameter_us_id`, `parameter_us_uji_id`, `parameter_us_metode_id`, `parameter_us_hasil`) VALUES
+(2, '5ec68e1a65eda', 3, 2, '6'),
+(3, '5ec68e1a65eda', 8, 2, '30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_pengambilan_sampel`
+--
+
+CREATE TABLE `tbl_pengambilan_sampel` (
+  `ps_id` int(11) NOT NULL,
+  `ps_us_id` varchar(20) NOT NULL,
+  `lokasi` text NOT NULL,
+  `titik_pengambilan` varchar(100) NOT NULL DEFAULT '-',
+  `metode_id` int(11) NOT NULL,
+  `rincian` varchar(500) NOT NULL DEFAULT '-'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_pengambilan_sampel`
+--
+
+INSERT INTO `tbl_pengambilan_sampel` (`ps_id`, `ps_us_id`, `lokasi`, `titik_pengambilan`, `metode_id`, `rincian`) VALUES
+(5, '5ec68e1a65eda', 'Outlet 1', '-', 2, '-');
 
 -- --------------------------------------------------------
 
@@ -1267,7 +1311,33 @@ INSERT INTO `tbl_pengunjung` (`pengunjung_id`, `pengunjung_tanggal`, `pengunjung
 (979, '2020-05-04 03:36:21', '::1', 'Chrome'),
 (980, '2020-05-05 05:13:34', '::1', 'Chrome'),
 (981, '2020-05-07 05:11:11', '::1', 'Chrome'),
-(982, '2020-05-07 05:11:11', '::1', 'Chrome');
+(982, '2020-05-07 05:11:11', '::1', 'Chrome'),
+(983, '2020-05-08 06:04:55', '::1', 'Chrome'),
+(984, '2020-05-18 17:14:33', '::1', 'Chrome'),
+(985, '2020-05-21 06:06:23', '::1', 'Chrome'),
+(986, '2020-05-22 05:59:39', '::1', 'Chrome'),
+(987, '2020-05-23 07:07:04', '::1', 'Chrome'),
+(988, '2020-05-24 11:55:44', '::1', 'Chrome');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_satuan`
+--
+
+CREATE TABLE `tbl_satuan` (
+  `satuan_id` int(11) NOT NULL,
+  `satuan_nama` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_satuan`
+--
+
+INSERT INTO `tbl_satuan` (`satuan_id`, `satuan_nama`) VALUES
+(1, 'mg/L'),
+(2, 'C'),
+(3, '-');
 
 -- --------------------------------------------------------
 
@@ -1286,7 +1356,34 @@ CREATE TABLE `tbl_setting` (
 --
 
 INSERT INTO `tbl_setting` (`setting_id`, `setting_nama`, `setting_data`) VALUES
-(1, 'Uang Muka (Persentase)', '10');
+(1, 'Persentase Uang Muka', '10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_setting_email`
+--
+
+CREATE TABLE `tbl_setting_email` (
+  `setting_id` int(11) NOT NULL,
+  `setting_nama` varchar(100) NOT NULL,
+  `setting_data` text NOT NULL,
+  `setting_type` enum('number','text','email','password','url') NOT NULL DEFAULT 'text'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_setting_email`
+--
+
+INSERT INTO `tbl_setting_email` (`setting_id`, `setting_nama`, `setting_data`, `setting_type`) VALUES
+(1, 'SMPT User (Email)', 'yusufxyz114@gmail.com', 'email'),
+(2, 'SMTP Host', 'ssl://smtp.googlemail.com', 'url'),
+(3, 'SMPT Port', '465', 'number'),
+(4, 'SMPT Password', 'zhikanoseishin', 'text'),
+(5, 'Nama Pengirim', 'Admin UPT Laboratorium Lingkungan', 'text'),
+(6, 'Subject Email (Valid)', 'Pemberitahuan Uji Sampel (Valid)', 'text'),
+(7, 'Subject Email (Tidak Valid)', 'Pemberitahuan Uji Sampel (Tidak Valid)', 'text'),
+(8, 'Isi Pesan ', 'Pelanggan yang terhormat, dengan ini kami beritahukan bahwa subjek uji sampel Anda, saat ini statusnya ialah', 'text');
 
 -- --------------------------------------------------------
 
@@ -1337,17 +1434,23 @@ INSERT INTO `tbl_slider` (`slider_id`, `slider_promo`, `slider_foto`, `slider_to
 CREATE TABLE `tbl_status` (
   `status_id` int(11) NOT NULL,
   `status_nama` varchar(100) NOT NULL,
-  `status_class` varchar(100) NOT NULL
+  `status_class` varchar(100) NOT NULL,
+  `status_id_setting_email` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_status`
 --
 
-INSERT INTO `tbl_status` (`status_id`, `status_nama`, `status_class`) VALUES
-(1, 'Menunggu Konfirmasi', 'alert-info'),
-(2, 'Selesai', 'alert-success'),
-(3, 'Proses dibatalkan', 'alert-danger');
+INSERT INTO `tbl_status` (`status_id`, `status_nama`, `status_class`, `status_id_setting_email`) VALUES
+(1, 'Menunggu Konfirmasi', 'alert-warning', 0),
+(2, 'Pengujian Selesai', 'alert-info', 6),
+(3, 'Proses dibatalkan', 'alert-primary', 0),
+(4, 'Tidak Diterima', 'alert-danger', 7),
+(5, 'Diterima', 'alert-success', 6),
+(6, 'Proses Pengujian Sampel', 'alert-success', 6),
+(7, 'Sudah Melakukan Pembayaran', 'alert-success', 0),
+(8, 'Tutup', 'alert-danger', 0);
 
 -- --------------------------------------------------------
 
@@ -1378,10 +1481,179 @@ INSERT INTO `tbl_tentang` (`tentang_id`, `tentang_judul`, `tentang_isi`) VALUES
 
 CREATE TABLE `tbl_transaksi` (
   `transaksi_id` int(11) NOT NULL,
-  `transaksi_us` int(11) NOT NULL,
+  `transaksi_us` varchar(50) NOT NULL,
   `transaksi_bayar` double NOT NULL,
   `transaksi_tgl` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_transaksi`
+--
+
+INSERT INTO `tbl_transaksi` (`transaksi_id`, `transaksi_us`, `transaksi_bayar`, `transaksi_tgl`) VALUES
+(2, '5', 1000, '2020-05-21 07:38:09'),
+(3, '5', 1000, '2020-05-21 07:39:07'),
+(4, '5', 1000, '2020-05-21 07:39:51'),
+(5, '5', 2000, '2020-05-22 06:36:56'),
+(6, '5', 16000, '2020-05-22 14:52:54'),
+(7, '5', 18000, '2020-05-22 14:59:05'),
+(8, '5', 2000, '2020-05-23 12:44:43'),
+(9, '5', 2000, '2020-05-23 12:45:55'),
+(10, '5', 2000, '2020-05-23 12:47:26'),
+(11, '5', 2000, '2020-05-23 12:48:18'),
+(12, '5', 2000, '2020-05-23 12:49:50'),
+(13, '5', 2000, '2020-05-23 12:50:58'),
+(14, '5', 2000, '2020-05-23 12:51:56'),
+(15, '5', 2000, '2020-05-23 12:53:33'),
+(16, '5', 2000, '2020-05-23 12:53:52'),
+(17, '5', 2000, '2020-05-23 12:54:06'),
+(18, '5', 2000, '2020-05-23 12:54:27'),
+(19, '5', 2000, '2020-05-23 12:55:44'),
+(20, '5', 2000, '2020-05-23 12:55:54'),
+(21, '5', 2000, '2020-05-23 12:56:08'),
+(22, '5', 2000, '2020-05-23 12:56:28'),
+(23, '5', 2000, '2020-05-23 12:56:43'),
+(24, '5', 2000, '2020-05-23 12:56:59'),
+(25, '5', 2000, '2020-05-23 12:57:29'),
+(26, '5', 2000, '2020-05-23 13:00:12'),
+(27, '5', 2000, '2020-05-23 13:00:41'),
+(28, '5', 2000, '2020-05-23 13:00:59'),
+(29, '5', 2000, '2020-05-23 13:01:05'),
+(30, '5', 2000, '2020-05-23 13:01:11'),
+(31, '5', 2000, '2020-05-23 13:01:21'),
+(32, '5', 2000, '2020-05-23 13:01:38'),
+(33, '5', 2000, '2020-05-23 13:01:49'),
+(34, '5', 2000, '2020-05-23 13:01:57'),
+(35, '5', 2000, '2020-05-23 13:02:33'),
+(36, '5', 2000, '2020-05-23 13:03:25'),
+(37, '5', 2000, '2020-05-23 13:03:34'),
+(38, '5', 2000, '2020-05-23 13:03:50'),
+(39, '5', 2000, '2020-05-23 13:04:17'),
+(40, '5', 2000, '2020-05-23 13:05:42'),
+(41, '5', 2000, '2020-05-23 13:06:43'),
+(42, '5', 2000, '2020-05-23 13:07:02'),
+(43, '5', 2000, '2020-05-23 13:07:12'),
+(44, '5', 2000, '2020-05-23 13:07:39'),
+(45, '5', 2000, '2020-05-23 13:09:02'),
+(46, '5', 2000, '2020-05-23 13:09:18'),
+(47, '5', 2000, '2020-05-23 13:09:54'),
+(48, '5', 2000, '2020-05-23 13:11:09'),
+(49, '5', 2000, '2020-05-23 13:13:28'),
+(50, '5', 2000, '2020-05-23 13:13:37'),
+(51, '5', 2000, '2020-05-23 13:14:40'),
+(52, '5', 2000, '2020-05-23 13:14:57'),
+(53, '5', 2000, '2020-05-23 13:15:12'),
+(54, '5', 2000, '2020-05-23 13:15:20'),
+(55, '5', 2000, '2020-05-23 13:15:29'),
+(56, '5', 2000, '2020-05-23 13:15:39'),
+(57, '5', 2000, '2020-05-23 13:15:45'),
+(58, '5', 2000, '2020-05-23 13:16:09'),
+(59, '5', 2000, '2020-05-23 13:16:14'),
+(60, '5', 2000, '2020-05-23 13:16:23'),
+(61, '5', 2000, '2020-05-23 13:16:33'),
+(62, '5', 2000, '2020-05-23 13:16:41'),
+(63, '5', 2000, '2020-05-23 13:16:55'),
+(64, '5', 2000, '2020-05-23 13:17:01'),
+(65, '5', 2000, '2020-05-23 13:17:07'),
+(66, '5', 2000, '2020-05-23 13:31:00'),
+(67, '5', 2000, '2020-05-23 13:31:40'),
+(68, '5', 2000, '2020-05-23 13:31:54'),
+(69, '5', 2000, '2020-05-23 13:32:00'),
+(70, '5', 2000, '2020-05-23 13:32:26'),
+(71, '5', 2000, '2020-05-23 13:32:38'),
+(72, '5', 2000, '2020-05-23 13:33:26'),
+(73, '5', 2000, '2020-05-23 13:34:01'),
+(74, '5', 2000, '2020-05-23 13:34:20'),
+(75, '5', 2000, '2020-05-23 13:34:44'),
+(76, '5', 2000, '2020-05-23 13:34:58'),
+(77, '5', 2000, '2020-05-23 13:35:28'),
+(78, '5', 2000, '2020-05-23 13:36:04'),
+(79, '5', 2000, '2020-05-23 13:36:38'),
+(80, '5', 2000, '2020-05-23 13:36:47'),
+(81, '5', 2000, '2020-05-23 13:36:56'),
+(82, '5', 2000, '2020-05-23 13:37:03'),
+(83, '5', 2000, '2020-05-23 13:37:41'),
+(84, '5', 2000, '2020-05-23 13:38:59'),
+(85, '5', 2000, '2020-05-23 13:39:14'),
+(86, '5', 2000, '2020-05-23 13:39:36'),
+(87, '5', 2000, '2020-05-23 13:40:07'),
+(88, '5', 2000, '2020-05-23 13:40:20'),
+(89, '5', 2000, '2020-05-23 13:40:41'),
+(90, '5', 2000, '2020-05-23 13:41:09'),
+(91, '5', 2000, '2020-05-23 13:41:18'),
+(92, '5', 2000, '2020-05-23 13:41:53'),
+(93, '5', 2000, '2020-05-23 13:42:02'),
+(94, '5', 2000, '2020-05-23 13:42:21'),
+(95, '5', 2000, '2020-05-23 13:42:42'),
+(96, '5', 2000, '2020-05-23 13:42:53'),
+(97, '5', 2000, '2020-05-23 13:43:03'),
+(98, '5', 2000, '2020-05-23 13:43:15'),
+(99, '5', 2000, '2020-05-23 13:43:33'),
+(100, '5', 2000, '2020-05-23 13:43:57'),
+(101, '5', 2000, '2020-05-23 13:44:07'),
+(102, '5', 2000, '2020-05-23 13:44:16'),
+(103, '5', 2000, '2020-05-23 13:45:05'),
+(104, '5', 2000, '2020-05-23 13:45:14'),
+(105, '5', 2000, '2020-05-23 13:45:20'),
+(106, '5', 2000, '2020-05-23 13:45:33'),
+(107, '5', 2000, '2020-05-23 13:45:40'),
+(108, '5', 2000, '2020-05-23 13:46:03'),
+(109, '5', 2000, '2020-05-23 13:46:11'),
+(110, '5', 2000, '2020-05-23 13:46:19'),
+(111, '5', 2000, '2020-05-23 13:46:31'),
+(112, '5', 2000, '2020-05-23 13:46:41'),
+(113, '5', 2000, '2020-05-23 13:46:55'),
+(114, '5', 2000, '2020-05-23 13:47:02'),
+(115, '5', 2000, '2020-05-23 13:47:09'),
+(116, '5', 2000, '2020-05-23 13:47:38'),
+(117, '5', 2000, '2020-05-23 13:47:49'),
+(118, '5', 2000, '2020-05-23 13:47:56'),
+(119, '5', 2000, '2020-05-23 13:49:07'),
+(120, '5', 2000, '2020-05-23 13:56:58'),
+(121, '5', 2000, '2020-05-23 13:58:05'),
+(122, '5', 2000, '2020-05-23 13:58:28'),
+(123, '5', 2000, '2020-05-23 13:58:35'),
+(124, '5', 2000, '2020-05-23 13:58:58'),
+(125, '5', 2000, '2020-05-23 13:59:06'),
+(126, '5', 2000, '2020-05-23 14:00:05'),
+(127, '5', 2000, '2020-05-23 14:00:19'),
+(128, '5', 2000, '2020-05-23 14:00:42'),
+(129, '5', 2000, '2020-05-23 14:01:01'),
+(130, '5', 2000, '2020-05-23 14:03:03'),
+(131, '5', 2000, '2020-05-23 14:03:16'),
+(132, '5', 2000, '2020-05-23 14:03:29'),
+(133, '5', 2000, '2020-05-23 14:03:40'),
+(134, '5', 2000, '2020-05-23 14:03:56'),
+(135, '5', 2000, '2020-05-23 14:04:06'),
+(136, '5', 2000, '2020-05-23 14:04:16'),
+(137, '5', 2000, '2020-05-23 14:04:24'),
+(138, '5', 2000, '2020-05-23 14:05:08'),
+(139, '5', 2000, '2020-05-23 14:05:23'),
+(140, '5', 2000, '2020-05-23 14:05:38'),
+(141, '5', 2000, '2020-05-23 14:05:47'),
+(142, '5', 2000, '2020-05-23 14:06:21'),
+(143, '5', 2000, '2020-05-23 14:06:37'),
+(144, '5', 2000, '2020-05-23 14:07:00'),
+(145, '5', 2000, '2020-05-23 14:07:12'),
+(146, '5', 2000, '2020-05-23 14:07:26'),
+(147, '5', 2000, '2020-05-23 14:07:41'),
+(148, '5', 2000, '2020-05-23 14:07:59'),
+(149, '5', 2000, '2020-05-23 14:08:14'),
+(150, '5', 2000, '2020-05-23 14:08:30'),
+(151, '5', 2000, '2020-05-23 14:09:52'),
+(152, '5', 2000, '2020-05-23 14:10:38'),
+(153, '5', 2000, '2020-05-23 14:11:11'),
+(154, '5', 2000, '2020-05-23 14:11:35'),
+(155, '5', 2000, '2020-05-23 14:11:48'),
+(156, '5', 2000, '2020-05-23 14:13:14'),
+(157, '5', 2000, '2020-05-23 14:13:40'),
+(158, '5', 2000, '2020-05-23 14:13:54'),
+(159, '5', 2000, '2020-05-23 14:14:42'),
+(160, '5', 2000, '2020-05-23 14:16:56'),
+(161, '5', 2000, '2020-05-23 14:17:43'),
+(162, '5', 2000, '2020-05-23 14:18:16'),
+(163, '5', 16000, '2020-05-24 12:01:09'),
+(164, '5', 16000, '2020-05-24 12:01:09');
 
 -- --------------------------------------------------------
 
@@ -1395,18 +1667,23 @@ CREATE TABLE `tbl_us` (
   `us_kode_sampel` varchar(100) NOT NULL,
   `us_fk_js` int(11) NOT NULL,
   `us_fk_jw` int(11) NOT NULL,
-  `us_tanggal_diterima` date NOT NULL,
-  `us_selesai` date NOT NULL,
   `us_pengambilan` enum('Pelanggan','Laboratorium') NOT NULL,
   `us_total` double NOT NULL,
   `us_uang_muka` double NOT NULL,
   `us_sisa` double NOT NULL,
+  `us_file` text NOT NULL,
   `us_catatan` text NOT NULL,
+  `us_catatan_status` text NOT NULL,
   `us_status_id` int(11) NOT NULL DEFAULT '1',
-  `us_laporan` varchar(200) NOT NULL,
-  `us_no_sampel` varchar(100) NOT NULL,
-  `us_metode` int(11) NOT NULL
+  `us_laporan` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_us`
+--
+
+INSERT INTO `tbl_us` (`us_id`, `us_anggota`, `us_kode_sampel`, `us_fk_js`, `us_fk_jw`, `us_pengambilan`, `us_total`, `us_uang_muka`, `us_sisa`, `us_file`, `us_catatan`, `us_catatan_status`, `us_status_id`, `us_laporan`) VALUES
+('5ec68e1a65eda', 6, 'Air Limbah', 1, 1, 'Laboratorium', 20000, 2000, 0, '3ac2f33806ba4e013bfe3642ed69f1fa.pdf', '', 'Transaksi berhasil, uji sampel memasuki tahap proses.', 2, 'doc5ec68e1a65eda.pdf');
 
 --
 -- Indexes for dumped tables
@@ -1429,6 +1706,12 @@ ALTER TABLE `tbl_anggota`
 --
 ALTER TABLE `tbl_inbox`
   ADD PRIMARY KEY (`inbox_id`);
+
+--
+-- Indexes for table `tbl_informasi_sampel`
+--
+ALTER TABLE `tbl_informasi_sampel`
+  ADD PRIMARY KEY (`is_id`);
 
 --
 -- Indexes for table `tbl_jenis_sampel`
@@ -1475,6 +1758,12 @@ ALTER TABLE `tbl_parameter_us`
   ADD PRIMARY KEY (`parameter_us`);
 
 --
+-- Indexes for table `tbl_pengambilan_sampel`
+--
+ALTER TABLE `tbl_pengambilan_sampel`
+  ADD PRIMARY KEY (`ps_id`);
+
+--
 -- Indexes for table `tbl_pengguna`
 --
 ALTER TABLE `tbl_pengguna`
@@ -1487,9 +1776,21 @@ ALTER TABLE `tbl_pengunjung`
   ADD PRIMARY KEY (`pengunjung_id`);
 
 --
+-- Indexes for table `tbl_satuan`
+--
+ALTER TABLE `tbl_satuan`
+  ADD PRIMARY KEY (`satuan_id`);
+
+--
 -- Indexes for table `tbl_setting`
 --
 ALTER TABLE `tbl_setting`
+  ADD PRIMARY KEY (`setting_id`);
+
+--
+-- Indexes for table `tbl_setting_email`
+--
+ALTER TABLE `tbl_setting_email`
   ADD PRIMARY KEY (`setting_id`);
 
 --
@@ -1542,13 +1843,19 @@ ALTER TABLE `tbl_acuan_metode`
 -- AUTO_INCREMENT for table `tbl_anggota`
 --
 ALTER TABLE `tbl_anggota`
-  MODIFY `anggota_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `anggota_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_inbox`
 --
 ALTER TABLE `tbl_inbox`
   MODIFY `inbox_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_informasi_sampel`
+--
+ALTER TABLE `tbl_informasi_sampel`
+  MODIFY `is_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_jenis_sampel`
@@ -1590,7 +1897,13 @@ ALTER TABLE `tbl_parameter_uji`
 -- AUTO_INCREMENT for table `tbl_parameter_us`
 --
 ALTER TABLE `tbl_parameter_us`
-  MODIFY `parameter_us` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `parameter_us` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_pengambilan_sampel`
+--
+ALTER TABLE `tbl_pengambilan_sampel`
+  MODIFY `ps_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengguna`
@@ -1602,13 +1915,25 @@ ALTER TABLE `tbl_pengguna`
 -- AUTO_INCREMENT for table `tbl_pengunjung`
 --
 ALTER TABLE `tbl_pengunjung`
-  MODIFY `pengunjung_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=983;
+  MODIFY `pengunjung_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
+
+--
+-- AUTO_INCREMENT for table `tbl_satuan`
+--
+ALTER TABLE `tbl_satuan`
+  MODIFY `satuan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_setting`
 --
 ALTER TABLE `tbl_setting`
   MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tbl_setting_email`
+--
+ALTER TABLE `tbl_setting_email`
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_sifat_pengujian`
@@ -1626,7 +1951,7 @@ ALTER TABLE `tbl_slider`
 -- AUTO_INCREMENT for table `tbl_status`
 --
 ALTER TABLE `tbl_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_tentang`
@@ -1638,7 +1963,7 @@ ALTER TABLE `tbl_tentang`
 -- AUTO_INCREMENT for table `tbl_transaksi`
 --
 ALTER TABLE `tbl_transaksi`
-  MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- Constraints for dumped tables
