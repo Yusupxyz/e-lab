@@ -96,6 +96,58 @@ class M_uji_sampel extends CI_Model{
 		$query=$this->db->query($hsl.$hsl2.$hsl3.$hsl4.$hsl5);
 		return $query;
 	}
+	function get_riwayat_anggota($id){
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id  WHERE us_status_id!='3' AND year(tanggal_pengujian_awal)=year(curdate()) AND us_anggota='$id'
+		ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_riwayat_anggota_filter($id,$tgl_awal,$tgl_akhir,$tabel){
+		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id WHERE us_status_id!='3' AND $tabel BETWEEN '$tgl_awal' AND '$tgl_akhir' AND us_anggota='$id'
+		ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_riwayat_transaksi_anggota($id){
+		$hsl=$this->db->query("SELECT * from tbl_transaksi LEFT JOIN tbl_us ON tbl_us.us_id=tbl_transaksi.transaksi_us
+		LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id  WHERE us_status_id!='3' AND year(tanggal_pengujian_awal)=year(curdate()) AND us_anggota='$id'
+		ORDER BY tbl_us.us_id DESC");
+		return $hsl;
+	}
+	function get_riwayat_transaksi_filter_anggota($id,$tgl_awal,$tgl_akhir,$pelanggan,$no){
+		$hsl2='';
+		$hsl3='';
+		$hsl4='';
+		$hsl5='';
+		$hsl="SELECT * from tbl_transaksi LEFT JOIN tbl_us ON tbl_us.us_id=tbl_transaksi.transaksi_us
+		LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
+		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
+		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_anggota ON 
+		us_anggota=anggota_id  WHERE us_status_id!='3' AND us_anggota='$id' ";
+		if ($pelanggan!=null){
+			$hsl2="AND us_anggota='$pelanggan'";
+		}
+		if ($no!=null){
+			$hsl3="AND no_identifikasi='$no'";
+		}
+		if ($tgl_awal!=null && tgl_akhir!=null){
+			$hsl4="AND transaksi_tgl BETWEEN '$tgl_awal' AND '$tgl_akhir'";
+		}elseif($tgl_awal!=null){
+			$hsl4="AND transaksi_tgl= '$tgl_awal'";
+		}elseif($tgl_akhir!=null){
+			$hsl4="AND transaksi_tgl= '".$tgl_akhir."'";
+		}
+		$hsl5="ORDER BY transaksi_tgl ASC";
+		$query=$this->db->query($hsl.$hsl2.$hsl3.$hsl4.$hsl5);
+		return $query;
+	}
 	function statistik_konfirmasi($kode){
 		$hsl=$this->db->query("SELECT count(*) as 'count' FROM tbl_us where us_anggota='$kode' and us_status_id='1'");
 		return $hsl;
