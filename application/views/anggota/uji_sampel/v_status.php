@@ -91,7 +91,8 @@
           					   $us_kode_sampel=$i['us_kode_sampel'];
           					   $js_nama=$i['js_nama'];              
           					   $jw_nama=$i['jw_nama'];             
-          					   $us_catatan_status=$i['us_catatan_status'];                           
+          					   $us_catatan_status=$i['us_catatan_status']; 
+          					   $us_file=$i['us_file'];                            
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
@@ -103,11 +104,15 @@
                   <td>
                     <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
                   </td>
-                  <td style="text-align:right;">
-                        <a class="btn" href="<?php echo base_url().'anggota/uji_sampel/get_edit/'.$us_id;?>"><span class="fa fa-pencil"></span></a>
-                        <?php if ($us_status_id=='1'){ ?>
-                          <a class="btn" href="<?php echo base_url().'anggota/uji_sampel/batal/'.$us_id;?>"><span class="fa fa-ban"></span></a>
-                        <?php } ?>
+                  <td style="text-align:center;">
+                    <?php if ($us_status_id!='2' && $us_status_id!='6' && $us_status_id!='4'){ ?>
+                      <a class="btn" href="<?php echo base_url().'anggota/uji_sampel/get_edit/'.$us_id;?>"><span class="fa fa-pencil"></span></a>
+                    <?php }else{
+                      echo "-";
+                    }
+                    if ($us_status_id=='1'){ ?>
+                        <a class="btn" href="<?php echo base_url().'anggota/uji_sampel/batal/'.$us_id.'/'.$us_file;?>"><span class="fa fa-ban"></span></a>
+                    <?php } ?>
                   </td>
                 </tr>
 				<?php endforeach;?>

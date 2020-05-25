@@ -14,6 +14,7 @@ class Dashboard extends CI_Controller{
 			$x['visitor'] = $this->m_uji_sampel->statistik_perbulan($anggota);
 			// echo $this->db->last_query();
 			$x['konfirmasi'] = $this->m_uji_sampel->statistik_konfirmasi($anggota)->row()->count;
+			$x['diterima'] = $this->m_uji_sampel->statistik_diterima($anggota)->row()->count;
 			$x['diproses'] = $this->m_uji_sampel->statistik_diproses($anggota)->row()->count;
 			$x['selesai'] = $this->m_uji_sampel->statistik_selesai($anggota)->row()->count;
 			$x['title'] = 'Beranda';

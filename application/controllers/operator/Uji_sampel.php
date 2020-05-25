@@ -25,6 +25,7 @@ class Uji_sampel extends CI_Controller{
 
 
 	function index(){
+		$this->m_uji_sampel->update_status_notif();
 		$x['data']=$this->m_uji_sampel->get_all_proses();
 		$x['pratitle'] = 'Kelola Uji Sampel';
 		$x['title']="Kelola Status";
@@ -390,14 +391,14 @@ class Uji_sampel extends CI_Controller{
 	}
 
 	private function footer($pdf){
-		$date = date('d-m-Y', time());
+		$date = date('Y-m-d', time());
 		$pdf->SetFont('Helvetica','','12');
 		$pdf->Cell(1);
 		$pdf->Cell(0,3,'',0,1,'L');
 		$pdf->Cell(1);
 		$pdf->Cell(0,5,'Uang tersebut diatas diterima di Palangka Raya',0,1,'L');
 		$pdf->Cell(1);
-		$pdf->Cell(0,5,'Tanggal, '.$date,0,1,'L');
+		$pdf->Cell(0,5,'Tanggal, '.date_indo($date),0,1,'L');
 		$pdf->Cell(1);
 		$pdf->Cell(0,3,'',0,1,'L');
 		$pdf->Cell(100,5,'Penerima,',0,0,'C');

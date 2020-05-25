@@ -215,7 +215,10 @@ class Uji_sampel extends CI_Controller{
 
 	function batal(){
 		$kode=$this->uri->segment(4);
+		$pdf=$this->uri->segment(5);
+		$path=FCPATH.'assets/surat_permohonan/c0bd7ad12fa082d1dc81f1e4d2df98fc - Copy.pdf';
 		if ($this->m_uji_sampel->batal($kode)){
+			unlink($path);
 			echo $this->session->set_flashdata('msg','success');
 			echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
 		}else{

@@ -63,8 +63,10 @@
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<img src="<?php echo base_url().'assets/kepala/001-man.png'?>"  onerror="this.src='<?php echo base_url().'assets/kepala/001-man.png'?>">
-					<h3>Nama</h3>
-					<p>Kepala UPT Laboratorium Lingkungan</p>
+					<h3>Bowo Budiarso, ST</h3>
+					<p>Kepala UPTD. Laboratorium Lingkungan
+					<br>
+					Dinas Lingkungan Hidup Kota Palangka Raya</p>
 				</div>
 				<div class="col-md-8 text-center item-block">
 					<h2>Sambutan Pimpinan</h2>

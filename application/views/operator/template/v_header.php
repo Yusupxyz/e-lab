@@ -1,6 +1,6 @@
 <!--Counter Inbox-->
 <?php 
-    $query=$this->db->query("SELECT * FROM tbl_inbox WHERE inbox_status='1'");
+    $query=$this->db->query("SELECT * FROM tbl_us WHERE us_notif_status='0'");
     $jum_pesan=$query->num_rows();
 ?>
 <header class="main-header">
@@ -29,35 +29,35 @@
               <span class="label label-success"><?php echo $jum_pesan;?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Anda memiliki <?php echo $jum_pesan;?> pesan</li>
+              <li class="header">Anda memiliki <?php echo $jum_pesan;?> uji sampel baru</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                 <?php 
-                    $inbox=$this->db->query("SELECT tbl_inbox.*,DATE_FORMAT(inbox_tanggal,'%d %M %Y') AS tanggal FROM tbl_inbox WHERE inbox_status='1' ORDER BY inbox_id DESC LIMIT 5");
+                    $inbox=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_anggota ON tbl_anggota.anggota_id=tbl_us.us_anggota WHERE us_notif_status='0' ORDER BY us_id DESC LIMIT 5");
                     foreach ($inbox->result_array() as $in) :
-                        $inbox_id=$in['inbox_id'];
-                        $inbox_nama=$in['inbox_nama'];
-                        $inbox_tgl=$in['tanggal'];
-                        $inbox_pesan=$in['inbox_pesan'];
+                        $us_id=$in['us_id'];
+                        $anggota_nama=$in['anggota_nama'];
+                        $us_kode_sampel=$in['us_kode_sampel'];
+                        $us_total=$in['us_total'];
                 ?>
                   <li><!-- start message -->
-                    <a href="<?php echo base_url().'admin/inbox'?>">
+                    <a href="<?php echo base_url().'admin/uji_sampel'?>">
                       <div class="pull-left">
                         <img src="<?php echo base_url().'assets/images/user_blank.png'?>" class="img-circle" alt="User Image">
                       </div>
                       <h4>
-                        <?php echo $inbox_nama;?>
-                        <small><i class="fa fa-clock-o"></i> <?php echo $inbox_tgl;?></small>
+                        <?php echo $anggota_nama;?>
+                        <small><i>Rp <?php echo number_format($us_total).',-';?></i> </small>
                       </h4>
-                      <p><?php echo $inbox_pesan;?></p>
+                      <p><?php echo $us_kode_sampel;?></p>
                     </a>
                   </li>
                   <!-- end message -->
                   <?php endforeach;?>
                 </ul>
               </li>
-              <li class="footer"><a href="<?php echo base_url().'admin/inbox'?>">Lihat Semua Pesan</a></li>
+              <li class="footer"><a href="<?php echo base_url().'operator/uji_sampel'?>">Lihat Semua Uji Sampel</a></li>
             </ul>
           </li>
           
@@ -90,7 +90,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="<?php echo base_url().'administrator/logout'?>" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo base_url().'administrator/logout'?>" class="btn btn-default btn-flat">Keluar</a>
                 </div>
               </li>
             </ul>

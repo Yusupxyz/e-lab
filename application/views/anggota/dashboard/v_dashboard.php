@@ -63,7 +63,7 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-flask"></i></span>
+            <span class="info-box-icon bg-orange"><i class="fa fa-clock-o"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Menunggu Konfirmasi</span>
               <span class="info-box-number"><?php echo  $konfirmasi;?></span>
@@ -73,10 +73,23 @@
           </div>
           <!-- /.info-box -->
         </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-check"></i></span>
+            <div class="info-box-content">
+            <span class="info-box-text">Diterima</span>
+            <span class="info-box-number"><?php echo  $diterima;?></span>
+            <span class="info-box-text">Uji Sampel</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
      <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-firefox"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-flask"></i></span>
             <div class="info-box-content">
             <span class="info-box-text">Diproses</span>
             <span class="info-box-number"><?php echo  $diproses;?></span>
@@ -93,7 +106,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-bug"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-list-alt"></i></span>
             <div class="info-box-content">
             <span class="info-box-text">Selesai</span>
             <span class="info-box-number"><?php echo  $selesai;?></span>

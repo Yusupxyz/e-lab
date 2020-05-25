@@ -109,8 +109,8 @@
                   <td><?php echo $no_identifikasi;?></td>
                   <td><?php echo $js_nama;?></td>
                   <td><?php echo $kondisi;?></td>
-                  <td><?php echo $tanggal_sampel;?></td>
-                  <td><?php echo $tanggal_pengujian_awal.'<i> s.d. </i>'.$tanggal_pengujian_akhir;?></td>
+                  <td><?php echo date_indo($tanggal_sampel);?></td>
+                  <td><?php echo date_indo($tanggal_pengujian_awal).'<i> - </i>'.date_indo($tanggal_pengujian_akhir);?></td>
                   <td style="text-align:center;">
                     <?php if ($us_pengambilan=='Pelanggan') { ?>
                       <a  class="btn" data-toggle="modal" <?= ($us_status_id!=1)?' data-target="#ModalEdit'.$us_id.'"':'disabled' ?>  ><span class="fa fa-pencil"></span></a>

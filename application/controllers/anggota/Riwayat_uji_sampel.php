@@ -27,7 +27,7 @@ class Riwayat_uji_sampel extends CI_Controller{
 			}else{
 				$tabel="Tanggal Selesai Pengujian";
 			}
-			$x['show']=$tabel.' dari '.$tgl_awal.' <i>s/d</i> '.$tgl_akhir;
+			$x['show']=$tabel.' dari '.date_indo($tgl_awal).' - '.date_indo($tgl_akhir);
 		}else{
 			$x['data']=$this->m_uji_sampel->get_riwayat_anggota($anggota);
 			$x['show']='';

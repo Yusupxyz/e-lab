@@ -64,6 +64,7 @@ class Laporan extends CI_Controller{
 		$name='doc'.$kode.'.pdf';
 		$path='C:/xampp/htdocs/e-lab/assets/hasil_pengujian/'.$name;
 		$pdf->Output('F',$path);
+		// $pdf->Output('I',$path);
 		if($this->m_uji_sampel->update_laporan($kode,$name)){
 			echo $this->session->set_flashdata('msg','success');
 			echo "<script>window.top.location.href = '".base_url()."operator/laporan';</script>";
@@ -150,11 +151,11 @@ class Laporan extends CI_Controller{
 		$pdf->Cell(4);
 		$pdf->Cell(0,5,'2.4. Tanggal diterima',0,0,'L');
 		$pdf->Cell(-123);
-		$pdf->Cell(0,5,': '.$sampel->tanggal_sampel,0,1,'L');
+		$pdf->Cell(0,5,': '.date_indo($sampel->tanggal_sampel),0,1,'L');
 		$pdf->Cell(4);
 		$pdf->Cell(0,5,'2.5. Tanggal pengujian',0,0,'L');
 		$pdf->Cell(-123);
-		$pdf->Cell(0,5,': '.$sampel->tanggal_pengujian_awal.' sampai '.$sampel->tanggal_pengujian_akhir,0,1,'L');
+		$pdf->Cell(0,5,': '.date_indo($sampel->tanggal_pengujian_awal).' - '.date_indo($sampel->tanggal_pengujian_akhir),0,1,'L');
 	}
 
 	private function informasi_pengambilan($pdf,$id,$laporan){
@@ -168,7 +169,7 @@ class Laporan extends CI_Controller{
 		$pdf->SetFont('Times','','12');
 		$pdf->Cell(0,5,'3.1. Tanggal pengambilan sampel',0,0,'L');
 		$pdf->Cell(-85);
-		$pdf->Cell(0,5,': '.$pengambilan->tanggal_sampel,0,1,'L');
+		$pdf->Cell(0,5,': '.date_indo($pengambilan->tanggal_sampel),0,1,'L');
 		$pdf->Cell(4); 
 		$pdf->Cell(0,5,'3.2. Lokasi pengambilan sampel',0,0,'L');
 		$pdf->Cell(-85);
@@ -262,12 +263,12 @@ class Laporan extends CI_Controller{
 	}
 
 	private function footer($pdf){
-		$date = date('d-m-Y', time());
+		$date = date('Y-m-d', time());
 		$pdf->SetFont('Times','','12');
 		$pdf->Cell(1);
 		$pdf->Cell(0,20,'',0,1,'R');
 		$pdf->Cell(100);
-		$pdf->Cell(0,5,'Palangka Raya, '.$date,0,1,'C');
+		$pdf->Cell(0,5,'Palangka Raya, '.date_indo($date),0,1,'C');
 		$pdf->Cell(100);
 		$pdf->Cell(0,5,'Kepala UPTD. Laboratorium Lingkungan',0,1,'C');
 		$pdf->Cell(100);

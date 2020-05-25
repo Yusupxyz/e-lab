@@ -28,11 +28,11 @@ class Riwayat_transaksi extends CI_Controller{
 				$hsl3="| No. identifikasi = ".$this->m_uji_sampel->get_is_by_kode($no)->row()->no_identifikasi." ";
 			}
 			if ($tgl_awal!=null && tgl_akhir!=null){
-				$hsl4="| Tanggal ".$tgl_awal." <i>s/d</i> ".$tgl_akhir." ";
+				$hsl4="| Tanggal ".date_indo($tgl_awal)." - ".date_indo($tgl_akhir)." ";
 			}elseif($tgl_awal!=null){
-				$hsl4="| Tanggal ".$tgl_awal." ";
+				$hsl4="| Tanggal ".date_indo($tgl_awal)." ";
 			}elseif($tgl_akhir!=null){
-				$hsl4="| Tanggal ".$tgl_akhir." ";
+				$hsl4="| Tanggal ".date_indo($tgl_akhir)." ";
 			}
 			$no=",dengan nomor identifikasi ".$no;
 			$tgl=

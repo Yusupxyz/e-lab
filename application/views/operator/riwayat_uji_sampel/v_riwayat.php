@@ -147,8 +147,8 @@
                   <td><?php echo $anggota_nama;?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $no_identifikasi;?></td>
-                  <td><?php echo $tanggal_sampel;?></td>
-                  <td><?php echo $tanggal_pengujian_awal.'<i> s.d. </i>'.$tanggal_pengujian_akhir;?></td>
+                  <td><?php echo date_indo($tanggal_sampel);?></td>
+                  <td><?php echo date_indo($tanggal_pengujian_awal).'<i> - </i>'.date_indo($tanggal_pengujian_akhir);?></td>
                   <td>
                     <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
                   </td>

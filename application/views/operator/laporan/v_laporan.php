@@ -99,7 +99,7 @@
                   </td>
                   <?php }elseif ($us_laporan!=null){ ?>
                   <td style="text-align:center;">
-                        <a class="btn btn-xs btn-warning"  href="<?php echo base_url().'assets/hasil_pengujian/'.$us_laporan;?>" title="Buat Laporan PDF"><span class="fa fa-file-text"></span> Lihat Laporan PDF</a>
+                        <a class="btn btn-xs btn-warning" target="_blank"  href="<?php echo base_url().'assets/hasil_pengujian/'.$us_laporan;?>" title="Buat Laporan PDF"><span class="fa fa-file-text"></span> Lihat Laporan PDF</a>
                   </td>
                   <?php } ?>
                 </tr>

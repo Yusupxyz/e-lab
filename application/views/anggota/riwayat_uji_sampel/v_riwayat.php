@@ -38,10 +38,10 @@
 <div class="wrapper">
 
    <?php 
-    $this->load->view('operator/template/v_header');
+    $this->load->view('anggota/template/v_header');
     ?>
 <!-- Left side column. contains the logo and sidebar -->
-  <?php $this->load->view('operator/template/left_menu'); ?>  
+  <?php $this->load->view('anggota/template/left_menu'); ?>  
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -66,12 +66,12 @@
           <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Filter Berdasar Waktu
           </a>  &nbsp;&nbsp;
-          <a class="btn btn-primary" href="<?php echo base_url().'operator/riwayat_uji_sampel'?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+          <a class="btn btn-primary" href="<?php echo base_url().'anggota/riwayat_uji_sampel'?>" role="button" aria-expanded="false" aria-controls="collapseExample">
             Reset Filter
           </a>
           <p style="color:red"><b><?= $show; ?></b></p>
           
-          <form class="form-horizontal" action="<?php echo base_url().'operator/riwayat_uji_sampel'?>" method="post">
+          <form class="form-horizontal" action="<?php echo base_url().'anggota/riwayat_uji_sampel'?>" method="post">
           <div class="row">
           <div class="col-xs-4">
           <div class="collapse" id="collapseExample">
@@ -147,8 +147,8 @@
                   <td><?php echo $anggota_nama;?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $no_identifikasi;?></td>
-                  <td><?php echo $tanggal_sampel;?></td>
-                  <td><?php echo $tanggal_pengujian_awal.'<i> s.d. </i>'.$tanggal_pengujian_akhir;?></td>
+                  <td><?php echo date_indo($tanggal_sampel);?></td>
+                  <td><?php echo date_indo($tanggal_pengujian_awal).'<i> s.d. </i>'.date_indo($tanggal_pengujian_akhir);?></td>
                   <td>
                     <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
                   </td>

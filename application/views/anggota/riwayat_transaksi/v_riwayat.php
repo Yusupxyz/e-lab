@@ -38,10 +38,10 @@
 <div class="wrapper">
 
    <?php 
-    $this->load->view('operator/template/v_header');
+    $this->load->view('anggota/template/v_header');
     ?>
 <!-- Left side column. contains the logo and sidebar -->
-  <?php $this->load->view('operator/template/left_menu'); ?>  
+  <?php $this->load->view('anggota/template/left_menu'); ?>  
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -66,11 +66,11 @@
           <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Filter
           </a>  &nbsp;&nbsp;
-          <a class="btn btn-primary" href="<?php echo base_url().'operator/riwayat_transaksi'?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+          <a class="btn btn-primary" href="<?php echo base_url().'anggota/riwayat_transaksi'?>" role="button" aria-expanded="false" aria-controls="collapseExample">
             Reset Filter
           </a>
           <p style="color:red"><b><?= $show; ?></b></p>
-          <form class="form-horizontal" action="<?php echo base_url().'operator/riwayat_transaksi'?>" method="post">
+          <form class="form-horizontal" action="<?php echo base_url().'anggota/riwayat_transaksi'?>" method="post">
           <div class="row">
           <div class="col-xs-4">
           <div class="collapse" id="collapseExample">
