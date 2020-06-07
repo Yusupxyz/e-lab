@@ -8,7 +8,7 @@ class M_anggota extends CI_Model{
 	}
 
 	function simpan_anggota($nama,$username,$password,$alamat,$personil,$jl,$email,$kontak){
-		$hsl=$this->db->query("INSERT INTO tbl_anggota (anggota_nama,anggota_username,anggota_password,anggota_alamat,anggota_personil,anggota_jenis_kelamin,anggota_kontak,anggota_kontak) VALUES ('$nama','$username',md5('$password'),'$alamat','$personil','$jl','$kontak','$email')");
+		$hsl=$this->db->query("INSERT INTO tbl_anggota (anggota_nama,anggota_username,anggota_password,anggota_alamat,anggota_personil,anggota_jenis_kelamin,anggota_kontak,anggota_email) VALUES ('$nama','$username',md5('$password'),'$alamat','$personil','$jl','$kontak','$email')");
 		return $hsl;
 	}
 
