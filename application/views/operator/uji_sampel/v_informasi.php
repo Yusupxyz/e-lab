@@ -100,6 +100,16 @@
           					   $us_catatan=$i['us_catatan'];  
                        $us_catatan_status=$i['us_catatan_status'];   
                        $anggota_nama=$i['anggota_nama'];        
+                       if ($tanggal_pengujian_awal==null){
+                          $tanggal_pengujian_awal='-';
+                       }else{
+                          $tanggal_pengujian_awal=date_indo($tanggal_pengujian_awal);
+                       }
+                       if ($tanggal_pengujian_akhir==null){
+                        $tanggal_pengujian_akhir='-';
+                       }else{
+                        $tanggal_pengujian_akhir=date_indo($tanggal_pengujian_akhir);
+                       }
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
@@ -109,8 +119,8 @@
                   <td><?php echo $no_identifikasi;?></td>
                   <td><?php echo $js_nama;?></td>
                   <td><?php echo $kondisi;?></td>
-                  <td><?php echo date_indo($tanggal_sampel);?></td>
-                  <td><?php echo date_indo($tanggal_pengujian_awal).'<i> - </i>'.date_indo($tanggal_pengujian_akhir);?></td>
+                  <td><?php echo $tanggal_sampel!=null?date_indo($tanggal_sampel):'-';?></td>
+                  <td><?php echo $tanggal_pengujian_awal.'<i> s.d </i>'.$tanggal_pengujian_akhir;?></td>
                   <td style="text-align:center;">
                     <?php if ($us_pengambilan=='Pelanggan') { ?>
                       <a  class="btn" data-toggle="modal" <?= ($us_status_id!=1)?' data-target="#ModalEdit'.$us_id.'"':'disabled' ?>  ><span class="fa fa-pencil"></span></a>
