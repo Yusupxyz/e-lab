@@ -121,8 +121,9 @@
       					<th>Kode Sampel</th>
       					<th>No. Identifikasi</th>
       					<th>Detail</th>
-      					<th>Besaran Uang Muka</th>
-      					<th>Tanggal Transaksi</th>
+      					<th>Jumlah Bayar</th>
+      					<th>Status</th>
+      					<th>Waktu Transaksi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -135,7 +136,9 @@
           					   $no_identifikasi=$i['no_identifikasi'];
           					   $us_total=$i['us_total'];           
           					   $us_kode_sampel=$i['us_kode_sampel'];    
-          					   $transaksi_tgl=$i['transaksi_tgl'];                      
+          					   $transaksi_tgl=$i['transaksi_tgl'];     
+                       $transaksi_bayar=$i['transaksi_bayar']; 
+                       $sisa=$us_total- $transaksi_bayar;                     
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
@@ -145,7 +148,12 @@
                   <td>
                     <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
                   </td>
-                  <td><?php echo 'Rp '.number_format($us_total);?></td>
+                  <td><?php echo 'Rp '.number_format($transaksi_bayar);?></td>
+                  <td> <?php if ($sisa!=0){ ?>
+                    <span class="alert-warning alert" style="padding:5px">Belum Lunas</span></td>
+                  <?php }else{ ?>
+                    <span class="alert-success alert" style="padding:5px">Lunas</span></td>
+                  <?php } ?>                  
                   <td><?php echo $transaksi_tgl;?></td>
                 </tr>
 				<?php endforeach;?>
@@ -202,14 +210,14 @@
                                 <td><?= $j++ ?></td>
                                 <td><?= $pu_nama ?></td>
                                 <td><?= $sp_jenis ?></td>
-                                <td><?= $pu_tarif ?></td>
+                                <td><?php echo 'Rp '.number_format($pu_tarif);?></td>
                             </tr>
                             </tbody>
                                             <?php
                     }
                         ?>
                         </table>
-                        Total = Rp <?= $us_total ?> ,-
+                        Total = <?php echo 'Rp '.number_format($us_total);?> ,-
                 </div>
                         <div class="modal-footer">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>

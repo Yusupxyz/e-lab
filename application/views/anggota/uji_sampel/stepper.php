@@ -117,7 +117,7 @@
                           <div class="card-body" style="padding-left:20px;">
                             <div class="form-check form-check-inline" >
                             <?php foreach ($parameter[$value->sp_id] as $key => $value2) { ?>
-                              <input class="form-check-input" onchange='handleChange(this);' name="xparam<?= $value->sp_id ?>[]" id="xparam<?= $value->sp_id ?>[]" type="checkbox" id="inlineCheckbox1" value="<?= $value2->pu_id ?>" data-value="<?= $value2->pu_nama ?>">
+                              <input class="form-check-input" onchange='handleChange(this);' name="xparam<?= $value->sp_id ?>[]" id="xparam<?= $value->sp_id ?>[]" type="checkbox" id="inlineCheckbox1" value="<?= $value2->pu_id ?>" data-value="<?= $value2->pu_nama ?>" <?= $value2->pu_status_alat_bahan=='Tersedia'?'':'Disabled' ?>>
                               <label data-toggle="tooltip" data-placement="top" title="<?= "Rp ".number_format($value2->pu_tarif) ?>" class="form-check-label" for="inlineCheckbox1"><?= $value2->pu_nama ?></label>&nbsp;
                             <?php } ?>
                             </div>
@@ -136,7 +136,7 @@
               </div>
               <!--single form panel-->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">Surat Permohonan (format file pdf)</h3>
+                <h3 class="multisteps-form__title">Surat Permohonan (format file pdf & maks. ukuran 5MB)</h3>
                 <div class="multisteps-form__content">
                 <div class="form-row mt-4">
                     <input type="file" id="xfile" name="xfile" class="multisteps-form__textarea form-control" accept="application/pdf" required/>

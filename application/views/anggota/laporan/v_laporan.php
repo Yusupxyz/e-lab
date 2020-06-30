@@ -81,13 +81,26 @@
           					foreach ($data->result_array() as $i) :
           					   $us_id=$i['us_id'];
           					   $us_kode_sampel=$i['us_kode_sampel'];
-          					   $us_laporan=$i['us_laporan'];                     
+          					   $us_laporan=$i['us_laporan'];     
+                       $us_sisa=$i['us_sisa'];                                    
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
                   <td><?php echo $us_kode_sampel;?></td>
-                  <td style="text-align:right;">
+                  <?php if ($us_sisa!=0){ ?>
+                    <td>
+                      <p style="color:red;"><b>Lakukan pelunasan untuk mendapatkan laporan.</b></p>
+                  </td>
+                  <?php }elseif ($us_laporan==null){ ?>
+                  <td style="text-align:center;">
+                  <p style="color:blue;"><b>Laporan sedang dalam proses generate oleh operator.</b></p>
+                  </td>
+                  <?php }else{ ?>
+                    <td style="text-align:right;">
+
                         <a class="btn" target="_blank" href="<?php echo base_url().'assets/hasil_pengujian/'.$us_laporan;?>"><span class="fa fa-download"></span></a>
+                 
+                        <?php } ?>
                   </td>
                 </tr>
 				<?php endforeach;?>

@@ -137,8 +137,8 @@
           					   $no_identifikasi=$i['no_identifikasi'];    
                        $us_kode_sampel=$i['us_kode_sampel'];               
                        $tanggal_sampel=$i['tanggal_sampel'];             
-          					   $tanggal_pengujian_awal=$i['tanggal_pengujian_awal'];   
-          					   $tanggal_pengujian_akhir=$i['tanggal_pengujian_akhir'];  
+          					   $tanggal_pengujian_awal=$i['tanggal_pengujian_awal']!=null?date_indo($i['tanggal_pengujian_awal']):'-';   
+          					   $tanggal_pengujian_akhir=$i['tanggal_pengujian_akhir']!=null?date_indo($i['tanggal_pengujian_akhir']):'-';  
           					   $status_nama=$i['status_nama'];
           					   $status_class=$i['status_class'];                       
                     ?>
@@ -147,8 +147,12 @@
                   <td><?php echo $anggota_nama;?></td>
                   <td><?php echo $us_kode_sampel;?></td>
                   <td><?php echo $no_identifikasi;?></td>
-                  <td><?php echo date_indo($tanggal_sampel);?></td>
-                  <td><?php echo date_indo($tanggal_pengujian_awal).'<i> s.d. </i>'.date_indo($tanggal_pengujian_akhir);?></td>
+                  <td> <?php if ($tanggal_sampel==null){ ?>
+                      -</td>
+                    <?php }else{ ?>
+                      <?php echo date_indo($tanggal_sampel);?></td>
+                  <?php } ?>  
+                  <td><?php echo $tanggal_pengujian_awal.'<i> s.d. </i>'.$tanggal_pengujian_akhir;?></td>
                   <td>
                     <a class="btn btn-xs btn-warning" href="#modalDetail<?php echo $us_id?>"  data-toggle="modal" title="Detail"><span class="fa fa-info"></span> Detail</a>
                   </td>
