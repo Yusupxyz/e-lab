@@ -174,6 +174,14 @@
             </span>
           </a>
         </li>
+        <li class="<?= $title=='Setting TTD'?'active':''?>">
+          <a href="<?php echo base_url().'admin/setting_ttd'?>">
+            <i class="fa fa-map-signs"></i> <span>Setting TTD</span>
+            <span class="pull-right-container">
+              <small class="label pull-right"></small>
+            </span>
+          </a>
+        </li>
         <li class="<?= $title=='Status'?'active':''?>">
           <a href="<?php echo base_url().'admin/status'?>">
             <i class="fa fa-star-o"></i> <span>Status</span>

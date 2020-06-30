@@ -96,22 +96,6 @@
 
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-bug"></i></span>
-              <?php 
-                    $query=$this->db->query("SELECT * FROM tbl_pengunjung WHERE pengunjung_perangkat='Googlebot'");
-                    $jml=$query->num_rows();
-              ?>
-            <div class="info-box-content">
-              <span class="info-box-text">Googlebot</span>
-              <span class="info-box-number"><?php echo $jml;?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">

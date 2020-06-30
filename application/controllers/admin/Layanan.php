@@ -62,8 +62,7 @@ class Layanan extends CI_Controller{
 				
 		$config['upload_path'] = './assets/layanan/'; //path folder
 		$config['allowed_types'] = 'png'; //type yang dapat diakses bisa anda sesuaikan
-		$config['overwrite'] = TRUE; //nama yang terupload nantinya
-		$config['file_name'] = $this->input->post('xikonlama');
+		$config['encrypt_name'] = TRUE; //nama yang terupload nantinya
 		$this->upload->initialize($config);
 
 		if(!empty($_FILES['xikon']['name']))
@@ -77,6 +76,8 @@ class Layanan extends CI_Controller{
 				$penjelasan=$this->input->post('xpenjelasan');
 				$id=$this->input->post('xid');
 				$this->m_layanan->update_layanan($id,$nama,$penjelasan,$gambar);
+				echo $path='./assets/layanan/'.$this->input->post('xikonlama');
+				unlink($path);
 				echo $this->session->set_flashdata('msg','info');
 				redirect('admin/layanan');
 				

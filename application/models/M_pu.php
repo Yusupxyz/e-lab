@@ -6,9 +6,9 @@ class M_pu extends CI_Model{
 		tbl_parameter_uji.pu_satuan_id LEFT JOIN tbl_sifat_pengujian  ON sp_id=pu_sp_id ORDER BY pu_id DESC");
 		return $hsl;
 	}
-	function simpan($nama,$sp,$tarif,$mutu){
-		$hsl=$this->db->query("insert into tbl_parameter_uji(pu_nama,pu_sp_id,pu_tarif,pu_mutu) values 
-		('$nama','$sp','$tarif','$mutu')");
+	function simpan($nama,$sp,$tarif,$mutu,$satuan,$status){
+		$hsl=$this->db->query("insert into tbl_parameter_uji(pu_nama,pu_sp_id,pu_tarif,pu_mutu,pu_satuan_id,pu_status_alat_bahan) values 
+		('$nama','$sp','$tarif','$mutu','$satuan','$status')");
 		return $hsl;
 	}
 	function get_by_kode($kode){
@@ -19,8 +19,8 @@ class M_pu extends CI_Model{
 		$hsl=$this->db->query("SELECT * FROM tbl_parameter_uji where pu_sp_id='$fk'");
 		return $hsl;
 	}
-	function update($id,$nama,$sp,$tarif,$mutu,$satuan){
-		$hsl=$this->db->query("update tbl_parameter_uji set pu_nama='$nama',pu_sp_id='$sp',pu_tarif='$tarif',pu_mutu='$mutu',pu_satuan_id='$satuan'
+	function update($id,$nama,$sp,$tarif,$mutu,$satuan,$status){
+		$hsl=$this->db->query("update tbl_parameter_uji set pu_nama='$nama',pu_sp_id='$sp',pu_tarif='$tarif',pu_mutu='$mutu',pu_satuan_id='$satuan',pu_status_alat_bahan='$status'
 			where pu_id='$id'");
 		return $hsl;
 	}

@@ -112,6 +112,16 @@
           </div>
           <div class="row">
             <div class="col-md-12">
+              <label for="male">Status Ketersedian Alat & Bahan*</label>
+              <select name="xstatus" class="form-control" required="">
+                <option value="" selected="selected">-- Pilih Satuan --</option>
+                <option value="Tersedia" <?= $data->pu_status_alat_bahan=='Tersedia'?'selected="selected"':'' ?>>Tersedia</option>
+                <option value="Tidak Tersedia" <?= $data->pu_status_alat_bahan=='Tidak Tersedia'?'selected="selected"':'' ?>>Tidak Tersedia</option>
+              </select><br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-edit"></span> Ubah</button>
                 <input type="hidden" name="xid" class="form-control" value="<?= $data->pu_id ?>" /><br>

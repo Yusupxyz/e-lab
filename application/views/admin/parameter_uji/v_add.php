@@ -113,6 +113,16 @@
           </div>
           <div class="row">
             <div class="col-md-12">
+              <label for="male">Status Ketersedian Alat & Bahan*</label>
+              <select name="xstatus" class="form-control" required="">
+                <option value="" selected="selected">-- Pilih Satuan --</option>
+                <option value="Tersedia">Tersedia</option>
+                <option value="Tidak Tersedia">Tidak Tersedia</option>
+              </select><br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat pull-left"><span class="fa fa-save"></span> Simpan</button>
               <!-- /.form-group -->

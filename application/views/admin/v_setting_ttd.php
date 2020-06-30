@@ -23,15 +23,7 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/dist/css/skins/_all-skins.min.css'?>">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/plugins/toast/jquery.toast.min.css'?>"/>
-  
-	<?php 
-            function limit_words($string, $word_limit){
-                $words = explode(" ",$string);
-                return implode(" ",array_splice($words,0,$word_limit));
-            }
-                
-    ?>
-	
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -39,23 +31,24 @@
    <?php 
     $this->load->view('admin/template/v_header');
   ?>
-<!-- Left side column. contains the logo and sidebar -->
-<?php 
+  <!-- Left side column. contains the logo and sidebar -->
+  <?php 
     $this->load->view('admin/template/v_left_menu');
   ?>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Daftar Parameter Uji
+        Data Setting TTD
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Parameter Uji</a></li>
-        <li class="active">Daftar</li>
+        <li><a href="#">Setting</a></li>
+        <li class="active">Data Setting</li>
       </ol>
     </section>
 
@@ -66,46 +59,35 @@
           <div class="box">
            
           <div class="box">
-            <div class="box-header">
-              <a class="btn btn-success btn-flat" href="<?php echo base_url().'admin/parameter_uji/add_parameter_uji'?>"><span class="fa fa-plus"></span> Tambah Baru</a>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-striped" style="font-size:13px;">
                 <thead>
                 <tr>
-                <th>No.</th>
-      					<th>Parameter Uji</th>
-                <th>Sifat Pengujian</th>
-                <th>Baku Mutu</th>
-                <th>Satuan</th>
-                <th>Tarif</th>
-                <th style="text-align:right;">Aksi</th>
+					          <th>No.</th>
+                    <th>Posisi</th>
+                    <th>Nama</th>
+                    <th>Golongan</th>
+                    <th>NIP</th>
+                    <th style="text-align:center;">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-          				<?php
-          					$no=1;
-          					foreach ($data->result_array() as $i) :
-                       $pu_id=$i['pu_id'];
-                       $pu_nama=$i['pu_nama'];
-          					   $sp_jenis=$i['sp_jenis'];
-          					   $pu_tarif=$i['pu_tarif'];
-          					   $pu_mutu=$i['pu_mutu'];
-          					   $satuan_nama=$i['satuan_nama'];
-          					   $pu_status_alat_bahan=$i['pu_status_alat_bahan'];
+                <?php $no=1; foreach ($data->result_array() as $i) :
+                       $st_id=$i['st_id'];
+                       $st_nama=$i['st_nama'];
+                       $st_posisi=$i['st_posisi'];
+                       $st_golongan=$i['st_golongan'];
+                       $st_nip=$i['st_nip'];
                     ?>
                 <tr>
                   <td><?php echo $no++;?></td>
-                  <td><?php echo $pu_nama;?></td>
-                  <td><?php echo $sp_jenis;?></td>
-                  <td><?php echo $pu_mutu;?></td>
-                  <td><?php echo $satuan_nama;?></td>
-                  <td><?php echo 'Rp '.number_format($pu_tarif);?></td>
-                  <td><?php echo $pu_status_alat_bahan;?></td>
+                  <td><?php echo $st_posisi;?></td>
+                  <td><?php echo $st_nama;?></td>
+                  <td><?php echo $st_golongan;?></td>
+                  <td><?php echo $st_nip;?></td>
                   <td style="text-align:right;">
-                        <a class="btn" href="<?php echo base_url().'admin/parameter_uji/get_edit/'.$pu_id;?>"><span class="fa fa-pencil"></span></a>
-                        <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $pu_id;?>"><span class="fa fa-trash"></span></a>
+                        <a class="btn" data-toggle="modal" data-target="#ModalEdit<?php echo $st_id;?>"><span class="fa fa-pencil"></span></a>
                   </td>
                 </tr>
 				<?php endforeach;?>
@@ -127,34 +109,62 @@
     <?php $this->load->view('template/copyright'); ?>  
   </footer>
 
+
   
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
-<?php foreach ($data->result_array() as $i) :
-                       $pu_id=$i['pu_id'];
-                       $pu_nama=$i['pu_nama'];
-          					   $sp_jenis=$i['sp_jenis'];
-          					   $pu_tarif=$i['pu_tarif'];
-                    ?>
-	<!--Modal Hapus Pengguna-->
-        <div class="modal fade" id="ModalHapus<?php echo $pu_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		
+		<?php foreach ($data->result_array() as $i) :
+              $st_id=$i['st_id'];
+              $st_nama=$i['st_nama'];
+              $st_posisi=$i['st_posisi'];
+              $st_golongan=$i['st_golongan'];
+              $st_nip=$i['st_nip'];
+            ?>
+	<!--Modal Edit Pengguna-->
+        <div class="modal fade" id="ModalEdit<?php echo $st_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
-                        <h4 class="modal-title" id="myModalLabel">Hapus Parameter Uji</h4>
+                        <h4 class="modal-title" id="myModalLabel">Edit Setting TTD</h4>
                     </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'admin/parameter_uji/hapus_parameter_uji'?>" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">       
-							       <input type="hidden" name="kode" value="<?php echo $pu_id;?>"/> 
-                            <p>Apakah Anda yakin mau menghapus Parameter Uji <b><?php echo $pu_nama;?></b> ?</p>
+                    <form class="form-horizontal" action="<?php echo base_url().'admin/setting_ttd/update'?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Posisi</label>
+                        <div class="col-sm-7">
+                            <input type="hidden" name="kode" value="<?php echo $st_id;?>"/> 
+                            <input type="text"class="form-control" id="inputUserName" value="<?php echo $st_posisi;?>" placeholder="Setting" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Nama</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="xnama" class="form-control" id="inputUserName" value="<?php echo $st_nama;?>" placeholder="Nama" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Golongan</label>
+                        <div class="col-sm-7">
+                        <?php
+                            echo form_dropdown('xgolongan', $golongan, $st_golongan, $attribute);
+                        ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">NIP</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="xnip" class="form-control" id="inputUserName" value="<?php echo $st_nip;?>" placeholder="NIP" required>
+                        </div>
+                    </div>
                                
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Hapus</button>
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Update</button>
                     </div>
                     </form>
                 </div>
@@ -207,12 +217,23 @@
                     bgColor: '#FF4859'
                 });
         </script>
-    
+    <?php elseif($this->session->flashdata('msg')=='warning'):?>
+        <script type="text/javascript">
+                $.toast({
+                    heading: 'Warning',
+                    text: "Gambar yang Anda masukan terlalu besar.",
+                    showHideTransition: 'slide',
+                    icon: 'warning',
+                    hideAfter: false,
+                    position: 'bottom-right',
+                    bgColor: '#FFC017'
+                });
+        </script>
     <?php elseif($this->session->flashdata('msg')=='success'):?>
         <script type="text/javascript">
                 $.toast({
                     heading: 'Success',
-                    text: "Informasi Berhasil disimpan ke database.",
+                    text: "Pengguna Berhasil disimpan ke database.",
                     showHideTransition: 'slide',
                     icon: 'success',
                     hideAfter: false,
@@ -224,7 +245,7 @@
         <script type="text/javascript">
                 $.toast({
                     heading: 'Info',
-                    text: "Informasi berhasil di update",
+                    text: "Pengguna berhasil di update",
                     showHideTransition: 'slide',
                     icon: 'info',
                     hideAfter: false,
@@ -236,13 +257,17 @@
         <script type="text/javascript">
                 $.toast({
                     heading: 'Success',
-                    text: "Informasi Berhasil dihapus.",
+                    text: "Pengguna Berhasil dihapus.",
                     showHideTransition: 'slide',
                     icon: 'success',
                     hideAfter: false,
                     position: 'bottom-right',
                     bgColor: '#7EC857'
                 });
+        </script>
+    <?php elseif($this->session->flashdata('msg')=='show-modal'):?>
+        <script type="text/javascript">
+                $('#ModalResetPassword').modal('show');
         </script>
     <?php else:?>
 

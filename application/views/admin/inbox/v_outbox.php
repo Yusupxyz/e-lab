@@ -46,12 +46,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Inbox
+      Outbox
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Inbox</li>
+        <li class="active">Outbox</li>
       </ol>
     </section>
 
@@ -62,19 +62,17 @@
           <div class="box">
            
           <div class="box">
-          <div class="box-header">
-              <a class="btn btn-primary btn-flat" href="<?php echo base_url().'admin/inbox/outbox'?>"><span class="fa fa-mail-reply-all"></span> Outbox</a>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-striped" style="font-size:12px;">
                 <thead>
                 <tr>
-					          <th style="width:70px;">#Tanggal</th>
-                    <th>Nama</th>
+					          <th style="width:70px;">#Tanggal Balasan</th>
+                    <th>Penerima</th>
                     <th>Email</th>
-                    <th>Pesan</th>
-                    <th>Dibalas</th>
+                    <th>Pesan Dari Penerima</th>
+                    <th>Subjek Balasan</th>
+                    <th>Pesan Balasan</th>
                     <th style="text-align:right;">Aksi</th>
                 </tr>
                 </thead>
@@ -82,23 +80,25 @@
 				<?php
 					$no=0;
   					foreach ($data->result_array() as $i) :
-  					   $no;
-                       $inbox_id=$i['inbox_id'];
-                       $inbox_nama=$i['inbox_nama'];
-                       $inbox_email=$i['inbox_email'];
-                       $inbox_msg=$i['inbox_pesan'];
-                       $tanggal=$i['tanggal'];
-                       
+  					   $no++;
+                $outbox_id=$i['outbox_id'];
+                $inbox_nama=$i['inbox_nama'];
+                $inbox_email=$i['inbox_email'];
+                $outbox_sub=$i['outbox_sub'];
+                $tanggal=$i['tanggal'];
+                $outbox_msg=$i['outbox_msg'];
+                $inbox_msg=$i['inbox_pesan'];
+
                     ?>
                 <tr>
                   <td><?php echo $tanggal;?></td>
                   <td><?php echo $inbox_nama;?></td>
                   <td><?php echo $inbox_email;?></td>
-                  <td><?php echo substr($inbox_msg,0,200).'... ' ;?><a lass="btn" data-toggle="modal" href="#ModalView<?php echo $inbox_id;?>">detail</a></td>
-                  <td><?php echo $dibalas[$no++].' kali';?></td>
+                  <td><?php echo substr($inbox_msg,0,200).'... ' ;?><a lass="btn" data-toggle="modal" href="#ModalView<?php echo $outbox_id;?>">detail</a></td>
+                  <td><?php echo $outbox_sub;?></td>
+                  <td><?php echo substr($outbox_msg,0,200).'... ' ;?><a lass="btn" data-toggle="modal" href="#ModalView2<?php echo $outbox_id;?>">detail</a></td>
                   <td style="text-align:right;">
-                      <a class="btn" data-toggle="modal" data-target="#ModalBalas<?php echo $inbox_id;?>"><span class="fa fa-reply"></span></a>
-                      <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $inbox_id;?>"><span class="fa fa-trash"></span></a>
+                      <a class="btn" data-toggle="modal" data-target="#ModalHapus<?php echo $outbox_id;?>"><span class="fa fa-trash"></span></a>
                   </td>
                 </tr>
 				<?php endforeach;?>
@@ -131,23 +131,25 @@
 		
 	
 	<?php foreach ($data->result_array() as $i) :
-              $inbox_id=$i['inbox_id'];
+              $outbox_id=$i['outbox_id'];
               $inbox_nama=$i['inbox_nama'];
               $inbox_email=$i['inbox_email'];
-              $inbox_msg=$i['inbox_pesan'];
+              $outbox_sub=$i['outbox_sub'];
               $tanggal=$i['tanggal'];
+              $outbox_msg=$i['outbox_msg'];
+              $inbox_msg=$i['inbox_pesan'];
             ?>
 	<!--Modal Hapus Pengguna-->
-        <div class="modal fade" id="ModalHapus<?php echo $inbox_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="ModalHapus<?php echo $outbox_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
                         <h4 class="modal-title" id="myModalLabel">Hapus Agenda</h4>
                     </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'admin/inbox/hapus_inbox'?>" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="<?php echo base_url().'admin/inbox/hapus_outbox'?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">       
-							       <input type="hidden" name="kode" value="<?php echo $inbox_id;?>"/> 
+							       <input type="hidden" name="kode" value="<?php echo $outbox_id;?>"/> 
                             <p>Apakah Anda yakin mau menghapus data ini?</p>
                                
                     </div>
@@ -162,67 +164,11 @@
 	<?php endforeach;?>
 	
   <?php foreach ($data->result_array() as $i) :
-              $inbox_id=$i['inbox_id'];
-              $inbox_nama=$i['inbox_nama'];
-              $inbox_email=$i['inbox_email'];
-              $inbox_msg=$i['inbox_pesan'];
-              $tanggal=$i['tanggal'];
-            ?>
-	<!--Modal Edit Pengguna-->
-        <div class="modal fade" id="ModalBalas<?php echo $inbox_id;?>"  aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" >
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
-                        <h4 class="modal-title" id="myModalLabel">Balas Inbox</h4>
-                    </div>
-                    <form class="form-horizontal" action="<?php echo base_url().'admin/inbox/kirim_email'?>" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-4 control-label">Tujuan</label>
-                        <div class="col-sm-7">
-                            <input type="hidden" name="kode" value="<?php echo $inbox_id;?>"/> 
-                            <input type="hidden" name="to_email" value="<?php echo $inbox_email;?>"/> 
-                            <input type="text" class="form-control" id="inputUserName" value="<?= $inbox_nama.' ('.$inbox_email.')'?>" placeholder="Subject" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-4 control-label">Pesan</label>
-                        <div class="col-sm-7">
-                          <textarea class="form-control" placeholder="Subject" readonly><?= $inbox_msg ?></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-4 control-label">Subject</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="xsubject" class="form-control" id="inputUserName" placeholder="Subject" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputUserName" class="col-sm-4 control-label">Balasan</label>
-                        <div class="col-sm-7">
-                          <textarea id="ckeditor" name="xpesan" required></textarea><br>
-                        </div>
-                    </div>
-                   
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Balas</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-	<?php endforeach;?>
-
-  <?php foreach ($data->result_array() as $i) :
-             $inbox_id=$i['inbox_id'];
+             $outbox_id=$i['outbox_id'];
              $inbox_msg=$i['inbox_pesan'];
             ?>
 	<!--Modal View-->
-        <div class="modal fade" id="ModalView<?php echo $inbox_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="ModalView<?php echo $outbox_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -239,7 +185,32 @@
                 </div>
             </div>
         </div>
+  <?php endforeach;?>
+  
+  <?php foreach ($data->result_array() as $i) :
+             $outbox_id=$i['outbox_id'];
+             $outbox_msg=$i['outbox_msg'];
+             ?>
+	<!--Modal View-->
+        <div class="modal fade" id="ModalView2<?php echo $outbox_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
+                        <h4 class="modal-title" id="myModalLabel">Isi Pesan</h4>
+                    </div>
+                    <div class="modal-body">       
+							       <p><?= $outbox_msg?></p> 
+                               
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 	<?php endforeach;?>
+
 
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url().'assets/plugins/jQuery/jquery-2.2.3.min.js'?>"></script>
@@ -260,19 +231,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url().'assets/dist/js/demo.js'?>"></script>
 <script type="text/javascript" src="<?php echo base_url().'assets/plugins/toast/jquery.toast.min.js'?>"></script>
-<script src="<?php echo base_url().'assets/ckeditor/ckeditor.js'?>"></script>
-
 <!-- page script -->
-<script>
-  $(function () {
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-	
-    CKEDITOR.replace('ckeditor');
-   
-	
-  });
-</script>
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -330,18 +289,6 @@
                     hideAfter: false,
                     position: 'bottom-right',
                     bgColor: '#00C9E6'
-                });
-        </script>
-      <?php elseif($this->session->flashdata('msg')=='success-balas'):?>
-        <script type="text/javascript">
-                $.toast({
-                    heading: 'Info',
-                    text: "Pesan berhasil dibalas via email",
-                    showHideTransition: 'slide',
-                    icon: 'info',
-                    hideAfter: false,
-                    position: 'bottom-right',
-                    bgColor: '#7EC857'
                 });
         </script>
     <?php elseif($this->session->flashdata('msg')=='success-hapus'):?>

@@ -45,7 +45,9 @@ class Parameter_uji extends CI_Controller{
 		$sp=$this->input->post('xsifat');
 		$tarif=$this->input->post('xtarif');
 		$mutu=$this->input->post('xmutu');
-		if ($this->m_pu->simpan($nama,$sp,$tarif,$mutu)){
+		$satuan=$this->input->post('xsatuan');
+		$status=$this->input->post('xstatus');
+		if ($this->m_pu->simpan($nama,$sp,$tarif,$mutu,$satuan,$status)){
 			echo $this->session->set_flashdata('msg','success');
 			redirect('admin/parameter_uji');
 		}else{
@@ -62,7 +64,8 @@ class Parameter_uji extends CI_Controller{
 		$id=$this->input->post('xid');
 		$mutu=$this->input->post('xmutu');
 		$satuan=$this->input->post('xsatuan');
-		$this->m_pu->update($id,$nama,$sp,$tarif,$mutu,$satuan);
+		$status=$this->input->post('xstatus');
+		$this->m_pu->update($id,$nama,$sp,$tarif,$mutu,$satuan,$status);
 		echo $this->session->set_flashdata('msg','info');
 		redirect('admin/parameter_uji');
 	}
