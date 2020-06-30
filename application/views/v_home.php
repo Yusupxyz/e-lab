@@ -45,7 +45,7 @@
 					<div class="container">
 						<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
 							<div class="slider-text-inner">
-								<h2 ><font color="white"><?= $value->slider_promo ?></font></h2>
+								<h3 ><font color="white"><?= $value->slider_promo ?></font></h3>
 								<?php if($value->slider_tombol!=null) { ?>
 									<p><a href="<?= $value->slider_link ?>" class="btn btn-primary btn-lg"><?= $value->slider_tombol ?></a></p>
 								<?php } ?>
@@ -78,7 +78,7 @@
 	</div>
 
 
-	<div class="fh5co-section-with-image">
+	<!-- <div class="fh5co-section-with-image">
 
 		<img src="<?php echo base_url().'theme/images/image_1.jpg'?>" alt="" class="img-responsive">
 		<div class="fh5co-box animate-box">
@@ -87,7 +87,7 @@
 			<p><a href="<?php echo base_url().'layanan'?>" class="btn btn-primary btn-outline with-arrow">Lanjut <i class="icon-arrow-right"></i></a></p>
 		</div>
 
-	</div>
+	</div> -->
 
 
 
