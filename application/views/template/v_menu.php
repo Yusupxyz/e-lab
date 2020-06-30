@@ -2,7 +2,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-			<div class=”row”>
+			<div class="row">
 			<img src="<?php echo base_url().'assets/images/logo plk.png'?>" height="100" width="100">
 				<div class=”col-xs-6 col-md-6”>
 					<h1><a href="<?php echo base_url().''?>">UPT Laboratorium Lingkungan<span>.</span></a></h1>
@@ -19,10 +19,9 @@
 						</ul>
 					</nav>
 				</div>
-				<div class=”col-xs-6 col-md-6”><BR><BR>
+				<BR><BR>
 				<h4 style="color:#26ff79"><B>DINAS LINGKUNGAN HIDUP<BR> KOTA PALANGKA RAYA</b></h4>
 				
-				</div>
 			</div>
 
 

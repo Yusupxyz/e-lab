@@ -36,16 +36,16 @@
 	
 	</header>
 
-	<aside id="fh5co-hero" class="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
+	<aside id="fh5co-hero" style="height: 560px;">
+		<div class="flexslider " style="height: 560px;">
+			<ul class="slides" style="height: 560px;">
 			<?php foreach ($slider->result() as $key => $value) { ?>	
 				<li style="background-image: url(<?php echo base_url().'assets/slider/'.$value->slider_foto?>);">
 					<div class="overlay-gradient"></div>
 					<div class="container">
-						<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
+						<div class="col-md-10 col-md-offset-1 text-center  slider-text" style="height: 560px;">
 							<div class="slider-text-inner">
-								<h3 ><font color="white"><?= $value->slider_promo ?></font></h3>
+								<h2 style="font-size: 30px;"><font color="white"><?= $value->slider_promo ?></font></h2>
 								<?php if($value->slider_tombol!=null) { ?>
 									<p><a href="<?= $value->slider_link ?>" class="btn btn-primary btn-lg"><?= $value->slider_tombol ?></a></p>
 								<?php } ?>
@@ -58,7 +58,7 @@
 	  	</div>
 	</aside>
 
-	<div id="fh5co-why-us" class="animate-box">
+	<div id="fh5co-why-us" class="animate-box" style="height: 360px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 text-center">
@@ -76,20 +76,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- <div class="fh5co-section-with-image">
-
-		<img src="<?php echo base_url().'theme/images/image_1.jpg'?>" alt="" class="img-responsive">
-		<div class="fh5co-box animate-box">
-			<h2>Layanan Laboratorium</h2>
-			<p>Dapatkan informasi mengenai jenis layanan laboratorium serta tarif yang berlaku.</p>
-			<p><a href="<?php echo base_url().'layanan'?>" class="btn btn-primary btn-outline with-arrow">Lanjut <i class="icon-arrow-right"></i></a></p>
-		</div>
-
-	</div> -->
-
-
 
 
 	<?php $this->load->view('template/v_footer');?>

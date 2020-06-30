@@ -54,15 +54,15 @@
 	</header>
 
 
-	<aside id="fh5co-hero" clsas="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
+	<aside id="fh5co-hero" style="height: 560px;">
+		<div class="flexslider " style="height: 560px;">
+			<ul class="slides"  style="height: 560px;">
 		   	<li style="background-image: url(<?php echo base_url().'theme/images/slide_6.jpg'?>);">
 		   		<div class="overlay-gradient"></div>
 		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
+		   			<div class="col-md-10 col-md-offset-1 text-center slider-text"  style="height: 560px;">
 		   				<div class="slider-text-inner">
-		   					<h2>Layanan Laboratorium</h2>
+		   					<h2 style="font-size: 30px;">Layanan Laboratorium</h2>
 		   				</div>
 		   			</div>
 		   		</div>
@@ -98,10 +98,6 @@
 							<a class="popup2 btn btn-info btn-sm" href="http://twitter.com/share?source=sharethiscom&text=<?php echo $b['tulisan_judul'];?>&url=<?php echo $url; ?>&via=badoey" title="Bagikan ke Twitter"><i class="fa fa-twitter"></i> Twitter</a>
 						</div>
 					</div>
-
-
-
-					
 
 
 			</div>

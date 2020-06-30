@@ -452,7 +452,7 @@ figure {
 #fh5co-header h1 {
   float: left;
   padding: 0;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0;
   font-size: 25px;
 }
@@ -602,7 +602,7 @@ figure {
 }
 
 #fh5co-hero {
-  min-height: 300px;
+  min-height: 560px;
   background: #fff url(../images/loader.gif) no-repeat center center;
 }
 
@@ -629,7 +629,7 @@ figure {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  min-height: 700px;
+  min-height: 400px;
 }
 
 #fh5co-hero .flexslider .flex-control-nav {
@@ -657,13 +657,13 @@ figure {
 #fh5co-hero .flexslider .slider-text {
   display: table;
   opacity: 0;
-  min-height: 700px;
+  min-height: 400px;
 }
 
 #fh5co-hero .flexslider .slider-text>.slider-text-inner {
   display: table-cell;
   vertical-align: middle;
-  min-height: 700px;
+  min-height: 400px;
 }
 
 #fh5co-hero .flexslider .slider-text>.slider-text-inner h2 {
@@ -945,7 +945,7 @@ figure {
 }
 
 #fh5co-grid-products {
-  background: #ecf1f5;
+  background: #ffffff;
   padding: 7em 0 0px 0;
   float: left;
   width: 100%;
@@ -1059,7 +1059,10 @@ figure {
   transition: 0.5s;
 }
 
-#fh5co-grid-products .item-grid .title,
+#fh5co-grid-products .item-grid .title {
+  color: black;
+}
+
 #fh5co-grid-products .item-grid .icon,
 #fh5co-grid-products .item-grid .category {
   top: 50px;
@@ -1343,8 +1346,8 @@ figure {
 .fh5co-copyright {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   clear: both;
-  margin-top: 40px !important;
-  padding: 40px 0 0 0;
+  /* margin-top: 40px !important;
+  padding: 40px 0 0 0; */
 }
 
 .fh5co-copyright span {
@@ -1640,7 +1643,7 @@ figure {
   font-size: 13px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 400;
   color: #888f94;
 }
 

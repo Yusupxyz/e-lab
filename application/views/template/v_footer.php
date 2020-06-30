@@ -1,4 +1,4 @@
-<footer id="fh5co-footer" role="contentinfo">
+<footer id="fh5co-footer" role="contentinfo" style="height: 460px;">
 
 		<div class="container">
 			<div class="col-md-6 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
@@ -7,22 +7,6 @@
 				parameter fisik, kimiawi, biologi dalam menunjang lingkungan hidup sesuai dengan perundang-undangan yang berlaku
 				(Keputusan Ka. BAPEDAL No. 113 Tahun 2005)</p>
 			</div>
-			<!-- <div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				 <h3>Our Services</h3>
-				<ul class="float">
-					<li><a href="<?php echo base_url().'portfolio'?>">Web Design</a></li>
-					<li><a href="<?php echo base_url().'portfolio'?>">IT Consulting</a></li>
-					<li><a href="<?php echo base_url().'portfolio'?>">Software & Program</a></li>
-					<li><a href="<?php echo base_url().'portfolio'?>">IT Audit</a></li>
-				</ul>
-				<ul class="float">
-					<li><a href="<?php echo base_url().'portfolio'?>">SEO Service</a></li>
-					<li><a href="<?php echo base_url().'portfolio'?>">Hardware & Nerworking</a></li>
-					<li><a href="<?php echo base_url().'portfolio'?>">Online Marketing</a></li>
-					<li><a href="<?php echo base_url().'portfolio'?>">Graphic Design</a></li>
-				</ul> 
-
-			</div> -->
 
 			<!-- <div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<h3>Ikuti Kami</h3>

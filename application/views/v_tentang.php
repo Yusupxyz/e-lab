@@ -31,15 +31,15 @@
 	</header>
 
 
-	<aside id="fh5co-hero" clsas="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
+	<aside id="fh5co-hero" style="height: 560px;">
+		<div class="flexslider " style="height: 560px;">
+			<ul class="slides"  style="height: 560px;">
 		   	<li style="background-image: url(<?php echo base_url().'theme/images/slide_1.jpg'?>);">
 		   		<div class="overlay-gradient"></div>
 		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
+		   			<div class="col-md-10 col-md-offset-1 text-center slider-text" style="height: 560px;">
 		   				<div class="slider-text-inner">
-		   					<h2>Tentang Kami</h2>
+		   					<h2 style="font-size: 30px;">Tentang Kami</h2>
 		   				</div>
 		   			</div>
 		   		</div>

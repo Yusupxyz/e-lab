@@ -34,15 +34,15 @@
 	</header>
 
 
-	<aside id="fh5co-hero" clsas="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
-		   	<li style="background-image: url(<?php echo base_url().'theme/images/slide_2.jpg'?>);">
+	<aside id="fh5co-hero" style="height: 560px;">
+		<div class="flexslider " style="height: 560px;">
+			<ul class="slides"  style="height: 560px;">
+		   	<li style="background-image: url(<?php echo base_url().'theme/images/thomas-peham-bJVvTYBXms4-unsplash.jpg'?>);" >
 		   		<div class="overlay-gradient"></div>
 		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
-		   				<div class="slider-text-inner">
-		   					<h2>Semua Layanan Kami</h2>
+		   			<div class="col-md-10 col-md-offset-1 text-center  slider-text" style="height: 560px;">
+		   				<div class="slider-text-inner" style="height: 560px;">
+		   					<h2 style="font-size: 30px;">Semua Layanan Kami</h2>
 		   				</div>
 		   			</div>
 		   		</div>
@@ -53,7 +53,7 @@
 
 
 
-	<div id="fh5co-grid-products" class="animate-box">
+	<div id="fh5co-grid-products" class="animate-box" >
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
@@ -70,12 +70,12 @@
 				$layanan_teks=$i['layanan_teks'];
 
 		?>
-		<div class="col-md-4" align="center">
-			<a href="<?php echo base_url().'layanan/detail/'.$layanan_id;?>" ><img src="<?php echo base_url().'assets/layanan/'.$layanan_ikon;?>" class="img-responsive"></a>
+		<div class="col-md-3" align="center">
+			<a href="<?php echo base_url().'layanan/detail/'.$layanan_id;?>" style="padding:1px"><img src="<?php echo base_url().'assets/layanan/'.$layanan_ikon;?>" class="img-responsive"></a>
 				<div class="v-align">
-					<div class="v-align-middle">
-						<h3 class="title"><?php echo $layanan_nama;?></h3>
-						<h5 class="category">Klik gambar untuk detail info</h5>
+					<div class="v-align-middle" >
+						<h3 class="title" style="color:black"><?php echo $layanan_nama;?></h3>
+						<h6 class="category" style="color:black">Klik gambar untuk detail info</h6>
 					</div>
 				</div><br/>
 		</div>
