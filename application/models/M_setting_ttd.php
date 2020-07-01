@@ -2,16 +2,16 @@
 class M_setting_ttd extends CI_Model{
 
 	function get_all(){
-		$hsl=$this->db->query("SELECT * FROM tbl_setting_ttd");
+		$hsl=$this->db->query("SELECT * FROM tbl_setting_ttd LEFT JOIN tbl_golongan ON tbl_setting_ttd.st_golongan=tbl_golongan.golongan_kode");
 		return $hsl;	
 	}
 
 	function get_by_kode($id){
-		$hsl=$this->db->query("SELECT * FROM tbl_setting_ttd WHERE setting_id='$id'");
+		$hsl=$this->db->query("SELECT * FROM tbl_setting_ttd 
+		 WHERE st_id='$id'");
 		return $hsl;	
 	}
 
-	//UPDATE PENGGUNA //
 	function update($kode,$nama,$golongan,$nip){
 		$hsl=$this->db->query("UPDATE tbl_setting_ttd set st_nama='$nama',st_golongan='$golongan',st_nip='$nip' where st_id='$kode'");
 		return $hsl;

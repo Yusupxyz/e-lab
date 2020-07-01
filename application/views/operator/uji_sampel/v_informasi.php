@@ -196,7 +196,6 @@
               $kondisi=$i['kondisi'];   
               $tanggal_sampel=$i['tanggal_sampel'];  
               $lokasi=$i['lokasi'];      
-              $titik_pengambilan=$i['titik_pengambilan'];  
               $metode_id=$i['metode_id'];    
               $rincian=$i['rincian'];   
               $us_pengambilan=$i['us_pengambilan'];         
@@ -220,11 +219,9 @@
                       </div>
                       </div>
                       <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Kondisi Saat Diterima*</label>
+                      <label for="inputUserName" class="col-sm-4 control-label">Kondisi Lingkungan Selama Pengambilan Sampel*</label>
                       <div class="col-sm-7">
-                      <?php
-                              echo form_dropdown('xkondisi', $kondisi_list, $kondisi, $attribute);
-                        ?>
+                          <input  placeholder="Kondisi Lingkungan Selama Pengambilan Sampel" type="text" class="form-control" name="xkondisi" value="<?php echo $kondisi;?>" required>
                       </div>
                       </div>
                       <div class="form-group">
@@ -240,13 +237,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Titik Pengambilan</label>
-                      <div class="col-sm-7">
-                        <input  placeholder="Titik Pengambilan" type="text" class="form-control" name="xtitik" value="<?php echo $titik_pengambilan;?>">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Acuan Rencana dan Prosedur Pengambilan*</label>
+                      <label for="inputUserName" class="col-sm-4 control-label">Acuan Prosedur Pengambilan Sampel*</label>
                       <div class="col-sm-7">
                       <?php
                               echo form_dropdown('xmetode', $am, $metode_id, $attribute);
@@ -254,9 +245,9 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputUserName" class="col-sm-4 control-label">Rincian Kondisi Lingkungan</label>
+                      <label for="inputUserName" class="col-sm-4 control-label">Penyimpanan Prosedur Pengambilan Sampel</label>
                       <div class="col-sm-7">
-                        <textarea placeholder="Rincian Kondisi Lingkungan Pengambilan Sampel" class="form-control" name="xrincian" ><?php echo $rincian;?></textarea>
+                        <textarea placeholder="Penyimpanan Prosedur Pengambilan Sampel" class="form-control" name="xrincian" ><?php echo $rincian;?></textarea>
                       </div>
                     </div>
                     </div>

@@ -225,7 +225,7 @@
                       <label for="inputUserName" class="col-sm-4 control-label">Jenis Pembayaran*</label>
                       <div class="col-sm-7">
                       <?php if ($us_sisa==$us_total){
-                              echo form_dropdown('xjenis', $jenis, '', $attribute);
+                              echo form_dropdown('xjenis', $jenis, '',  'class="form-control" required id="transaksi'.$us_id.'"');
                       }else{?>
                           <input type="text" name="xjenis" class="form-control" id="inputUserName" value="Lunas" placeholder="Masukkan No. Sampel Lab" readonly>
                       <?php } ?>
@@ -234,7 +234,7 @@
                   <div class="form-group">
                       <label for="inputUserName" class="col-sm-4 control-label">Bayar (Rp)</label>
                       <div class="col-sm-7">
-                        <input type="number" name="xbayar" class="form-control" id="bayar" placeholder="Masukkan Jumlah Pembayaran" min="<?php echo $us_uang_muka;?>" max="<?php echo $us_sisa;?>" required>
+                        <input type="number" name="xbayar" class="form-control" id="bayar<?php echo $us_id;?>" placeholder="Masukkan Jumlah Pembayaran" min="<?php echo $us_uang_muka;?>" max="<?php echo $us_sisa;?>" required>
                       </div>
                   </div>
                      
@@ -354,19 +354,36 @@
 </script>
 
 <script>
-$('#transaksi').on('change', function() {
+ <?php foreach ($data->result_array() as $i) :
+               $us_id=$i['us_id'];           
+               $us_uang_muka=$i['us_uang_muka'];                   
+               $us_sisa=$i['us_sisa'];                             
+               $us_status_id=$i['us_status_id'];                          
+            ?>
+$('#transaksi<?=$us_id?>').on('change', function() {
   if (this.value==1){
-    $("#bayar").attr({
-      "max" : (parseInt(document.getElementById("sisa").value))-1,
-      "min" : document.getElementById("dp").value
+    $("#bayar<?=$us_id?>").attr({
+      "max" : (parseInt(<?=$us_sisa?>))-1,
+      "min" : <?=$us_uang_muka?>
     });
   }else{
-    $("#bayar").attr({
-      "max" : document.getElementById("sisa").value,
-      "min" : document.getElementById("sisa").value
+    $("#bayar<?=$us_id?>").attr({
+      "max" : <?=$us_sisa?>,
+      "min" : <?=$us_sisa?>
     });
   }
 });
+
+$( document ).ready(function() {
+  if (<?=$us_status_id?>==7){
+    $("#bayar<?=$us_id?>").attr({
+      "max" : <?=$us_sisa?>,
+      "min" : <?=$us_sisa?>
+    });
+  }
+});
+<?php endforeach;?>
+
 </script>
 
 </body>

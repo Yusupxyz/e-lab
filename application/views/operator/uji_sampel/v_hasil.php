@@ -58,6 +58,7 @@
           <div class="box">
           <div class="box-header">
               <a class="btn btn-success btn-flat" data-toggle="modal" data-target="#ModalSelesai<?php echo $kode;?>"><span class="fa fa-check-square-o"></span> Pengujian Selesai</a>
+              <a class="btn btn-primary btn-flat" data-toggle="modal" data-target="#ModalEdit<?php echo $kode;?>"><span class="fa fa-pencil"></span> Intrepetasi Hasil</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -215,6 +216,37 @@
             </div>
         </div>
 
+        	<!--Modal Edit IH-->
+          <div class="modal fade" id="ModalEdit<?php echo $kode;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><span class="fa fa-close"></span></span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Interpretasi Hasil</h4>
+                    </div>
+                    <form class="form-horizontal" action="<?php echo base_url().'operator/uji_sampel/update_ih'?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Penyimpangan Prosedur Pengujian</label>
+                        <div class="col-sm-7">
+                            <input type="hidden" name="kode" value="<?php echo $kode;?>"/> 
+                            <textarea class="form-control" rows="6" placeholder="Penyimpangan Prosedur Pengujian" name="xpenyimpangan" ><?php echo $ih->ih_penyimpangan;?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputUserName" class="col-sm-4 control-label">Persyaratan Pelanggan</label>
+                        <div class="col-sm-7">
+                          <textarea class="form-control" rows="6" placeholder="Persyaratan Pelanggan" name="xpersyaratan" ><?php echo $ih->ih_persyaratan;?></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Update</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url().'assets/plugins/jQuery/jquery-2.2.3.min.js'?>"></script>

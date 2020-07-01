@@ -340,7 +340,7 @@
         <script type="text/javascript">
                 $.toast({
                     heading: 'Success',
-                    text: "Informasi Berhasil disimpan ke database. Dan email berhasil terkiriM ketujuan. Silahkan cek kotak keluar gmail Anda.",
+                    text: "Informasi Berhasil disimpan ke database. Dan email berhasil terkirim ketujuan. Silahkan cek kotak keluar gmail Anda.",
                     showHideTransition: 'slide',
                     icon: 'success',
                     hideAfter: false,

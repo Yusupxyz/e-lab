@@ -41,7 +41,8 @@ class M_uji_sampel extends CI_Model{
 		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
 		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id LEFT JOIN tbl_acuan_metode ON
 		tbl_acuan_metode.acuan_metode_id=tbl_pengambilan_sampel.metode_id
-		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id='2' AND us_id='$kode' ORDER BY tbl_us.us_id DESC");
+		LEFT JOIN tbl_anggota ON us_anggota=anggota_id LEFT JOIN tbl_interpretasi_hasil ON  tbl_interpretasi_hasil.ih_us_id=tbl_us.us_id
+		 WHERE us_status_id='2' AND us_id='$kode' ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
 	function get_riwayat(){
@@ -190,12 +191,21 @@ class M_uji_sampel extends CI_Model{
 		('$id')");
 		return $hsl;
 	}
+	function simpan_interpretasi($id){
+		$hsl=$this->db->query("insert into tbl_interpretasi_hasil(ih_us_id) values 
+		('$id')");
+		return $hsl;
+	}
 	function get_by_kode($kode){
 		$hsl=$this->db->query("SELECT * FROM tbl_us where us_id='$kode'");
 		return $hsl;
 	}
 	function get_is_by_kode($kode){
 		$hsl=$this->db->query("SELECT * FROM tbl_informasi_sampel where is_us_id='$kode'");
+		return $hsl;
+	}
+	function get_ih_by_kode($kode){
+		$hsl=$this->db->query("SELECT * FROM tbl_interpretasi_hasil where ih_us_id='$kode'");
 		return $hsl;
 	}
 	function get_anggota($kode){
@@ -218,13 +228,17 @@ class M_uji_sampel extends CI_Model{
 	}
 	function update_informasi($id,$no,$kondisi){
 		$hsl=$this->db->query("update tbl_informasi_sampel set no_identifikasi='$no',kondisi='$kondisi'
-		where is_us_id='$id'");
+		where is_id='$id'");
 		return $hsl;
 	}
-	function update_pengambilan($id,$lokasi,$titik,$metode,$rincian){
-		echo $metode;
-		$hsl=$this->db->query("update tbl_pengambilan_sampel set lokasi='$lokasi',titik_pengambilan='$titik',metode_id='$metode',rincian='$rincian'
+	function update_pengambilan($id,$lokasi,$metode,$rincian){
+		$hsl=$this->db->query("update tbl_pengambilan_sampel set lokasi='$lokasi',metode_id='$metode',rincian='$rincian'
 		where ps_us_id='$id'");
+		return $hsl;
+	}
+	function update_ih($id,$xpenyimpangan,$xpersyaratan){
+		$hsl=$this->db->query("update tbl_interpretasi_hasil set ih_penyimpangan='$xpenyimpangan',ih_persyaratan='$xpersyaratan'
+		where ih_us_id='$id'");
 		return $hsl;
 	}
 	function update_tanggal_pengambilan($id,$tanggal=NULL){

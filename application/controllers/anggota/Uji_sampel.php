@@ -101,12 +101,13 @@ class Uji_sampel extends CI_Controller{
 				}
 				$persentase=$this->m_setting->get_by_kode('1')->row()->setting_data;
 				$uang_muka=$tarif*($persentase/100);
-				$sisa=$tarif-$uang_muka;
+				$sisa=$tarif;
 				if ($this->m_uji_sampel->simpan($anggota,$id,$kode,$pengambilan,$jenis_sampel,$jenis_wadah,$tarif,$catatan,$uang_muka,$sisa,$pdf)){
 					$this->m_uji_sampel->simpan_informasi($id);
 					if ($pengambilan=="Laboratorium"){
 						$this->m_uji_sampel->simpan_pengambilan($id);
 					}
+					$this->m_uji_sampel->simpan_interpretasi($id);
 					echo $this->session->set_flashdata('msg','success');
 					echo "<script>window.top.location.href = '".base_url()."anggota/uji_sampel';</script>";
 				}else{
@@ -216,7 +217,7 @@ class Uji_sampel extends CI_Controller{
 	function batal(){
 		$kode=$this->uri->segment(4);
 		$pdf=$this->uri->segment(5);
-		$path=FCPATH.'assets/surat_permohonan/c0bd7ad12fa082d1dc81f1e4d2df98fc - Copy.pdf';
+		$path=FCPATH.'assets/surat_permohonan/'.$pdf;
 		if ($this->m_uji_sampel->batal($kode)){
 			unlink($path);
 			echo $this->session->set_flashdata('msg','success');
