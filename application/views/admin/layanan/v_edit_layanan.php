@@ -164,8 +164,11 @@
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
 	
-    CKEDITOR.replace('ckeditor');
-   
+    // CKEDITOR.replace('ckeditor');
+    CKEDITOR.replace( 'ckeditor', {
+      height: 300,
+      filebrowserUploadUrl: "<?php echo base_url().'admin/layanan/upload'?>"
+    });
 	
   });
 </script>

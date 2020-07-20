@@ -76,9 +76,9 @@ class Layanan extends CI_Controller{
 				$penjelasan=$this->input->post('xpenjelasan');
 				$id=$this->input->post('xid');
 				$this->m_layanan->update_layanan($id,$nama,$penjelasan,$gambar);
-				echo $path='./assets/layanan/'.$this->input->post('xikonlama');
+			 	$path='./assets/layanan/'.$this->input->post('xikonlama');
 				unlink($path);
-				echo $this->session->set_flashdata('msg','info');
+				$this->session->set_flashdata('msg','info');
 				redirect('admin/layanan');
 				
 			}else{
@@ -105,6 +105,26 @@ class Layanan extends CI_Controller{
 		$this->m_layanan->hapus_layanan($kode);
 		echo $this->session->set_flashdata('msg','success-hapus');
 		redirect('admin/layanan');
+	}
+
+	function upload(){
+		if(isset($_FILES['upload']['name']))
+		{
+			$file = $_FILES['upload']['tmp_name'];
+			$file_name = $_FILES['upload']['name'];
+			$file_name_array = explode(".", $file_name);
+			$extension = end($file_name_array);
+			$new_image_name = rand() . '.' . $extension;
+			$allowed_extension = array("jpg", "gif", "png");
+			if(in_array($extension, $allowed_extension))
+			{
+				move_uploaded_file($file, './assets/upload/' . $new_image_name);
+				$function_number = $_GET['CKEditorFuncNum'];
+				$url = base_url().'assets/upload/'.$new_image_name;
+				$message = '';
+				echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($function_number, '$url', '$message');</script>";
+			}
+		}
 	}
 
 }
