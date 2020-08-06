@@ -323,6 +323,19 @@
                     bgColor: '#FF4859'
                 });
         </script>
+
+  <?php elseif($this->session->flashdata('msg')=='error2'):?>
+        <script type="text/javascript">
+                $.toast({
+                    heading: 'Success',
+                    text: "Informasi Berhasil disimpan ke database. Namun email gagal dikirim.",
+                    showHideTransition: 'slide',
+                    icon: 'success',
+                    hideAfter: false,
+                    position: 'bottom-right',
+                    bgColor: '#FF4859'
+                });
+        </script>
     
     <?php elseif($this->session->flashdata('msg')=='success'):?>
         <script type="text/javascript">

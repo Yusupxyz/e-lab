@@ -26,7 +26,7 @@ class M_uji_sampel extends CI_Model{
 		$hsl=$this->db->query("SELECT * FROM tbl_us LEFT JOIN tbl_jenis_sampel ON js_id=us_fk_js LEFT JOIN tbl_jenis_wadah ON 
 		jw_id=us_fk_jw LEFT JOIN tbl_status ON us_status_id=status_id LEFT JOIN tbl_informasi_sampel ON tbl_informasi_sampel.is_us_id=
 		tbl_us.us_id LEFT JOIN tbl_pengambilan_sampel ON tbl_pengambilan_sampel.ps_us_id=tbl_us.us_id
-		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id!='8' AND us_status_id!='4' ORDER BY tbl_us.us_id DESC");
+		LEFT JOIN tbl_anggota ON us_anggota=anggota_id WHERE us_status_id!='8' AND us_status_id!='4' AND us_status_id!='3' ORDER BY tbl_us.us_id DESC");
 		return $hsl;
 	}
 	function get_laporan(){
@@ -228,7 +228,7 @@ class M_uji_sampel extends CI_Model{
 	}
 	function update_informasi($id,$no,$kondisi){
 		$hsl=$this->db->query("update tbl_informasi_sampel set no_identifikasi='$no',kondisi='$kondisi'
-		where is_id='$id'");
+		where is_us_id='$id'");
 		return $hsl;
 	}
 	function update_pengambilan($id,$lokasi,$metode,$rincian){

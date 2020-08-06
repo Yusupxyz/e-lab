@@ -157,10 +157,9 @@ class Uji_sampel extends CI_Controller{
 				$rincian=$this->input->post('xrincian');
 				$this->m_uji_sampel->update_tanggal_pengambilan($id,$tanggal);
 				$this->m_uji_sampel->update_pengambilan($id,$lokasi,$metode,$rincian);
-							echo $this->db->last_query();
 
 				echo $this->session->set_flashdata('msg','success');
-				// echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/informasi';</script>";
+				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/informasi';</script>";
 			}else{
 				$this->m_uji_sampel->update_tanggal_pengambilan($id);
 				echo $this->session->set_flashdata('msg','success');
@@ -244,7 +243,7 @@ class Uji_sampel extends CI_Controller{
 				echo $this->session->set_flashdata('msg','success2');
 			}else {
 				echo $this->email->print_debugger();
-				echo $this->session->set_flashdata('msg','error');
+				echo $this->session->set_flashdata('msg','error2');
 				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/transaksi';</script>";
 			} 
 		}else{
@@ -253,7 +252,7 @@ class Uji_sampel extends CI_Controller{
 				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
 			}else {
 				echo $this->email->print_debugger();
-				echo $this->session->set_flashdata('msg','error');
+				echo $this->session->set_flashdata('msg','error2');
 				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
 			} 
 		}
