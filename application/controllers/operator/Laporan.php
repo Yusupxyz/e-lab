@@ -70,8 +70,8 @@ class Laporan extends CI_Controller{
 		$this->footer($pdf,$ttd);
 		$name='doc'.$kode.'.pdf';
 		$path='C:/xampp/htdocs/e-lab/assets/hasil_pengujian/'.$name;
-		$pdf->Output('F',$path);
-		// $pdf->Output('I',$path);
+		// $pdf->Output('F',$path);
+		$pdf->Output('I',$path);
 		if($this->m_uji_sampel->update_laporan($kode,$name)){
 			echo $this->session->set_flashdata('msg','success');
 			echo "<script>window.top.location.href = '".base_url()."operator/laporan';</script>";
@@ -185,6 +185,8 @@ class Laporan extends CI_Controller{
 
 	private function informasi_pengambilan($pdf,$id,$laporan){
 		$pengambilan=$laporan;
+		$length= ceil(strlen($pengambilan->acuan_metode_nama)/34);
+		$rh=5*$length;
 		// var_dump($pengambilan);
 		$tgl_sampel=$pengambilan->tanggal_sampel==null?'-':date_indo($pengambilan->tanggal_sampel);
 		$pdf->SetFont('Times','','12');
@@ -200,11 +202,11 @@ class Laporan extends CI_Controller{
 		$pdf->Cell(90,5,'Lokasi Pengambilan Sampel',1,0,'L');
 		$pdf->Cell(5,5,':',1,0,'C');
 		$pdf->Cell(75,5,$pengambilan->lokasi,1,1,'L');
-		$pdf->Cell(7,5,'',1,0,'L');
-		$pdf->Cell(10,5,'3.',1,0,'L');
-		$pdf->Cell(90,5,'Acuan Prosedur Pengambilan Sampel',1,0,'L');
-		$pdf->Cell(5,5,':',1,0,'C');
-		$pdf->Cell(75,5,$pengambilan->acuan_metode_nama,1,1,'L');
+		$pdf->Cell(7,$rh,'',1,0,'L');
+		$pdf->Cell(10,$rh,'3.',1,0,'L');
+		$pdf->Cell(90,$rh,'Acuan Prosedur Pengambilan Sampel',1,0,'L');
+		$pdf->Cell(5,$rh,':',1,0,'C');
+		$pdf->MultiCell(75,5,$pengambilan->acuan_metode_nama,1,'L');
 		$pdf->Cell(7,5,'',1,0,'L');
 		$pdf->Cell(10,5,'4.',1,0,'L');
 		$pdf->Cell(90,5,'Kondisi Lingkungan Selama Pengambilan Sampel',1,0,'L');
@@ -256,13 +258,30 @@ class Laporan extends CI_Controller{
 			$parameter=$this->m_parameter_us->get_by_pu($value->sp_id)->result();
 			// echo $this->db->last_query();
 			foreach ($parameter as $key => $value2) {
-				$pdf->Cell(7,5,'',1,0,'L');
-				$pdf->Cell(11,5,$x++.'.','1',0,'C');
-				$pdf->Cell(64,5,'     '.$value2->pu_nama,'1',0,'L');
-				$pdf->Cell(20,5,$value2->satuan_nama,'1',0,'C');
-				$pdf->Cell(15,5,$value2->parameter_us_hasil,'1',0,'C');
-				$pdf->Cell(30,5,$value2->pu_mutu,'1',0,'C');
-				$pdf->Cell(40,5,$value2->acuan_metode_nama,'1',1,'C');
+				$length= ceil(strlen($value2->acuan_metode_nama)/16);
+				$length2= ceil(strlen($value2->pu_nama)/34);
+				if ($length>0){
+					$rh=5*$length;
+					$rh2=5*$length;
+					$rh3=5;
+				}else {
+					if ($length2>0){
+						$rh=5*$length2;
+						$rh3=5*$length2;
+						$rh2=5;
+					}else{
+						$rh=5;
+					}
+				}
+				// echo $rh2.'/';
+				$pdf->Cell(7,$rh,'',1,0,'L');
+				$pdf->Cell(11,$rh,$x++.'.','1',0,'C');
+				$pdf->MultiCell(64,$rh2,$value2->pu_nama,1,'L');
+				$pdf->SetXY($pdf->GetX()+82,$pdf->GetY()-$rh);
+				$pdf->Cell(20,$rh,$value2->satuan_nama,'1',0,'C');
+				$pdf->Cell(15,$rh,$value2->parameter_us_hasil,'1',0,'C');
+				$pdf->Cell(30,$rh,$value2->pu_mutu,'1',0,'C');
+				$pdf->MultiCell(40,$rh3,$value2->acuan_metode_nama,1,'L');
 			}
 		}
 	}
