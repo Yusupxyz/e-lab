@@ -70,8 +70,8 @@ class Laporan extends CI_Controller{
 		$this->footer($pdf,$ttd);
 		$name='doc'.$kode.'.pdf';
 		$path='C:/xampp/htdocs/e-lab/assets/hasil_pengujian/'.$name;
-		// $pdf->Output('F',$path);
-		$pdf->Output('I',$path);
+		$pdf->Output('F',$path);
+		// $pdf->Output('I',$path);
 		if($this->m_uji_sampel->update_laporan($kode,$name)){
 			echo $this->session->set_flashdata('msg','success');
 			echo "<script>window.top.location.href = '".base_url()."operator/laporan';</script>";
@@ -256,14 +256,18 @@ class Laporan extends CI_Controller{
 		$pdf->SetFont('Times','','12');
 		foreach ($sifat as $key => $value) {
 			$parameter=$this->m_parameter_us->get_by_pu($value->sp_id)->result();
-			// echo $this->db->last_query();
 			foreach ($parameter as $key => $value2) {
-				$length= ceil(strlen($value2->acuan_metode_nama)/16);
-				$length2= ceil(strlen($value2->pu_nama)/34);
+				  $length= ceil($pdf->GetStringWidth($value2->acuan_metode_nama)/30);
+				// echo $pdf->GetStringWidth($value2->acuan_metode_nama).'/';
+				 $length2= ceil($pdf->GetStringWidth($value2->pu_nama)/60);
 				if ($length>0){
 					$rh=5*$length;
-					$rh2=5*$length;
 					$rh3=5;
+					if (($length2>1) ){
+						$rh2=5*($length/2);
+					}else{
+						$rh2=5*$length;
+					}
 				}else {
 					if ($length2>0){
 						$rh=5*$length2;
