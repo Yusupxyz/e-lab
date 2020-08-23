@@ -238,8 +238,8 @@ class Laporan extends CI_Controller{
 	}
 
 	private function informasi_hasil($pdf,$id,$nomor){
-		$sifat=$this->m_sp->get_all()->result();
 		$hasil=$this->m_parameter_us->get_by_kode($id)->result();
+		// echo $this->db->last_query();
 		$a='A';
 		$x=1;
 		// var_dump($hasil);
@@ -254,9 +254,7 @@ class Laporan extends CI_Controller{
 		$pdf->Cell(30,7,'BAKU MUTU*',1,0,'C');
 		$pdf->Cell(40,7,'ACUAN METODE',1,1,'C');
 		$pdf->SetFont('Times','','12');
-		foreach ($sifat as $key => $value) {
-			$parameter=$this->m_parameter_us->get_by_pu($value->sp_id)->result();
-			foreach ($parameter as $key => $value2) {
+			foreach ($hasil as $key => $value2) {
 				  $length= ceil($pdf->GetStringWidth($value2->acuan_metode_nama)/30);
 				// echo $pdf->GetStringWidth($value2->acuan_metode_nama).'/';
 				 $length2= ceil($pdf->GetStringWidth($value2->pu_nama)/60);
@@ -287,7 +285,6 @@ class Laporan extends CI_Controller{
 				$pdf->Cell(30,$rh,$value2->pu_mutu,'1',0,'C');
 				$pdf->MultiCell(40,$rh3,$value2->acuan_metode_nama,1,'L');
 			}
-		}
 	}
 
 	private function catatan($pdf){

@@ -162,7 +162,7 @@ class M_uji_sampel extends CI_Model{
 		return $hsl;
 	}
 	function statistik_selesai($kode){
-		$hsl=$this->db->query("SELECT count(*) as 'count' FROM tbl_us where us_anggota='$kode' and us_status_id='2' OR us_status_id='8'");
+		$hsl=$this->db->query("SELECT count(*) as 'count' FROM tbl_us where us_anggota='$kode' and (us_status_id='2' OR us_status_id='8')");
 		return $hsl;
 	}
 
