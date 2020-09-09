@@ -147,6 +147,7 @@
  
 
  <?php foreach ($data->result_array() as $i) :
+           		$us_id=$i['us_id'];
               $is_id=$i['is_id'];
               $us_status_id=$i['us_status_id'];
               $no_identifikasi=$i['no_identifikasi']; 

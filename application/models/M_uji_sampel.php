@@ -228,7 +228,7 @@ class M_uji_sampel extends CI_Model{
 	}
 	function update_informasi($id,$no,$kondisi){
 		$hsl=$this->db->query("update tbl_informasi_sampel set no_identifikasi='$no',kondisi='$kondisi'
-		where is_us_id='$id'");
+		where is_id='$id'");
 		return $hsl;
 	}
 	function update_pengambilan($id,$lokasi,$metode,$rincian){
@@ -243,10 +243,10 @@ class M_uji_sampel extends CI_Model{
 	}
 	function update_tanggal_pengambilan($id,$tanggal=NULL){
 		if ($tanggal==NULL){
-			$tanggal= "now()";
+			$tanggal= date('Y-m-d');
 		}
 		$hsl=$this->db->query("update tbl_informasi_sampel set tanggal_sampel='$tanggal'
-		where is_us_id='$id'");
+		where is_id='$id'");
 		return $hsl;
 	}
 	function update_tanggal_pengujian_awal($id){

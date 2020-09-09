@@ -150,6 +150,7 @@ class Uji_sampel extends CI_Controller{
 		$kondisi=$this->input->post('xkondisi');
 
 		if ($this->m_uji_sampel->update_informasi($id,$no,$kondisi)){
+			echo $this->db->last_query();
 			if ($oleh=='Laboratorium'){
 				$tanggal=$this->input->post('xtanggal');
 				$lokasi=$this->input->post('xlokasi');
@@ -157,7 +158,6 @@ class Uji_sampel extends CI_Controller{
 				$rincian=$this->input->post('xrincian');
 				$this->m_uji_sampel->update_tanggal_pengambilan($id,$tanggal);
 				$this->m_uji_sampel->update_pengambilan($id,$lokasi,$metode,$rincian);
-
 				echo $this->session->set_flashdata('msg','success');
 				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel/informasi';</script>";
 			}else{

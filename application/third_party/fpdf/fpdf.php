@@ -1253,7 +1253,16 @@ protected function _parsejpg($file)
 protected function _parsepng($file)
 {
 	// Extract info from a PNG file
-	$f = fopen($file,'rb');
+	// Extract info from a PNG file
+	$opts=array(
+		"ssl"=>array(
+			"verify_peer"=>false,
+			"verify_peer_name"=>false,
+		),
+	);  
+	
+	$f = fopen($file,'rb', false, stream_context_create($opts));
+	// $f = fopen($file,'rb');
 	if(!$f)
 		$this->Error('Can\'t open image file: '.$file);
 	$info = $this->_parsepngstream($f,$file);
