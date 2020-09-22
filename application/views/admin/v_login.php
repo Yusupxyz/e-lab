@@ -46,6 +46,9 @@
               <label>
                 Belum punya akun? <a href="<?php echo base_url().'administrator/registrasi'; ?>">Registrasi</a>
               </label>
+              <label>
+               <a href="<?php echo base_url().'administrator/reset'; ?>" style="color:red">Lupa Password</a>
+              </label>
             </div>
           <?php } ?>
         </div>

@@ -62,6 +62,7 @@
 				<div class="col-md-8 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<?php echo $this->session->flashdata('msg');?>
 					<div class="row">
+					<h3><p align="center"><b>Tanyakan sesuatu pada kami &#128522;<b></p></h3>
 					<form method="post" action="<?php echo base_url().'kontak/kirim_pesan'?>">
 						<div class="col-md-6">
 							<div class="form-group">

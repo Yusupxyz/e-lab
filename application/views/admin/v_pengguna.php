@@ -198,15 +198,15 @@
                                             <input type="text" name="xkontak" class="form-control" id="inputUserName" placeholder="Kontak Person" required>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="inputUserName" class="col-sm-4 control-label">Level</label>
                                         <div class="col-sm-7">
                                             <select class="form-control" name="xlevel" required>
-                                                <!-- <option value="1">Administrator</option> -->
+                                                <option value="1">Administrator</option>
                                                 <option value="2">Operator</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="inputUserName" class="col-sm-4 control-label">Photo</label>
                                         <div class="col-sm-7">

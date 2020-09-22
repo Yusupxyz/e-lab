@@ -132,7 +132,12 @@ class Uji_sampel extends CI_Controller{
 			$status_nama=$this->m_status->get_by_kode($status)->row()->status_nama;
 			$anggota_email=$this->m_uji_sampel->get_anggota($id)->row()->anggota_email;
 			if ($status_id_setting_email!=0){
-				$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
+				if ($status=="8"){
+					$file=$this->m_uji_sampel->get_by_kode($id)->row()->us_laporan;
+					$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan,null,$file);
+				}else{
+					$this->kirim_email($anggota_email,$status_id_setting_email,$status_nama,$catatan);
+				}
 			}else{
 				echo $this->session->set_flashdata('msg','success');
 				echo "<script>window.top.location.href = '".base_url()."operator/uji_sampel';</script>";
@@ -204,7 +209,7 @@ class Uji_sampel extends CI_Controller{
 	    redirect('operator/uji_sampel');
 	}
 
-	function kirim_email($to_email,$status,$status_nama,$catatan,$jenis=null){
+	function kirim_email($to_email,$status,$status_nama,$catatan,$jenis=null,$file=null){
 		$email=$this->m_setting_email->get_all()->result();
 		$from_email = $email[0]->setting_data; 
 		$nama_pengirim = $email[4]->setting_data;
@@ -235,6 +240,10 @@ class Uji_sampel extends CI_Controller{
 		}elseif($status==7){
 			$this->email->subject($email[6]->setting_data); 
 			$this->email->message($email[7]->setting_data.' <b>'.$status_nama.'</b>. Terima kasih.<br>Catatan : <b>'.$catatan.'</b>'); 
+		}
+		if ($file!=null){
+			// echo 'C:\xampp\htdocs\e-lab\assets\hasil_pengujian/'.$file;
+			$this->email->attach('C:\xampp\htdocs\e-lab\assets\hasil_pengujian/'.$file);
 		}
 
 		//Send mail 

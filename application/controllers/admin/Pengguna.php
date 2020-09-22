@@ -50,7 +50,7 @@ class Pengguna extends CI_Controller{
                             $konfirm_password=$this->input->post('xpassword2');
                             $email=$this->input->post('xemail');
                             $nohp=$this->input->post('xkontak');
-							$level=$this->input->post('xlevel');
+							$level='2';
      						if ($password <> $konfirm_password) {
      							echo $this->session->set_flashdata('msg','error');
 	               				redirect('admin/pengguna');
@@ -74,7 +74,7 @@ class Pengguna extends CI_Controller{
                     $konfirm_password=$this->input->post('xpassword2');
                     $email=$this->input->post('xemail');
                     $nohp=$this->input->post('xkontak');
-					$level=$this->input->post('xlevel');
+					$level='2';
 	            	if ($password <> $konfirm_password) {
      					echo $this->session->set_flashdata('msg','error');
 	               		redirect('admin/pengguna');

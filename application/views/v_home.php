@@ -32,9 +32,23 @@
 	<?php 
 		$this->load->view('template/v_menu');
 	?>
-
-	
 	</header>
+	<aside id="fh5co-hero" style="height: 560px;">
+		<div class="flexslider " style="height: 560px;">
+			<ul class="slides"  style="height: 560px;">
+		   	<li style="background-image: url(<?php echo base_url().'theme/images/samuel-elias-nadler-48Ys7bUryKE-unsplash.jpg'?>);">
+		   		<div class="overlay-gradient"></div>
+		   		<div class="container">
+		   			<div class="col-md-10 col-md-offset-1 text-center slider-text" style="height: 560px;">
+		   				<div class="slider-text-inner">
+		   					<h2 style="font-size: 30px;">Permudah Proses Uji Sampel Sekarang</h2>
+		   				</div>
+		   			</div>
+		   		</div>
+		   	</li>
+		  	</ul>
+	  	</div>
+	</aside>
 
 	<aside id="fh5co-hero" style="height: 560px;">
 		<div class="flexslider " style="height: 560px;">
@@ -58,24 +72,7 @@
 	  	</div>
 	</aside>
 
-	<div id="fh5co-why-us" class="animate-box" style="height: 360px;">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 text-center">
-					<img src="<?php echo base_url().'assets/kepala/001-man.png'?>"  onerror="this.src='<?php echo base_url().'assets/kepala/001-man.png'?>">
-					<h3>Bowo Budiarso, ST</h3>
-					<p>Kepala UPTD. Laboratorium Lingkungan
-					<br>
-					Dinas Lingkungan Hidup Kota Palangka Raya</p>
-				</div>
-				<div class="col-md-8 text-center item-block">
-					<h2>Sambutan Pimpinan</h2>
-					<p>Puji syukur kehadirat Tuhan Y.M.E. dengan rahmat dan hidayah-Nya Official Web UPT Laboratorium Lingkungan telah hadir. Diharapkan dengan adanya Official Web ini dapat bermanfaat dalam mengembangkan masyarakat yang informatif. Web ini menyediakan informasi seputar pelatihan kerja.</p>
-					<!-- <p><a href="<?php echo base_url().'sambutan'?>" class="btn btn-primary btn-outline with-arrow">Selengkapnya <i class="icon-arrow-right"></i></a></p> -->
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
 
 	<?php $this->load->view('template/v_footer');?>

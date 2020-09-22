@@ -4,6 +4,9 @@ class Administrator extends CI_Controller{
         parent:: __construct();
         $this->load->model('m_login');
         $this->load->model('m_anggota');
+        $this->load->helper('string');
+		$this->load->model('m_setting_email');
+
     }
     function index($role=""){
         $x['role']=$role;
@@ -41,7 +44,7 @@ class Administrator extends CI_Controller{
     }
 
     function auth($role=""){
-        echo $role;
+        // echo $role;
         $username=strip_tags(str_replace("'", "", $this->input->post('username',TRUE)));
         $password=strip_tags(str_replace("'", "", $this->input->post('password',TRUE)));
         if ($role=="anggota"){
@@ -118,4 +121,90 @@ class Administrator extends CI_Controller{
             echo '1';
         }
     }
+
+    function reset(){
+        $submit=$this->input->post('submit');
+        if(isset($submit)){
+            $email=$this->input->post('email');
+            $reset_key =  random_string('alnum', 50);
+            $cek=$this->m_anggota->cek_email($email)->num_rows();
+            if ($cek==0){
+                echo $this->session->set_flashdata('msg','<center>Email tidak terdaftar! Silahkan daftar.</center>');
+                redirect('administrator/registrasi');
+            }else{
+                $this->m_anggota->update_reset($email,$reset_key);
+                $this->kirim_email($email,$reset_key);
+            }
+        }else{
+            $x['role']='anggota';
+            $this->load->view('v_reset',$x);
+        }
+    }
+
+    function kirim_email($to_email,$reset_key){
+		$email=$this->m_setting_email->get_all()->result();
+		$from_email = $email[0]->setting_data; 
+		$config = Array(
+			   'protocol' => 'smtp',
+			   'smtp_host' => $email[1]->setting_data,
+			   'smtp_port' => $email[2]->setting_data,
+			   'smtp_timeout' => '30',
+			   'smtp_user' => $from_email,
+			   'smtp_pass' => $email[3]->setting_data,
+			   'mailtype'  => 'html', 
+			   'charset'   => 'iso-8859-1'
+	   );
+	//    var_dump($email);
+
+		   $this->load->library('email', $config);
+		   $this->email->set_newline("\r\n");   
+
+		$this->email->from($from_email,$email[4]->setting_data); 
+		$this->email->to($to_email);
+        $this->email->subject("Ganti Password"); 
+        $message = "<p>Anda melakukan permintaan reset password. Klik link dibawah ini jika benar, abaikan email ini jika tidak benar.</p>";
+		$message .= "<a href='".site_url('administrator/reset_password/'.$reset_key)."'>link reset password</a>";
+        $this->email->message($message); 
+		//Send mail 
+        if($this->email->send()){
+            echo $this->session->set_flashdata('msg','<center>Link reset email telah dikirim, silahkan cek email anda!</center>');
+            redirect('anggota');
+        }else {
+            echo $this->session->set_flashdata('msg','<center>Maaf email gagal terkirim, silahkan coba beberapa saat lagi. Atau silahkan kontak admin.</center>');
+            redirect('anggota');
+        } 
+    }
+    
+    public function reset_password(){
+        $reset_key = $this->uri->segment(3);
+        if(!$reset_key){
+			die('Jangan Dihapus');
+		}
+        $cek=$this->m_anggota->check_reset_key($reset_key);
+		if($cek->num_rows() > 0)
+		{
+            $submit=$this->input->post('submit');
+			if(isset($submit)){
+                $password=strip_tags(str_replace("'", "", $this->input->post('password',TRUE)));
+                $update=$this->m_anggota->update_password($cek->row()->anggota_id,$password);
+                if (!$update){
+                    echo $this->session->set_flashdata('msg','<center>Password Gagal diubah! Silahkan kontak admin.</center>');
+                    redirect('administrator/registrasi');
+                }else{
+                    echo $this->session->set_flashdata('msg','<center>Password berhasil diubah, silahkan masuk!</center>');
+                    redirect('anggota');
+                }
+            }else{
+                $x['role']='anggota';
+                $x['reset_key']=$reset_key;
+                $this->load->view('v_reset_password',$x);
+            }
+		} else{
+			die("reset key salah");
+		}
+		
+
+	
+	}
+
 }

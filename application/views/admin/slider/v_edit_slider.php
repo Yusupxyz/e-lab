@@ -85,7 +85,7 @@
           </div>  
           <div class="row">
             <div class="col-md-12">
-            <label for="male">Foto Slider*</label>
+            <label for="male">Foto Slider* <i>(rekomendasi ukuran 970*560px)</i></label>
               <input type="file" name="xfoto" class="form-control" accept="image/jpg,image/png" /><br>
             </div>
           </div>  
